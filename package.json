@@ -1,0 +1,30 @@
+{
+  "name": "sensorspeak",
+  "version": "1.0.0",
+  "description": "SensorSpeak Skill & Lambda",
+  "main": " ",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misterdev/sensorspeak.git"
+  },
+  "keywords": [
+    "alexa",
+    "alexa-skills",
+    "aws",
+    "aws-lambda",
+    "sparql"
+  ],
+  "author": "Devid Farinelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/misterdev/sensorspeak/issues"
+  },
+  "homepage": "https://github.com/misterdev/sensorspeak#readme",
+  "devDependencies": {}
+}
