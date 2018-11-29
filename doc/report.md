@@ -37,6 +37,10 @@ Smart home Actions rely on Home Graph, a database that stores and provides conte
 - US West (Oregon)
 - Asia Pacific (Tokyo)
 
+### Configuration
+
+- `skill.json` ([doc](https://developer.amazon.com/docs/smapi/skill-manifest.html))
+
 ## Tutorials & Boilerplate
 
 - [alexa-skills-kit-sdk-for-nodejs](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs)
