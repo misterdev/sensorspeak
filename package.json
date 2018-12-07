@@ -28,5 +28,8 @@
         "url": "https://github.com/misterdev/sensorspeak/issues"
     },
     "homepage": "https://github.com/misterdev/sensorspeak#readme",
-    "devDependencies": {}
+    "devDependencies": {},
+    "dependencies": {
+        "sparql-client-2": "^0.6.3"
+    }
 }

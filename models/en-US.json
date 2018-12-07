@@ -15,7 +15,7 @@
                     "samples": []
                 },
                 {
-                    "name": "CreateDeviceIntent",
+                    "name": "nopeCreateDeviceIntent",
                     "slots": [{
                             "name": "type",
                             "type": "DeviceType",
@@ -54,7 +54,7 @@
                     ]
                 },
                 {
-                    "name": "GetAllEnergyIntent",
+                    "name": "nopeGetAllEnergyIntent",
                     "slots": [],
                     "samples": [
                         "get energy of all sensors",
@@ -78,7 +78,7 @@
                     ]
                 },
                 {
-                    "name": "GetAverageIntent",
+                    "name": "nopeGetAverageIntent",
                     "slots": [{
                         "name": "type",
                         "type": "DeviceType"
@@ -111,7 +111,7 @@
                     ]
                 },
                 {
-                    "name": "GetEnergyIntent",
+                    "name": "nopeGetEnergyIntent",
                     "slots": [{
                             "name": "location",
                             "type": "Location"
@@ -140,7 +140,7 @@
                     ]
                 },
                 {
-                    "name": "GetLastUpdateTimeIntent",
+                    "name": "nopeGetLastUpdateTimeIntent",
                     "slots": [{
                             "name": "location",
                             "type": "Location"
@@ -201,7 +201,7 @@
                     ]
                 },
                 {
-                    "name": "GetStateIntent",
+                    "name": "nopeGetStateIntent",
                     "slots": [{
                             "name": "location",
                             "type": "Location"
@@ -284,7 +284,7 @@
                     ]
                 },
                 {
-                    "name": "ListByStateIntent",
+                    "name": "nopeListByStateIntent",
                     "slots": [{
                         "name": "on_off",
                         "type": "DeviceStatus"
@@ -331,7 +331,7 @@
                     ]
                 },
                 {
-                    "name": "RemoveDeviceIntent",
+                    "name": "nopeRemoveDeviceIntent",
                     "slots": [{
                             "name": "type",
                             "type": "DeviceType",
@@ -388,7 +388,7 @@
                     ]
                 },
                 {
-                    "name": "SetUpdateIntervalIntent",
+                    "name": "nopeSetUpdateIntervalIntent",
                     "slots": [{
                             "name": "interval",
                             "type": "AMAZON.DURATION"
@@ -414,7 +414,7 @@
                     ]
                 },
                 {
-                    "name": "TurnOnOffAllIntent",
+                    "name": "nopeTurnOnOffAllIntent",
                     "slots": [{
                         "name": "on_off",
                         "type": "DeviceStatus"
@@ -426,7 +426,7 @@
                     ]
                 },
                 {
-                    "name": "TurnOnOffByLocationIntent",
+                    "name": "nopeTurnOnOffByLocationIntent",
                     "slots": [{
                             "name": "on_off",
                             "type": "DeviceStatus"
@@ -444,7 +444,7 @@
                     ]
                 },
                 {
-                    "name": "TurnOnOffByTypeIntent",
+                    "name": "nopeTurnOnOffByTypeIntent",
                     "slots": [{
                             "name": "on_off",
                             "type": "DeviceStatus"
@@ -462,7 +462,7 @@
                     ]
                 },
                 {
-                    "name": "TurnOnOffIntent",
+                    "name": "nopeTurnOnOffIntent",
                     "slots": [{
                             "name": "on_off",
                             "type": "DeviceStatus"
@@ -496,21 +496,6 @@
                         {
                             "name": {
                                 "value": "humidity"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "light"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "proximity"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "alarm"
                             }
                         },
                         {
@@ -557,172 +542,52 @@
                             "name": {
                                 "value": "pressure"
                             }
-                        },
-                        {
-                            "name": {
-                                "value": "water level"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "motion"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "movement"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "presence"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "occupancy"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "contact"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "fire detector"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "gas detector"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "flame detector"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "smoke detector"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "leak detector"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "fire alarm"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "gas alarm"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "flame alarm"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "smoke alarm"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "pollution alarm"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "door"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "window"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "gate"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "irrigator"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "led"
-                            }
                         }
                     ]
                 },
                 {
                     "name": "Location",
                     "values": [{
-                            "name": {
-                                "value": "blue hall"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "server room"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "office"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "kitchen"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "living room"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "bathroom"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "bedroom"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "garden"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "outside"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "hall"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "study room"
-                            }
+                        "name": {
+                            "value": "mars"
                         }
-                    ]
+                    }, {
+                        "name": {
+                            "value": "mars server room"
+                        }
+                    }, {
+                        "name": {
+                            "value": "mars server rack"
+                        }
+                    }, {
+                        "name": {
+                            "value": "mml"
+                        }
+                    }, {
+                        "name": {
+                            "value": "giove"
+                        }
+                    }, {
+                        "name": {
+                            "value": "samba"
+                        }
+                    }, {
+                        "name": {
+                            "value": "star"
+                        }
+                    }, {
+                        "name": {
+                            "value": "ares"
+                        }
+                    }, {
+                        "name": {
+                            "value": "ares server room"
+                        }
+                    }, {
+                        "name": {
+                            "value": "ercole"
+                        }
+                    }]
                 },
                 {
                     "name": "DeviceStatus",
@@ -742,7 +607,7 @@
         },
         "dialog": {
             "intents": [{
-                    "name": "CreateDeviceIntent",
+                    "name": "nopeCreateDeviceIntent",
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent-CreateDeviceIntent"
@@ -792,7 +657,7 @@
                     ]
                 },
                 {
-                    "name": "RemoveDeviceIntent",
+                    "name": "nopeRemoveDeviceIntent",
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent-RemoveDeviceIntent"
@@ -818,7 +683,7 @@
                     ]
                 },
                 {
-                    "name": "TurnOnOffIntent",
+                    "name": "nopeTurnOnOffIntent",
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent-TurnOnOffIntent"
