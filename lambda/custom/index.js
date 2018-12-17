@@ -2,28 +2,9 @@
 /* eslint-disable  no-console */
 
 const Alexa = require('ask-sdk-core');
-const SparqlClient = require('sparql-client-2');
+const SEPA = require('./sepa');
 
-const endpoint = 'http://mml.arces.unibo.it:8000/query';
-const client = new SparqlClient(endpoint)
-    .register({
-        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-        "rdfs": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-        "sosa": "http://www.w3.org/ns/sosa/",
-        "qudt-1-1": "http://qudt.org/1.1/schema/qudt#",
-        "qudt-unit-1-1": "http://qudt.org/1.1/vocab/unit#",
-        "arces-monitor": "http://wot.arces.unibo.it/monitor#",
-        "mqtt": "http://wot.arces.unibo.it/mqtt#"
-    })
-
-const LaunchRequestQuery =
-    `
-    SELECT DISTINCT ?x
-    WHERE {
-        arces-monitor:Italy-Site1-Pressure ?p ?o ;
-            rdf:label ?x
-    }
-`
+// ListByLocationIntent
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -32,8 +13,7 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         // const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
 
-        return new Promise((resolve, reject) => client.query(LaunchRequestQuery)
-            .execute()
+        return new Promise((resolve, reject) => SEPA.query(SEPA.queries.LaunchRequestQuery)
             .then(function(results) {
                 const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. The label of the sensor Italy-Site1-Pressure is ${results.results.bindings[0].x.value}`
                 const response = handlerInput.responseBuilder
@@ -51,22 +31,12 @@ const LaunchRequestHandler = {
     },
 };
 
-
-const ListDevicesIntentQuery = `
-    SELECT DISTINCT ?x
-    WHERE {
-        ?obs ?p sosa:Observation ;
-            rdf:label ?x
-    }
-`
-
 const ListDevicesIntentHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.intent.name === 'ListDevicesIntent';
     },
     handle(handlerInput) {
-        return new Promise((resolve, reject) => client.query(ListDevicesIntentQuery)
-            .execute()
+        return new Promise((resolve, reject) => SEPA.query(SEPA.queries.ListDevicesIntentQuery)
             .then(function(results) {
                 const speechText = results.results.bindings.map(e => e.x.value).toString()
                 const response = handlerInput.responseBuilder
