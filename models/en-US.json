@@ -2,7 +2,8 @@
     "interactionModel": {
         "languageModel": {
             "invocationName": "sensor speak",
-            "intents": [{
+            "intents": [
+                {
                     "name": "AMAZON.CancelIntent",
                     "samples": []
                 },
@@ -15,8 +16,9 @@
                     "samples": []
                 },
                 {
-                    "name": "nopeCreateDeviceIntent",
-                    "slots": [{
+                    "name": "CreateDeviceIntent",
+                    "slots": [
+                        {
                             "name": "type",
                             "type": "DeviceType",
                             "samples": [
@@ -54,43 +56,9 @@
                     ]
                 },
                 {
-                    "name": "nopeGetAllEnergyIntent",
-                    "slots": [],
-                    "samples": [
-                        "get energy of all sensors",
-                        "get battery of all sensors",
-                        "get battery level of all sensors",
-                        "get battery of all",
-                        "get battery of all devices",
-                        "get energy of all devices"
-                    ]
-                },
-                {
-                    "name": "GetAllStateIntent",
-                    "slots": [],
-                    "samples": [
-                        "get state of all sensors",
-                        "get state of all",
-                        "get state of all devices",
-                        "get status of all devices",
-                        "get status of all",
-                        "get status of all sensors"
-                    ]
-                },
-                {
-                    "name": "nopeGetAverageIntent",
-                    "slots": [{
-                        "name": "type",
-                        "type": "DeviceType"
-                    }],
-                    "samples": [
-                        "get average {type}",
-                        "get average"
-                    ]
-                },
-                {
                     "name": "GetAverageOfLocationIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                             "name": "type",
                             "type": "DeviceType"
                         },
@@ -111,25 +79,9 @@
                     ]
                 },
                 {
-                    "name": "nopeGetEnergyIntent",
-                    "slots": [{
-                            "name": "location",
-                            "type": "Location"
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType"
-                        }
-                    ],
-                    "samples": [
-                        "get energy",
-                        "get energy of {location} {type} sensor",
-                        "get energy of {location} {type}"
-                    ]
-                },
-                {
                     "name": "GetInfoIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                         "name": "location",
                         "type": "Location"
                     }],
@@ -140,8 +92,9 @@
                     ]
                 },
                 {
-                    "name": "nopeGetLastUpdateTimeIntent",
-                    "slots": [{
+                    "name": "GetLastUpdateTimeIntent",
+                    "slots": [
+                        {
                             "name": "location",
                             "type": "Location"
                         },
@@ -160,7 +113,8 @@
                 },
                 {
                     "name": "GetMaxOfLocationIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                             "name": "type",
                             "type": "DeviceType"
                         },
@@ -182,7 +136,8 @@
                 },
                 {
                     "name": "GetMinOfLocationIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                             "name": "type",
                             "type": "DeviceType"
                         },
@@ -201,26 +156,9 @@
                     ]
                 },
                 {
-                    "name": "nopeGetStateIntent",
-                    "slots": [{
-                            "name": "location",
-                            "type": "Location"
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType"
-                        }
-                    ],
-                    "samples": [
-                        "get state",
-                        "get state of {location} {type}",
-                        "get status",
-                        "get status of {location} {type}"
-                    ]
-                },
-                {
                     "name": "GetUpdateIntervalIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                             "name": "location",
                             "type": "Location"
                         },
@@ -237,7 +175,8 @@
                 },
                 {
                     "name": "GetValueIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                             "name": "type",
                             "type": "DeviceType",
                             "samples": [
@@ -264,7 +203,8 @@
                 },
                 {
                     "name": "ListByLocationIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                         "name": "location",
                         "type": "Location"
                     }],
@@ -284,30 +224,9 @@
                     ]
                 },
                 {
-                    "name": "nopeListByStateIntent",
-                    "slots": [{
-                        "name": "on_off",
-                        "type": "DeviceStatus"
-                    }],
-                    "samples": [
-                        "list all sensor in {on_off} mode",
-                        "list all sensor in {on_off} state",
-                        "list {on_off} sensors",
-                        "list turned {on_off} devices",
-                        "list turned {on_off} device",
-                        "list turned {on_off} sensors",
-                        "list turned {on_off} sensor",
-                        "list {on_off} devices",
-                        "list devices {on_off}",
-                        "list device {on_off}",
-                        "list all device in {on_off} state",
-                        "list by state",
-                        "list by status"
-                    ]
-                },
-                {
                     "name": "ListByTypeIntent",
-                    "slots": [{
+                    "slots": [
+                        {
                         "name": "type",
                         "type": "DeviceType"
                     }],
@@ -331,7 +250,7 @@
                     ]
                 },
                 {
-                    "name": "nopeRemoveDeviceIntent",
+                    "name": "RemoveDeviceIntent",
                     "slots": [{
                             "name": "type",
                             "type": "DeviceType",
@@ -385,104 +304,6 @@
                         "remove",
                         "delete device",
                         "remove device"
-                    ]
-                },
-                {
-                    "name": "nopeSetUpdateIntervalIntent",
-                    "slots": [{
-                            "name": "interval",
-                            "type": "AMAZON.DURATION"
-                        },
-                        {
-                            "name": "location",
-                            "type": "Location"
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType"
-                        }
-                    ],
-                    "samples": [
-                        "set update interval",
-                        "set update interval of {location} {type} to {interval}",
-                        "set update interval of {location} {type}",
-                        "set update interval to {interval}",
-                        "set update interval of {type}",
-                        "set update interval of {location} {type} sensor",
-                        "set update interval of {location} {type} device",
-                        "set update interval of {type} sensor"
-                    ]
-                },
-                {
-                    "name": "nopeTurnOnOffAllIntent",
-                    "slots": [{
-                        "name": "on_off",
-                        "type": "DeviceStatus"
-                    }],
-                    "samples": [
-                        "turn {on_off} all sensors",
-                        "turn {on_off} all devices",
-                        "turn {on_off} all"
-                    ]
-                },
-                {
-                    "name": "nopeTurnOnOffByLocationIntent",
-                    "slots": [{
-                            "name": "on_off",
-                            "type": "DeviceStatus"
-                        },
-                        {
-                            "name": "location",
-                            "type": "Location"
-                        }
-                    ],
-                    "samples": [
-                        "turn {on_off} all sensors in {location}",
-                        "turn {on_off} by location",
-                        "turn {on_off} all devices in {location}",
-                        "turn {on_off} devices in {location}"
-                    ]
-                },
-                {
-                    "name": "nopeTurnOnOffByTypeIntent",
-                    "slots": [{
-                            "name": "on_off",
-                            "type": "DeviceStatus"
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType"
-                        }
-                    ],
-                    "samples": [
-                        "turn {on_off} by type",
-                        "turn {on_off} all {type} ",
-                        "turn {on_off} all {type} devices",
-                        "turn {on_off} all {type} sensors"
-                    ]
-                },
-                {
-                    "name": "nopeTurnOnOffIntent",
-                    "slots": [{
-                            "name": "on_off",
-                            "type": "DeviceStatus"
-                        },
-                        {
-                            "name": "location",
-                            "type": "Location"
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType"
-                        }
-                    ],
-                    "samples": [
-                        "turn {on_off} ",
-                        "turn {on_off} {location} {type}",
-                        "turn {on_off} {location} ",
-                        "turn {on_off} {type} ",
-                        "turn {on_off} {location} {type} sensor",
-                        "turn {on_off} {type} sensor"
                     ]
                 }
             ],
@@ -548,46 +369,81 @@
                 {
                     "name": "Location",
                     "values": [{
-                        "name": {
-                            "value": "mars"
+                            "name": {
+                                "value": "Mars Server Room"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Mars Garden"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Mars Server Rack"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "MML HDD"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "MML CPU"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "GIOVE HDD"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "GIOVE CPU"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "SAMBA HDD"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Star Garden"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Star ST Office"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Star SEHM Lab"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Star Server Room"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ERCOLE HDD"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ERCOLE CPU"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Italy Site 1"
+                            }
                         }
-                    }, {
-                        "name": {
-                            "value": "mars server room"
-                        }
-                    }, {
-                        "name": {
-                            "value": "mars server rack"
-                        }
-                    }, {
-                        "name": {
-                            "value": "mml"
-                        }
-                    }, {
-                        "name": {
-                            "value": "giove"
-                        }
-                    }, {
-                        "name": {
-                            "value": "samba"
-                        }
-                    }, {
-                        "name": {
-                            "value": "star"
-                        }
-                    }, {
-                        "name": {
-                            "value": "ares"
-                        }
-                    }, {
-                        "name": {
-                            "value": "ares server room"
-                        }
-                    }, {
-                        "name": {
-                            "value": "ercole"
-                        }
-                    }]
+                    ]
                 },
                 {
                     "name": "DeviceStatus",
@@ -607,7 +463,7 @@
         },
         "dialog": {
             "intents": [{
-                    "name": "nopeCreateDeviceIntent",
+                    "name": "CreateDeviceIntent",
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent-CreateDeviceIntent"
@@ -657,7 +513,7 @@
                     ]
                 },
                 {
-                    "name": "nopeRemoveDeviceIntent",
+                    "name": "RemoveDeviceIntent",
                     "confirmationRequired": true,
                     "prompts": {
                         "confirmation": "Confirm.Intent-RemoveDeviceIntent"
@@ -679,35 +535,6 @@
                             "prompts": {
                                 "elicitation": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location"
                             }
-                        }
-                    ]
-                },
-                {
-                    "name": "nopeTurnOnOffIntent",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent-TurnOnOffIntent"
-                    },
-                    "slots": [{
-                            "name": "on_off",
-                            "type": "DeviceStatus",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "location",
-                            "type": "Location",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
                         }
                     ]
                 }
