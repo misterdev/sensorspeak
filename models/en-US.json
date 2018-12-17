@@ -309,7 +309,8 @@
             ],
             "types": [{
                     "name": "DeviceType",
-                    "values": [{
+                    "values": [
+                        {
                             "name": {
                                 "value": "temperature"
                             }
@@ -369,92 +370,93 @@
                 {
                     "name": "Location",
                     "values": [{
+                            "id": "http://wot.arces.unibo.it/monitor#Mars_Server_Room",
                             "name": {
                                 "value": "Mars Server Room"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#Mars_Garden",
                             "name": {
                                 "value": "Mars Garden"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#Mars_Server_Rack",
                             "name": {
                                 "value": "Mars Server Rack"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#MML_HDD",
                             "name": {
                                 "value": "MML HDD"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#MML_CPU",
                             "name": {
                                 "value": "MML CPU"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#GIOVE_HDD",
                             "name": {
                                 "value": "GIOVE HDD"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#GIOVE_CPU",
                             "name": {
                                 "value": "GIOVE CPU"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#SAMBA_HDD",
                             "name": {
                                 "value": "SAMBA HDD"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#Star_Garden",
                             "name": {
                                 "value": "Star Garden"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#Star_ST_Office",
                             "name": {
                                 "value": "Star ST Office"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#Star_SEHM_Lab",
                             "name": {
                                 "value": "Star SEHM Lab"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#Star_Server_Room",
                             "name": {
                                 "value": "Star Server Room"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#ERCOLE_HDD",
                             "name": {
                                 "value": "ERCOLE HDD"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#ERCOLE_CPU",
                             "name": {
                                 "value": "ERCOLE CPU"
                             }
                         },
                         {
+                            "id": "http://wot.arces.unibo.it/monitor#ItalySite1",
                             "name": {
                                 "value": "Italy Site 1"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "DeviceStatus",
-                    "values": [{
-                            "name": {
-                                "value": "on"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "off"
                             }
                         }
                     ]

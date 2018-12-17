@@ -4,16 +4,15 @@
 const Alexa = require('ask-sdk-core');
 const SEPA = require('./sepa');
 
-// ListByLocationIntent
+const checkRequestType = (handlerInput, type) => handlerInput.requestEnvelope.request.type === type
+const checkIntentName = (handlerInput, name) => handlerInput.requestEnvelope.request.intent.name === name
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+        return checkRequestType(handlerInput, 'LaunchRequest')
     },
     handle(handlerInput) {
-        // const speechText = 'Welcome to the Alexa Skills Kit, you can say hello!';
-
-        return new Promise((resolve, reject) => SEPA.query(SEPA.queries.LaunchRequestQuery)
+        return new Promise((resolve, reject) => SEPA.query( SEPA.queryBuilder.LaunchRequestQuery())
             .then(function(results) {
                 const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. The label of the sensor Italy-Site1-Pressure is ${results.results.bindings[0].x.value}`
                 const response = handlerInput.responseBuilder
@@ -33,10 +32,10 @@ const LaunchRequestHandler = {
 
 const ListDevicesIntentHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.intent.name === 'ListDevicesIntent';
+        return checkIntentName(handlerInput, 'ListDevicesIntent');
     },
     handle(handlerInput) {
-        return new Promise((resolve, reject) => SEPA.query(SEPA.queries.ListDevicesIntentQuery)
+        return new Promise((resolve, reject) => SEPA.query( SEPA.queryBuilder.ListDevicesIntentQuery() )
             .then(function(results) {
                 const speechText = results.results.bindings.map(e => e.x.value).toString()
                 const response = handlerInput.responseBuilder
@@ -59,14 +58,29 @@ const ListDevicesIntentHandler = {
     },
 };
 
+const ListByLocationIntentHandler = {
+    canHandle(handlerInput) {
+        return checkIntentName(handlerInput, 'ListByLocationIntent')
+    },
+    handle(handlerInput) {
+        const query = SEPA.queryBuilder.ListByLocationIntent()
+        return new Promise((resolve, reject) => SEPA.query(query)
+            .then(function(results) {
+                const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. The label of the sensor Italy-Site1-Pressure is ${results.results.bindings[0].x.value}`
+                const response = handlerInput.responseBuilder
+                    .speak(speechText)
+                    .reprompt(speechText)
+                    .withSimpleCard('Sensor Speak', speechText)
+                    .getResponse()
 
-
-
-
-
-
-
-
+                resolve(response)
+            })
+            .catch(function(error) {
+                console.error('🙀', error)
+            })
+        )
+    }
+};
 
 
 
@@ -158,7 +172,8 @@ exports.handler = skillBuilder
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
-        ListDevicesIntentHandler
+        ListDevicesIntentHandler,
+        ListByLocationIntentHandler
     )
     .addErrorHandlers(ErrorHandler)
     .lambda();

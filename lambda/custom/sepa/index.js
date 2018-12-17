@@ -1,8 +1,9 @@
-const queries = require('./queries.js');
-const SparqlClient = require('sparql-client-2');
+const SparqlClient = require('sparql-client-2')
+const queryBuilder = require('./queryBuilder.js')
 
-const endpoint = 'http://mml.arces.unibo.it:8000/query';
+const endpoint = 'http://mml.arces.unibo.it:8000/query'
 
+// queryBuilder expexts those namespaces
 const client = new SparqlClient(endpoint)
     .register({
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
@@ -14,9 +15,19 @@ const client = new SparqlClient(endpoint)
         "mqtt": "http://wot.arces.unibo.it/mqtt#"
     })
 
-const query = (q) => client.query(q).execute()
+const query = (q) => new Promise( (resolve, reject) => 
+    client.query(q).execute()
+        .then( response => {
+            let ret = null
+            if ( response && response.results && response.results.bindings ) {
+                ret = response.results.bindings
+                    .map( e => ( e && e.x && e.x.value ) ? e.x.value : null )
+            }
+            resolve(ret)
+        })
+)
 
 module.exports = {
     query,
-    queries
+    queryBuilder
 }
