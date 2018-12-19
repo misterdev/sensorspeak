@@ -16,6 +16,13 @@
                     "samples": []
                 },
                 {
+                    "name": "ListLocationsIntent",
+                    "samples": [
+                        "list all locations",
+                        "list locations"
+                    ]
+                },
+                {
                     "name": "CreateDeviceIntent",
                     "slots": [
                         {
@@ -25,34 +32,33 @@
                                 "{type}",
                                 "{type} sensor",
                                 "{type} type",
-                                "type {type} "
+                                "type {type}",
+                                "with type {type}"
                             ]
                         },
                         {
                             "name": "location",
-                            "type": "Location",
+                            "type": "AMAZON.SearchQuery",
                             "samples": [
-                                "in {location} ",
                                 "{location} ",
+                                "in {location} ",
                                 "to {location} ",
                                 "is located in {location} ",
                                 "is in {location} ",
                                 "is {location} ",
-                                "is located {location} "
+                                "is located {location} ",
+                                "for {location} "
                             ]
                         }
                     ],
                     "samples": [
-                        "create {type} sensor in {location} ",
-                        "create {type} sensor {location} ",
-                        "create {type} sensor for {location} ",
                         "create {type} sensor",
-                        "create sensor in the {location} ",
+                        "create {type} device",
                         "create sensor",
-                        "create",
                         "create device",
-                        "create {location} {type} sensor",
-                        "create {location} {type} device"
+                        "create",
+                        "create sensor in {location}",
+                        "create device in {location}"
                     ]
                 },
                 {
@@ -64,18 +70,17 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location"
+                            "type": "AMAZON.SearchQuery"
                         }
                     ],
                     "samples": [
-                        "get average {type} of {location}",
-                        "get average of {location}",
-                        "get daily average {type}",
-                        "get daily average {type} of {location}",
+                        "get average {type}",
                         "get average {type} of today",
-                        "get daily average {type} in {location}",
-                        "get average {type} in {location}",
-                        "get average in {location}"
+                        "get daily average {type}",
+                        "get average of {location}",
+                        "get average in {location}",
+                        "get average for {location}",
+                        "get daily average in {location}"
                     ]
                 },
                 {
@@ -83,7 +88,7 @@
                     "slots": [
                         {
                         "name": "location",
-                        "type": "Location"
+                        "type": "AMAZON.SearchQuery"
                     }],
                     "samples": [
                         "get info in {location}",
@@ -96,18 +101,27 @@
                     "slots": [
                         {
                             "name": "location",
-                            "type": "Location"
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{location}",
+                                "in {location}"
+                            ]
                         },
                         {
                             "name": "type",
-                            "type": "DeviceType"
+                            "type": "DeviceType",
+                            "samples": [
+                                "{type}",
+                                "{type} sensor",
+                                "{type} type",
+                                "type {type}",
+                                "with type {type}"
+                            ]
                         }
                     ],
                     "samples": [
-                        "get last update time of {location} {type} sensor",
-                        "get last update time of {location} {type} ",
-                        "get last update of {location} {type} sensor",
-                        "get last update of {location} {type} ",
+                        "get last update time of {location}",
+                        "get last update of {type} ",
                         "get last update time"
                     ]
                 },
@@ -120,16 +134,19 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location"
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{location}",
+                                "of {location}"
+                            ]
                         }
                     ],
                     "samples": [
-                        "get maximum {type} of {location}",
-                        "get max {type} of {location}",
+                        "get maximum {type}",
+                        "get max {type}",
                         "get maximum of {location}",
                         "get max of {location}",
                         "get max in {location}",
-                        "get maximum {type} in {location}",
                         "get maximum",
                         "get max"
                     ]
@@ -143,12 +160,16 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location"
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{location}",
+                                "of {location}"
+                            ]
                         }
                     ],
                     "samples": [
-                        "get minimum {type} of {location}",
-                        "get min {type} of {location}",
+                        "get minimum {type}",
+                        "get min {type}",
                         "get minimum of {location}",
                         "get min of {location}",
                         "get minimum",
@@ -160,7 +181,7 @@
                     "slots": [
                         {
                             "name": "location",
-                            "type": "Location"
+                            "type": "AMAZON.SearchQuery"
                         },
                         {
                             "name": "type",
@@ -168,9 +189,10 @@
                         }
                     ],
                     "samples": [
-                        "get update interval of {location} {type}",
                         "get update interval",
-                        "get update interval of {location} {type} sensor"
+                        "get update interval of {location}",
+                        "get update interval of {location}",
+                        "get update interval of {type} sensor"
                     ]
                 },
                 {
@@ -185,20 +207,22 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location",
+                            "type": "AMAZON.SearchQuery",
                             "samples": [
                                 "{location} ",
-                                "in {location} "
+                                "in {location} ",
+                                "of {location} "
                             ]
                         }
                     ],
                     "samples": [
-                        "get {type} of {location}",
-                        "get {location} {type}",
+                        "get {type}",
+                        "get {location}",
                         "get value in {location} ",
                         "get {type} ",
                         "get value",
-                        "what is {location} {type}"
+                        "what is {type}",
+                        "what is {location}"
                     ]
                 },
                 {
@@ -206,7 +230,7 @@
                     "slots": [
                         {
                         "name": "location",
-                        "type": "Location"
+                        "type": "AMAZON.SearchQuery"
                     }],
                     "samples": [
                         "list sensors in the {location}",
@@ -244,8 +268,6 @@
                     "slots": [],
                     "samples": [
                         "list all sensors",
-                        "list sensors",
-                        "list devices",
                         "list all devices"
                     ]
                 },
@@ -261,43 +283,25 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location",
+                            "type": "AMAZON.SearchQuery",
                             "samples": [
                                 "in {location} ",
                                 "in the {location} ",
                                 "on {location} ",
+                                "for {location} ",
+                                "for the {location} ",
+                                "from {location} ",
+                                "from the {location} ",
                                 "{location} "
                             ]
                         }
                     ],
                     "samples": [
-                        "remove {type} sensor in the {location}",
-                        "remove {type} sensor for {location}",
-                        "remove {type} sensor for the {location}",
-                        "remove {type} sensor in {location}",
-                        "delete {type} sensor in {location}",
-                        "delete {type} sensor in the {location}",
-                        "delete {type} sensor for the {location}",
-                        "delete {type} sensor for {location}",
-                        "remove {type} sensor of {location} ",
-                        "delete {type} sensor of the {location} ",
-                        "remove {type} sensor of the {location} ",
                         "remove {type} sensor",
-                        "remove sensor in {location} ",
-                        "remove sensor in the {location} ",
-                        "remove sensor for {location} ",
-                        "delete sensor for {location}",
-                        "delete sensor in {location} ",
-                        "delete sensor in the {location} ",
                         "delete sensor {location} ",
                         "remove sensor {location} ",
-                        "remove {type} sensor from {location} ",
-                        "delete {type} sensor from {location} ",
                         "remove from {location} ",
                         "delete from {location} ",
-                        "remove {location} {type} sensor",
-                        "remove sensor from {location} ",
-                        "remove {location} {type}",
                         "remove sensor",
                         "delete sensor",
                         "delete",
@@ -366,100 +370,6 @@
                             }
                         }
                     ]
-                },
-                {
-                    "name": "Location",
-                    "values": [{
-                            "id": "http://wot.arces.unibo.it/monitor#Mars_Server_Room",
-                            "name": {
-                                "value": "Mars Server Room"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#Mars_Garden",
-                            "name": {
-                                "value": "Mars Garden"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#Mars_Server_Rack",
-                            "name": {
-                                "value": "Mars Server Rack"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#MML_HDD",
-                            "name": {
-                                "value": "MML HDD"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#MML_CPU",
-                            "name": {
-                                "value": "MML CPU"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#GIOVE_HDD",
-                            "name": {
-                                "value": "GIOVE HDD"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#GIOVE_CPU",
-                            "name": {
-                                "value": "GIOVE CPU"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#SAMBA_HDD",
-                            "name": {
-                                "value": "SAMBA HDD"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#Star_Garden",
-                            "name": {
-                                "value": "Star Garden"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#Star_ST_Office",
-                            "name": {
-                                "value": "Star ST Office"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#Star_SEHM_Lab",
-                            "name": {
-                                "value": "Star SEHM Lab"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#Star_Server_Room",
-                            "name": {
-                                "value": "Star Server Room"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#ERCOLE_HDD",
-                            "name": {
-                                "value": "ERCOLE HDD"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#ERCOLE_CPU",
-                            "name": {
-                                "value": "ERCOLE CPU"
-                            }
-                        },
-                        {
-                            "id": "http://wot.arces.unibo.it/monitor#ItalySite1",
-                            "name": {
-                                "value": "Italy Site 1"
-                            }
-                        }
-                    ]
                 }
             ]
         },
@@ -481,7 +391,7 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location",
+                            "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
@@ -505,7 +415,7 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location",
+                            "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
@@ -531,7 +441,7 @@
                         },
                         {
                             "name": "location",
-                            "type": "Location",
+                            "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {

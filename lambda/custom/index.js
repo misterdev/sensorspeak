@@ -3,56 +3,59 @@
 
 const Alexa = require('ask-sdk-core');
 const SEPA = require('./sepa');
-
-const checkRequestType = (handlerInput, type) => handlerInput.requestEnvelope.request.type === type
-const checkIntentName = (handlerInput, name) => handlerInput.requestEnvelope.request.intent.name === name
+const utils = require('./util.js')
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return checkRequestType(handlerInput, 'LaunchRequest')
+        return utils.checkRequestType(handlerInput, 'LaunchRequest')
     },
     handle(handlerInput) {
-        return new Promise((resolve, reject) => SEPA.query( SEPA.queryBuilder.LaunchRequestQuery())
-            .then(function(results) {
-                const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. The label of the sensor Italy-Site1-Pressure is ${results.results.bindings[0].x.value}`
-                const response = handlerInput.responseBuilder
-                    .speak(speechText)
-                    .reprompt(speechText)
-                    .withSimpleCard('Sensor Speak', speechText)
-                    .getResponse()
-
-                resolve(response)
+        return new Promise((resolve, reject) => SEPA.query( SEPA.queryBuilder.LaunchRequestQuery() )
+            .then((results) => {
+                console.log(results)
+                const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. The label of the sensor Italy-Site1-Pressure is ${results[0].x.value}`
+                resolve( utils.buildResponse(handlerInput, speechText) )
             })
-            .catch(function(error) {
-                console.error('🙀', error)
+            .catch((error) => {
+                resolve( utils.buildResponse(handlerInput, '🙀') )
             })
         )
     },
 };
 
+const ListLocationsIntentHandler = {
+    canHandle(handlerInput) {
+        return utils.checkIntentName(handlerInput, 'ListLocationsIntent');
+    },
+    handle(handlerInput) {
+        return new Promise((resolve, reject) => SEPA.query( SEPA.queryBuilder.ListLocationsIntent() )
+            .then((results) => {
+                const data = results.map( (el, i) => `\u{2022} #${i+1}, ${el.x.value} .` ).join("\n")
+                const speechText = `There are ${results.length} locations: ${data}`
+                resolve( utils.buildResponse(handlerInput, speechText) )
+            })
+            .catch((error) => {
+                const speechText = "Sorry, I can't find the list of location at the moment"
+                resolve( utils.buildResponse(handlerInput, speechText) )
+            })
+        )
+    },
+}
+
 const ListDevicesIntentHandler = {
     canHandle(handlerInput) {
-        return checkIntentName(handlerInput, 'ListDevicesIntent');
+        return utils.checkIntentName(handlerInput, 'ListDevicesIntent');
     },
     handle(handlerInput) {
         return new Promise((resolve, reject) => SEPA.query( SEPA.queryBuilder.ListDevicesIntentQuery() )
-            .then(function(results) {
-                const speechText = results.results.bindings.map(e => e.x.value).toString()
-                const response = handlerInput.responseBuilder
-                    .speak(speechText)
-                    .reprompt(speechText)
-                    .withSimpleCard('SensorSpeak', speechText)
-                    .getResponse()
-
-                resolve(response)
+            .then((results) => {
+                const data = results.map( (el, i) => `\u{2022} #${i+1}, ${el.x.value} .` ).join("\n")
+                const speechText = `There are ${results.length} devices: ${data}`
+                resolve( utils.buildResponse(handlerInput, speechText) )
             })
-            .catch(function(error) {
+            .catch((error) => {
                 const speechText = "Sorry, I can't find this list at the moment"
-                const response = handlerInput.responseBuilder
-                    .speak(speechText)
-                    .reprompt(speechText)
-                    .withSimpleCard('SensorSpeak', speechText)
-                    .getResponse()
+                resolve( utils.buildResponse(handlerInput, speechText) )
             })
         )
     },
@@ -60,23 +63,21 @@ const ListDevicesIntentHandler = {
 
 const ListByLocationIntentHandler = {
     canHandle(handlerInput) {
-        return checkIntentName(handlerInput, 'ListByLocationIntent')
+        return utils.checkIntentName(handlerInput, 'ListByLocationIntent')
     },
     handle(handlerInput) {
-        const query = SEPA.queryBuilder.ListByLocationIntent()
+        const slots = utils.getSlots(handlerInput)
+        if( !(slots && slots.location && slots.location.id ) ) return "Sorry, I don't know the location"
+        const query = SEPA.queryBuilder.ListByLocationIntent(`<${slots.location.id}>`)
         return new Promise((resolve, reject) => SEPA.query(query)
-            .then(function(results) {
-                const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. The label of the sensor Italy-Site1-Pressure is ${results.results.bindings[0].x.value}`
-                const response = handlerInput.responseBuilder
-                    .speak(speechText)
-                    .reprompt(speechText)
-                    .withSimpleCard('Sensor Speak', speechText)
-                    .getResponse()
-
-                resolve(response)
+            .then((results) => {
+                const data = results.map( (el, i) => `\u{2022} #${i+1}, ${el.x.value} .` ).join("\n")
+                const speechText = `The list of sensors in ${slots.location.name || "this location"} is: ${data}`
+                resolve( utils.buildResponse(handlerInput, speechText) )                    
             })
-            .catch(function(error) {
-                console.error('🙀', error)
+            .catch((error) => {
+                console.log(error)
+                resolve( utils.buildResponse(handlerInput, '🙀') )
             })
         )
     }
@@ -173,6 +174,7 @@ exports.handler = skillBuilder
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
         ListDevicesIntentHandler,
+        ListLocationsIntentHandler,
         ListByLocationIntentHandler
     )
     .addErrorHandlers(ErrorHandler)

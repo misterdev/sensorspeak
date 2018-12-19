@@ -9,7 +9,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dialog": "ask dialog --locale en-US",
-        "deploy": "ask deploy"
+        "deploy": "ask deploy",
+        "deploy-lambda": "ask deploy --target lambda",
+        "deploy-model": "ask deploy --target model",
+        "test-query": "node lambda/test.js"
     },
     "repository": {
         "type": "git",

@@ -6,6 +6,7 @@ const endpoint = 'http://mml.arces.unibo.it:8000/query'
 // queryBuilder expexts those namespaces
 const client = new SparqlClient(endpoint)
     .register({
+        "schema": "http://schema.org/",
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "rdfs": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "sosa": "http://www.w3.org/ns/sosa/",
@@ -21,10 +22,10 @@ const query = (q) => new Promise( (resolve, reject) =>
             let ret = null
             if ( response && response.results && response.results.bindings ) {
                 ret = response.results.bindings
-                    .map( e => ( e && e.x && e.x.value ) ? e.x.value : null )
             }
             resolve(ret)
         })
+        .catch( error => reject(error) ) //?
 )
 
 module.exports = {
