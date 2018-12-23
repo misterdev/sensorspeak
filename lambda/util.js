@@ -1,3 +1,5 @@
+const _ = require('lodash/object');
+
 const checkRequestType = (handlerInput, type) => handlerInput.requestEnvelope.request.type === type
 const checkIntentName = (handlerInput, name) => handlerInput.requestEnvelope.request.intent.name === name
 
@@ -10,24 +12,14 @@ const buildResponse = (handlerInput, speechText) =>
 
 const getSlots = (handlerInput) => {
     const ret = {}
-    if( handlerInput.requestEnvelope.request 
-        && handlerInput.requestEnvelope.request.intent 
-        && handlerInput.requestEnvelope.request.intent.slots
-    ) {
-        const slots = handlerInput.requestEnvelope.request.intent.slots
+    const slots = _.get(handlerInput, "requestEnvelope.request.intent.slots")
+    if (slots) {
         for (const name in slots) {
-            if( slots[name] 
-                && slots[name].resolutions 
-                && slots[name].resolutions.resolutionsPerAuthority
-                && slots[name].resolutions.resolutionsPerAuthority[0]
-                && slots[name].resolutions.resolutionsPerAuthority[0].values
-                && slots[name].resolutions.resolutionsPerAuthority[0].values[0]
-                && slots[name].resolutions.resolutionsPerAuthority[0].values[0].value
-            ) {
-                const s = slots[name].resolutions.resolutionsPerAuthority[0].values[0].value
+            const slot = _.get(slots, `[${name}].resolutions.resolutionsPerAuthority[0].values[0].value`)
+            if (slot) {
                 ret[name] = {
-                    id: s.id,
-                    name: s.name
+                    id: slot.id,
+                    name: slot.name
                 }
             }
         }

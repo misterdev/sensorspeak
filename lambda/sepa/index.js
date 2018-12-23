@@ -1,5 +1,6 @@
 const SparqlClient = require('sparql-client-2')
 const queryBuilder = require('./queryBuilder.js')
+const _ = require('lodash/object');
 
 const endpoint = 'http://mml.arces.unibo.it:8000/query'
 
@@ -16,16 +17,11 @@ const client = new SparqlClient(endpoint)
         "mqtt": "http://wot.arces.unibo.it/mqtt#"
     })
 
+
 const query = (q) => new Promise( (resolve, reject) => 
     client.query(q).execute()
-        .then( response => {
-            let ret = null
-            if ( response && response.results && response.results.bindings ) {
-                ret = response.results.bindings
-            }
-            resolve(ret)
-        })
-        .catch( error => reject(error) ) //?
+        .then( response => resolve(_.get( response, "results.bindings")))
+        .catch( error => reject(error) )
 )
 
 module.exports = {
