@@ -2,8 +2,7 @@
     "interactionModel": {
         "languageModel": {
             "invocationName": "sensor speak",
-            "intents": [
-                {
+            "intents": [{
                     "name": "AMAZON.CancelIntent",
                     "samples": []
                 },
@@ -24,8 +23,7 @@
                 },
                 {
                     "name": "CreateDeviceIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                             "name": "type",
                             "type": "DeviceType",
                             "samples": [
@@ -63,8 +61,7 @@
                 },
                 {
                     "name": "GetAverageOfLocationIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                             "name": "type",
                             "type": "DeviceType"
                         },
@@ -85,8 +82,7 @@
                 },
                 {
                     "name": "GetInfoIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                         "name": "location",
                         "type": "AMAZON.SearchQuery"
                     }],
@@ -98,8 +94,7 @@
                 },
                 {
                     "name": "GetLastUpdateTimeIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                             "name": "location",
                             "type": "AMAZON.SearchQuery",
                             "samples": [
@@ -127,8 +122,7 @@
                 },
                 {
                     "name": "GetMaxOfLocationIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                             "name": "type",
                             "type": "DeviceType"
                         },
@@ -153,8 +147,7 @@
                 },
                 {
                     "name": "GetMinOfLocationIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                             "name": "type",
                             "type": "DeviceType"
                         },
@@ -178,8 +171,7 @@
                 },
                 {
                     "name": "GetUpdateIntervalIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                             "name": "location",
                             "type": "AMAZON.SearchQuery"
                         },
@@ -197,8 +189,7 @@
                 },
                 {
                     "name": "GetValueIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                             "name": "type",
                             "type": "DeviceType",
                             "samples": [
@@ -219,7 +210,6 @@
                         "get {type}",
                         "get {location}",
                         "get value in {location} ",
-                        "get {type} ",
                         "get value",
                         "what is {type}",
                         "what is {location}"
@@ -227,8 +217,7 @@
                 },
                 {
                     "name": "ListByLocationIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                         "name": "location",
                         "type": "AMAZON.SearchQuery"
                     }],
@@ -249,8 +238,7 @@
                 },
                 {
                     "name": "ListByTypeIntent",
-                    "slots": [
-                        {
+                    "slots": [{
                         "name": "type",
                         "type": "DeviceType"
                     }],
@@ -312,66 +300,64 @@
                 }
             ],
             "types": [{
-                    "name": "DeviceType",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "temperature"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "humidity"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "moisture"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "speed"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "air pollution"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "pollution"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "acceleration"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "wind speed"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "altitude"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "air pressure"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "pressure"
-                            }
+                "name": "DeviceType",
+                "values": [{
+                        "name": {
+                            "value": "temperature"
                         }
-                    ]
-                }
-            ]
+                    },
+                    {
+                        "name": {
+                            "value": "humidity"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "moisture"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "speed"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "air pollution"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "pollution"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "acceleration"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "wind speed"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "altitude"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "air pressure"
+                        }
+                    },
+                    {
+                        "name": {
+                            "value": "pressure"
+                        }
+                    }
+                ]
+            }]
         },
         "dialog": {
             "intents": [{
