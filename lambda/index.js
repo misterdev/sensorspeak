@@ -4,7 +4,7 @@ const Fuse = require('fuse.js')
 
 const SEPA = require('./sepa')
 const utils = require('./utils/util')
-const locations = require('./utils/locations')
+const LOCATIONS = require('./utils/locations')
 
 const fuseOptions = {
     shouldSort: true,
@@ -41,10 +41,10 @@ const ListLocationsIntentHandler = {
         return utils.checkIntentName(handlerInput, 'ListLocationsIntent');
     },
     handle(handlerInput) {
-        return new Promise((resolve, reject) => SEPA.query(SEPA.queryBuilder.ListLocationsIntent())
+        return new Promise((resolve, reject) => SEPA.query(SEPA.queryBuilder.ListLocationsQuery())
             .then((results) => {
-                const data = results.map((el, i) => `\u{2022} #${i+1}, ${el.x.value} .`).join("\n")
-                const speechText = `There are ${results.length} locations: ${data}`
+                const locations = results.map((l, i) => `\u{2022} #${i+1}, ${_.get(l, 'x.value')} .`).join("\n")
+                const speechText = `There are ${results.length} locations: ${locations}`
                 resolve(utils.buildResponse(handlerInput, speechText))
             })
             .catch((error) => {
@@ -62,8 +62,8 @@ const ListDevicesIntentHandler = {
     handle(handlerInput) {
         return new Promise((resolve, reject) => SEPA.query(SEPA.queryBuilder.ListDevicesIntentQuery())
             .then((results) => {
-                const data = results.map((el, i) => `\u{2022} #${i+1}, ${el.x.value} .`).join("\n")
-                const speechText = `There are ${results.length} devices: ${data}`
+                const devices = results.map((s, i) => `\u{2022} #${i+1}, ${_.get(s, 'x.value')} .`).join("\n")
+                const speechText = `There are ${results.length} devices: ${devices}`
                 resolve(utils.buildResponse(handlerInput, speechText))
             })
             .catch((error) => {
@@ -84,45 +84,16 @@ const ListByLocationIntentHandler = {
         if (!slotLocation) return utils.buildResponse(handlerInput, "Sorry, I don't know this location")
 
         return new Promise((resolve, reject) => {
-            var location = new Fuse(locations, fuseOptions).search(slotLocation);
+            var location = new Fuse(LOCATIONS, fuseOptions).search(slotLocation);
 
             const locationId = _.get(location, "[0].label")
-            if (!locationId) return utils.buildResponse(handlerInput, "Sorry, I don't know this location")
+            if (!locationId) resolve(utils.buildResponse(handlerInput, "Sorry, I don't know this location"))
 
-            const query = SEPA.queryBuilder.ListByLocationIntent(`<${locationId}>`)
+            const query = SEPA.queryBuilder.ListByLocationQuery(`<${locationId}>`)
             SEPA.query(query)
-                .then((sensors) => {
-                    const data = sensors.map((s, i) => `\u{2022} #${i+1}, ${s.x.value} .`).join("\n")
-                    const speechText = `The list of sensors in ${_.get(location, "[0].label", "this location")} is: ${data}`
-                    resolve(utils.buildResponse(handlerInput, speechText))
-                })
-                .catch((error) => {
-                    resolve(utils.buildResponse(handlerInput, '🙀'))
-                })
-        })
-    }
-};
-
-const GetInfoIntentIntentHandler = {
-    canHandle(handlerInput) {
-        return utils.checkRequestType(handlerInput, 'IntentRequest') &&
-            utils.checkIntentName(handlerInput, 'GetInfoIntent')
-    },
-    handle(handlerInput) {
-        const slotLocation = _.get(handlerInput, "requestEnvelope.request.intent.slots.location.value")
-        if (!slotLocation) return utils.buildResponse(handlerInput, "Sorry, I don't know this location")
-
-        return new Promise((resolve, reject) => {
-            var location = new Fuse(locations, fuseOptions).search(slotLocation);
-
-            const locationId = _.get(location, "[0].label")
-            if (!locationId) return utils.buildResponse(handlerInput, "Sorry, I don't know this location")
-
-            const query = SEPA.queryBuilder.ListByLocationIntent(`<${locationId}>`)
-            SEPA.query(query)
-                .then((sensors) => {
-                    const data = sensors.map((s, i) => `\u{2022} #${i+1}, ${s.x.value} .`).join("\n")
-                    const speechText = `The list of sensors in ${_.get(location, "[0].label", "this location")} is: ${data}`
+                .then((result) => {
+                    const sensors = result.map((s, i) => `\u{2022} #${i+1}, ${_.get(s, 'x.value')} .`).join("\n")
+                    const speechText = `The list of sensors in ${_.get(location, "[0].label", "this location")} is: ${sensors}`
                     resolve(utils.buildResponse(handlerInput, speechText))
                 })
                 .catch((error) => {
@@ -133,84 +104,83 @@ const GetInfoIntentIntentHandler = {
 };
 
 
-
-
-
-
-
-
-
-
-
-const HelpIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-            handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
-    },
-    handle(handlerInput) {
-        const speechText = 'You can say hello to me!';
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
-            .withSimpleCard('Sensor Speak', speechText)
-            .getResponse();
-    },
-};
-
-const CancelAndStopIntentHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-            (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent' ||
-                handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
-    },
-    handle(handlerInput) {
-        const speechText = 'Goodbye!';
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .withSimpleCard('Sensor Speak', speechText)
-            .getResponse();
-    },
-};
-
-const SessionEndedRequestHandler = {
-    canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
-    },
-    handle(handlerInput) {
-        console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
-
-        return handlerInput.responseBuilder.getResponse();
-    },
-};
-
-const ErrorHandler = {
-    canHandle() {
-        return true;
-    },
-    handle(handlerInput, error) {
-        console.log(`Error handled: ${error.message}`);
-
-        return handlerInput.responseBuilder
-            .speak('Sorry, I can\'t understand the command. Please say again.')
-            .reprompt('Sorry, I can\'t understand the command. Please say again.')
-            .getResponse();
-    },
-};
 
 const skillBuilder = Alexa.SkillBuilders.custom();
 
 exports.handler = skillBuilder
     .addRequestHandlers(
         LaunchRequestHandler,
-        HelpIntentHandler,
-        CancelAndStopIntentHandler,
-        SessionEndedRequestHandler,
         ListDevicesIntentHandler,
         ListLocationsIntentHandler,
-        ListByLocationIntentHandler,
-        GetInfoIntentIntentHandler
+        ListByLocationIntentHandler
+        // HelpIntentHandler,
+        // CancelAndStopIntentHandler,
+        // SessionEndedRequestHandler,
     )
     .addErrorHandlers(ErrorHandler)
     .lambda();
+
+
+
+
+
+
+
+
+
+// const HelpIntentHandler = {
+//     canHandle(handlerInput) {
+//         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
+//             handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
+//     },
+//     handle(handlerInput) {
+//         const speechText = 'You can say hello to me!';
+
+//         return handlerInput.responseBuilder
+//             .speak(speechText)
+//             .reprompt(speechText)
+//             .withSimpleCard('Sensor Speak', speechText)
+//             .getResponse();
+//     },
+// };
+
+// const CancelAndStopIntentHandler = {
+//     canHandle(handlerInput) {
+//         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
+//             (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent' ||
+//                 handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
+//     },
+//     handle(handlerInput) {
+//         const speechText = 'Goodbye!';
+
+//         return handlerInput.responseBuilder
+//             .speak(speechText)
+//             .withSimpleCard('Sensor Speak', speechText)
+//             .getResponse();
+//     },
+// };
+
+// const SessionEndedRequestHandler = {
+//     canHandle(handlerInput) {
+//         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
+//     },
+//     handle(handlerInput) {
+//         console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
+
+//         return handlerInput.responseBuilder.getResponse();
+//     },
+// };
+
+// const ErrorHandler = {
+//     canHandle() {
+//         return true;
+//     },
+//     handle(handlerInput, error) {
+//         console.log(`Error handled: ${error.message}`);
+
+//         return handlerInput.responseBuilder
+//             .speak('Sorry, I can\'t understand the command. Please say again.')
+//             .reprompt('Sorry, I can\'t understand the command. Please say again.')
+//             .getResponse();
+//     },
+// };

@@ -13,7 +13,7 @@ const ListDevicesIntentQuery = () => `
     }
 `
 
-const ListByLocationIntent = (location) => `
+const ListByLocationIntentQuery = (location) => `
     SELECT DISTINCT ?x
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -21,16 +21,7 @@ const ListByLocationIntent = (location) => `
     }
 `
 
-const ListLocations = () => `
-    SELECT DISTINCT ?x
-    WHERE {
-        ?o a sosa:Observation ;
-            sosa:hasFeatureOfInterest ?p .
-        ?p schema:name ?x .
-    }  
-`
-
-const ListLocationsIntent = () => `
+const ListLocationsQuery = () => `
     SELECT DISTINCT ?x
     WHERE {
         ?o a sosa:Observation ;
@@ -43,6 +34,6 @@ const ListLocationsIntent = () => `
 module.exports = {
     LaunchRequestQuery,
     ListDevicesIntentQuery,
-    ListByLocationIntent,
-    ListLocationsIntent
+    ListByLocationIntentQuery,
+    ListLocationsQuery
 }
