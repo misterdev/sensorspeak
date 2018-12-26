@@ -5,7 +5,7 @@ const LaunchRequestQuery = () => `
             rdf:label ?x .
     }
 `
-const ListDevicesIntentQuery = () => `
+const ListDevicesQuery = () => `
     SELECT DISTINCT ?x
     WHERE {
         ?obs ?p sosa:Observation ;
@@ -13,7 +13,7 @@ const ListDevicesIntentQuery = () => `
     }
 `
 
-const ListByLocationIntentQuery = (location) => `
+const ListByLocationQuery = (location) => `
     SELECT DISTINCT ?x
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -30,10 +30,20 @@ const ListLocationsQuery = () => `
     }  
 `
 
+const GetValueIntent = (location, type) => `
+    SELECT DISTINCT ?label ?val
+    WHERE {
+        ?obs sosa:hasFeatureOfInterest ${location} ;
+            rdf:label ?label ;
+            sosa:hasResult ?result .
+        ?result qudt-1-1:numericValue ?val .
+    }
+`
 
 module.exports = {
     LaunchRequestQuery,
-    ListDevicesIntentQuery,
-    ListByLocationIntentQuery,
-    ListLocationsQuery
+    ListDevicesQuery,
+    ListByLocationQuery,
+    ListLocationsQuery,
+    GetValueIntent
 }
