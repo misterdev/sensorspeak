@@ -84,7 +84,7 @@
   O2 arces-monitor:switchedOn qudt-1-1:FALSE .
   ```
 
-- [] update interval, intervallo fra una rilevazione e l'altra
+- [] **Update Interval**, intervallo fra una rilevazione e l'altra
   
   **Requisiti:** i sensori devono leggere questo dato dal SEPA e modificare il proprio intervallo di conseguenza
   ```
@@ -96,7 +96,7 @@
   ```  
   
 
-- [] Create Sensor, aggiunge i dati relativi ad un sensore
+- [] **Create Sensor**, aggiunge i dati relativi ad un sensore
   
   **Requisiti:**
   - label, del sensore
@@ -117,6 +117,6 @@
       qudt:unit qudt-unit:[UNIT] .
   ```
 
-- [] Remove Sensor, rimuove i dati relativi ad un sensore
+- [] **Remove Sensor**, rimuove i dati relativi ad un sensore
   
   **Requisiti:** nome del sensore
