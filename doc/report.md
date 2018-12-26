@@ -44,6 +44,7 @@ Smart home Actions rely on Home Graph, a database that stores and provides conte
 ## Tutorials & Boilerplate
 
 - [alexa-skills-kit-sdk-for-nodejs](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs)
+- [Code Deep Dive ask-sdk-core](https://developer.amazon.com/blogs/alexa/post/dff6f892-ee90-4fef-954f-27ad84eb7739/code-deep-dive-introduction-to-the-ask-software-development-kit-for-node-js)
 
 ### Test
 

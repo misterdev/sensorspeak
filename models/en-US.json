@@ -193,7 +193,8 @@
                             "name": "type",
                             "type": "DeviceType",
                             "samples": [
-                                "{type}"
+                                "{type}",
+                                "the {type}"
                             ]
                         },
                         {
@@ -207,10 +208,9 @@
                         }
                     ],
                     "samples": [
-                        "get {type}",
-                        "get {location}",
-                        "get value in {location} ",
                         "get value",
+                        "get {type}",
+                        "get value {location} ",
                         "what is {type}",
                         "what is {location}"
                     ]
@@ -468,7 +468,7 @@
                 "id": "Elicit.Intent-GetValueIntent.IntentSlot-type",
                 "variations": [{
                     "type": "PlainText",
-                    "value": "which value?"
+                    "value": "which value do you want to know?"
                 }]
             },
             {

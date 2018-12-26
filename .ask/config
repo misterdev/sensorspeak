@@ -1,9 +1,33 @@
 {
   "deploy_settings": {
     "default": {
-      "skill_id": "",
+      "skill_id": "amzn1.ask.skill.7ea003c4-40a6-45d5-ab56-6f3d89c8a63f",
       "was_cloned": false,
-      "merge": {}
+      "merge": {},
+      "resources": {
+        "manifest": {
+          "eTag": "cd518a753ec4bdae30d236915b36a3f5"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "ceb990f5f670d5342d5ba3e391d2cee4"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:695920210044:function:sensor-speak-handler",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda",
+            "functionName": "sensor-speak-handler",
+            "handler": "index.handler",
+            "revisionId": "687064ac-4d89-4e30-ab4b-231af0aaa135",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dialog": "ask dialog --locale en-US",
         "deploy": "ask deploy",
-        "deploy-lambda": "ask deploy --target lambda",
+        "deploy-lambda": "ask deploy --target lambda --force",
         "deploy-model": "ask deploy --target model",
         "mock": "node lambda/test.js"
     },

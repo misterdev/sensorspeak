@@ -3,14 +3,14 @@
         "publishingInformation": {
             "locales": {
                 "en-US": {
-                    "summary": "Sample Short Description",
+                    "summary": "SEPA integration with Amazon Alexa",
                     "examplePhrases": [
                         "Alexa open sensor speak",
                         "sensor speak",
                         "help"
                     ],
                     "name": "Sensor Speak",
-                    "description": "Sample Full Description"
+                    "description": "This skills allows to read data from ARCES sensors"
                 }
             },
             "isAvailableWorldwide": true,

@@ -19,20 +19,6 @@ const fuseOptions = {
     ]
 };
 
-const ErrorHandler = {
-    canHandle() {
-        return true;
-    },
-    handle(handlerInput, error) {
-        console.log(`Error handled: ${error.message}`);
-
-        return handlerInput.responseBuilder
-            .speak('Sorry, I can\'t understand the command. Please say again.')
-            .reprompt('Sorry, I can\'t understand the command. Please say again.')
-            .getResponse();
-    },
-};
-
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return utils.checkRequestType(handlerInput, 'LaunchRequest')
@@ -41,10 +27,10 @@ const LaunchRequestHandler = {
         return new Promise((resolve, reject) => SEPA.query(SEPA.queryBuilder.LaunchRequestQuery())
             .then((results) => {
                 const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor "Italy-Site1-Pressure" is: ${results[0].x.value}`
-                resolve(utils.buildResponse(handlerInput, speechText));
+                resolve(utils.continueDialog(handlerInput, speechText));
             })
             .catch((error) => {
-                resolve(utils.buildResponse(handlerInput, '🙀'));
+                resolve(utils.endDialog(handlerInput, '🙀'));
             })
         )
     },
@@ -59,11 +45,11 @@ const ListLocationsIntentHandler = {
             .then((results) => {
                 const locations = results.map((l, i) => `\u{2022} #${i+1}, ${_.get(l, 'x.value')} .`).join("\n")
                 const speechText = `There are ${results.length} locations: ${locations}`
-                resolve(utils.buildResponse(handlerInput, speechText))
+                resolve(utils.endDialog(handlerInput, speechText))
             })
             .catch((error) => {
                 const speechText = "Sorry, I can't find the list of location at the moment"
-                resolve(utils.buildResponse(handlerInput, speechText))
+                resolve(utils.endDialog(handlerInput, speechText))
             })
         )
     },
@@ -78,11 +64,11 @@ const ListDevicesIntentHandler = {
             .then((results) => {
                 const devices = results.map((s, i) => `\u{2022} #${i+1}, ${_.get(s, 'x.value')} .`).join("\n")
                 const speechText = `There are ${results.length} devices: ${devices}`
-                resolve(utils.buildResponse(handlerInput, speechText))
+                resolve(utils.endDialog(handlerInput, speechText))
             })
             .catch((error) => {
                 const speechText = "Sorry, I can't find this list at the moment"
-                resolve(utils.buildResponse(handlerInput, speechText))
+                resolve(utils.endDialog(handlerInput, speechText))
             })
         )
     },
@@ -95,13 +81,13 @@ const ListByLocationIntentHandler = {
     },
     handle(handlerInput) {
         const slotLocation = _.get(handlerInput, "requestEnvelope.request.intent.slots.location.value")
-        if (!slotLocation) return utils.buildResponse(handlerInput, "Sorry, I don't know this location")
+        if (!slotLocation) return utils.endDialog(handlerInput, "Sorry, I don't know this location")
 
         return new Promise((resolve, reject) => {
             var location = new Fuse(LOCATIONS, fuseOptions).search(slotLocation);
 
             const locationId = _.get(location, "[0].id")
-            if (!locationId) resolve(utils.buildResponse(handlerInput, "Sorry, I don't know this location"))
+            if (!locationId) resolve(utils.endDialog(handlerInput, "Sorry, I don't know this location"))
 
             const query = SEPA.queryBuilder.ListByLocationQuery(`<${locationId}>`)
             SEPA.query(query)
@@ -111,10 +97,10 @@ const ListByLocationIntentHandler = {
                     } .`).join("\n")
 
                     const speechText = `The list of sensors in ${_.get(location, "[0].label", "this location")} is: ${sensors}`
-                    resolve(utils.buildResponse(handlerInput, speechText))
+                    resolve(utils.endDialog(handlerInput, speechText))
                 })
                 .catch((error) => {
-                    resolve(utils.buildResponse(handlerInput, '🙀'))
+                    resolve(utils.endDialog(handlerInput, '🙀'))
                 })
         })
     }
@@ -123,20 +109,22 @@ const ListByLocationIntentHandler = {
 const GetValueIntentHandler = {
     canHandle(handlerInput) {
         return utils.checkRequestType(handlerInput, 'IntentRequest') &&
-            utils.checkIntentName(handlerInput, 'GetValueIntent')
+            utils.checkIntentName(handlerInput, 'GetValueIntent');
     },
     handle(handlerInput) {
+        if (!utils.checkDialogState(handlerInput, 'COMPLETED')) return utils.elicitSlots(handlerInput);
+
         const slotLocation = _.get(handlerInput, "requestEnvelope.request.intent.slots.location.value")
-        if (!slotLocation) return utils.buildResponse(handlerInput, "Sorry, I don't know this location")
+        if (!slotLocation) return utils.endDialog(handlerInput, "Sorry, I don't know this location")
 
         const slotType = _.get(handlerInput, "requestEnvelope.request.intent.slots.type")
-        if (!slotType) return utils.buildResponse(handlerInput, "Sorry, I don't know this type")
+        if (!slotType) return utils.endDialog(handlerInput, "Sorry, I don't know this type")
 
         return new Promise((resolve, reject) => {
             var location = new Fuse(LOCATIONS, fuseOptions).search(slotLocation);
 
             const locationId = _.get(location, "[0].id")
-            if (!locationId) resolve(utils.buildResponse(handlerInput, "Sorry, I don't know this location"))
+            if (!locationId) resolve(utils.endDialog(handlerInput, "Sorry, I don't know this location"))
 
             const query = SEPA.queryBuilder.GetValueIntent(`<${locationId}>`, slotType)
             SEPA.query(query)
@@ -151,15 +139,28 @@ const GetValueIntentHandler = {
                     const locationLabel = _.get(location, "[0].label", "this location");
                     const speechText = `The most recent observations in ${locationLabel} are: ${data}`
 
-                    resolve(utils.buildResponse(handlerInput, speechText))
+                    resolve(utils.endDialog(handlerInput, speechText))
                 })
                 .catch((error) => {
-                    resolve(utils.buildResponse(handlerInput, '🙀'))
+                    resolve(utils.endDialog(handlerInput, '🙀'))
                 })
         })
     }
 };
 
+const ErrorHandler = {
+    canHandle(handlerInput) {
+        return true;
+    },
+    handle(handlerInput, error) {
+        console.log(`Error handled: ${error}`);
+
+        return handlerInput.responseBuilder
+            .speak('Sorry, I can\'t understand the command. Please say again.')
+            .reprompt('Sorry, I can\'t understand the command. Please say again.')
+            .getResponse();
+    },
+};
 
 const skillBuilder = Alexa.SkillBuilders.custom();
 
@@ -169,13 +170,11 @@ exports.handler = skillBuilder
         ListDevicesIntentHandler,
         ListLocationsIntentHandler,
         ListByLocationIntentHandler,
-        GetValueIntentHandler
+        GetValueIntentHandler,
+        ErrorHandler
     )
     .addErrorHandlers(ErrorHandler)
     .lambda();
-
-
-
 
 
 
