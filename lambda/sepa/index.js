@@ -18,13 +18,13 @@ const client = new SparqlClient(endpoint)
     })
 
 
-const query = (q) => new Promise( (resolve, reject) => 
+const query = (q) => new Promise((resolve, reject) =>
     client.query(q).execute()
-        .then( response => resolve(_.get( response, "results.bindings")))
-        .catch( error => reject(error) )
+    .then(response => resolve(_.get(response, "results.bindings")))
+    .catch(error => reject(error))
 )
 
 module.exports = {
     query,
-    queryBuilder
+    ...queryBuilder
 }

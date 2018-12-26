@@ -9,7 +9,7 @@
 - [x] ListDevicesIntent           - "list all sensors"
 
 ### TYPE
-- [-] GetValueIntent              - "get {type} of {location}"
+- [x] GetValueIntent              - "get {type} of {location}" (TODO Type)
 - [ ] ListByTypeIntent            - "list {type} sensors"
 - [ ] GetAverageIntent            - "get average {type}"
 - [ ] GetAverageOfLocationIntent  - "get average {type} of {location}"
