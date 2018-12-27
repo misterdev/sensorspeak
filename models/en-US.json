@@ -396,7 +396,7 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Intent-GetValueIntent.IntentSlot-type"
+                                "elicitation": "Elicit.IntentSlot-type"
                             }
                         },
                         {
@@ -405,7 +405,31 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Intent-GetValueIntent.IntentSlot-location"
+                                "elicitation": "Elicit.IntentSlot-location"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "GetLastUpdateTimeIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [{
+                            "name": "type",
+                            "type": "DeviceType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.IntentSlot-type"
+                            }
+                        },
+                        {
+                            "name": "location",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.IntentSlot-location"
                             }
                         }
                     ]
@@ -465,14 +489,14 @@
                 }]
             },
             {
-                "id": "Elicit.Intent-GetValueIntent.IntentSlot-type",
+                "id": "Elicit.IntentSlot-type",
                 "variations": [{
                     "type": "PlainText",
                     "value": "which value do you want to know?"
                 }]
             },
             {
-                "id": "Elicit.Intent-GetValueIntent.IntentSlot-location",
+                "id": "Elicit.IntentSlot-location",
                 "variations": [{
                     "type": "PlainText",
                     "value": "in which location?"

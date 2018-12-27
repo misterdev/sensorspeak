@@ -30,7 +30,8 @@ const ListLocationsQuery = () => `
     }  
 `
 
-const GetValueIntent = (location, type) => `
+// TODO mettere type
+const GetValueQuery = (location, type) => `
     SELECT DISTINCT ?label ?val
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -40,10 +41,25 @@ const GetValueIntent = (location, type) => `
     }
 `
 
+// TODO mettere type
+const GetLastUpdateTimeQuery = (location, type) => `
+    SELECT DISTINCT ?label max(?t) as ?lastTs
+    WHERE {
+        ?obs sosa:hasFeatureOfInterest ${location} ;
+            rdf:label ?label ;
+            sosa:hasResult ?r .
+        ?r a qudt-1-1:QuantityValue .
+        ?node arces-monitor:refersTo ?r ;
+            time:inXSDDateTimeStamp ?t .
+    }
+    GROUP BY ?label
+`
+
 module.exports = {
     LaunchRequestQuery,
     ListDevicesQuery,
     ListByLocationQuery,
     ListLocationsQuery,
-    GetValueIntent
+    GetValueQuery,
+    GetLastUpdateTimeQuery
 }

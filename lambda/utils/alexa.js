@@ -28,21 +28,11 @@ const elicitSlots = (handlerInput) =>
     .addDelegateDirective()
     .getResponse()
 
-const getSlots = (handlerInput) => {
-    const ret = {}
-    const slots = _.get(handlerInput, "requestEnvelope.request.intent.slots")
-    if (slots) {
-        for (const n in slots) {
-            const slot = _.get(slots, `[${n}].resolutions.resolutionsPerAuthority[0].values[0].value`)
-            if (slot) {
-                ret[n] = {
-                    id: slot.id,
-                    name: slot.name
-                }
-            }
-        }
-    }
-    return ret
+const getSlot = (handlerInput, slotName) => _.get(handlerInput, `requestEnvelope.request.intent.slots.${slotName}.value`)
+
+const ERROR = {
+    NO_LOCATION: `Sorry, I don't know this location`,
+    NO_TYPE: `Sorry, I don't know this type`,
 }
 
 module.exports = {
@@ -50,7 +40,8 @@ module.exports = {
     checkIntentName,
     checkDialogState,
     elicitSlots,
-    getSlots,
+    getSlot,
     endDialog,
-    continueDialog
+    continueDialog,
+    ERROR
 }

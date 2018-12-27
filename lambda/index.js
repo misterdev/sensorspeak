@@ -17,7 +17,7 @@ const fuseOptions = {
     keys: [
         "label"
     ]
-};
+}
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -26,19 +26,21 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         return new Promise((resolve, reject) => SEPA.query(SEPA.LaunchRequestQuery())
             .then((results) => {
-                const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor "Italy-Site1-Pressure" is: ${results[0].x.value}`
-                resolve(Alexa.continueDialog(handlerInput, speechText));
+                const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA.
+                    For example, I know that the label of the sensor "Italy-Site1-Pressure" is: 
+                    ${results[0].x.value}`
+                resolve(Alexa.continueDialog(handlerInput, speechText))
             })
             .catch((error) => {
-                resolve(Alexa.endDialog(handlerInput, '🙀'));
+                resolve(Alexa.endDialog(handlerInput, '🙀'))
             })
         )
     },
-};
+}
 
 const ListLocationsIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.checkIntentName(handlerInput, 'ListLocationsIntent');
+        return Alexa.checkIntentName(handlerInput, 'ListLocationsIntent')
     },
     handle(handlerInput) {
         return new Promise((resolve, reject) => SEPA.query(SEPA.ListLocationsQuery())
@@ -57,7 +59,7 @@ const ListLocationsIntentHandler = {
 
 const ListDevicesIntentHandler = {
     canHandle(handlerInput) {
-        return Alexa.checkIntentName(handlerInput, 'ListDevicesIntent');
+        return Alexa.checkIntentName(handlerInput, 'ListDevicesIntent')
     },
     handle(handlerInput) {
         return new Promise((resolve, reject) => SEPA.query(SEPA.ListDevicesQuery())
@@ -72,7 +74,7 @@ const ListDevicesIntentHandler = {
             })
         )
     },
-};
+}
 
 const ListByLocationIntentHandler = {
     canHandle(handlerInput) {
@@ -80,14 +82,14 @@ const ListByLocationIntentHandler = {
             Alexa.checkIntentName(handlerInput, 'ListByLocationIntent')
     },
     handle(handlerInput) {
-        const slotLocation = _.get(handlerInput, "requestEnvelope.request.intent.slots.location.value")
-        if (!slotLocation) return Alexa.endDialog(handlerInput, "Sorry, I don't know this location")
+        const locationName = Alexa.getSlot(handlerInput, 'location')
+        if (!locationName) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
         return new Promise((resolve, reject) => {
-            var location = new Fuse(LOCATIONS, fuseOptions).search(slotLocation);
+            var location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
 
             const locationId = _.get(location, "[0].id")
-            if (!locationId) resolve(Alexa.endDialog(handlerInput, "Sorry, I don't know this location"))
+            if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
             const query = SEPA.ListByLocationQuery(`<${locationId}>`)
             SEPA.query(query)
@@ -104,29 +106,29 @@ const ListByLocationIntentHandler = {
                 })
         })
     }
-};
+}
 
 const GetValueIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
-            Alexa.checkIntentName(handlerInput, 'GetValueIntent');
+            Alexa.checkIntentName(handlerInput, 'GetValueIntent')
     },
     handle(handlerInput) {
-        if (!Alexa.checkDialogState(handlerInput, 'COMPLETED')) return Alexa.elicitSlots(handlerInput);
+        if (!Alexa.checkDialogState(handlerInput, 'COMPLETED')) return Alexa.elicitSlots(handlerInput)
 
-        const slotLocation = _.get(handlerInput, "requestEnvelope.request.intent.slots.location.value")
-        if (!slotLocation) return Alexa.endDialog(handlerInput, "Sorry, I don't know this location")
+        const locationName = Alexa.getSlot(handlerInput, 'location')
+        if (!locationName) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-        const slotType = _.get(handlerInput, "requestEnvelope.request.intent.slots.type")
-        if (!slotType) return Alexa.endDialog(handlerInput, "Sorry, I don't know this type")
+        const type = Alexa.getSlot(handlerInput, 'type')
+        if (!type) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
 
         return new Promise((resolve, reject) => {
-            var location = new Fuse(LOCATIONS, fuseOptions).search(slotLocation);
+            var location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
 
             const locationId = _.get(location, "[0].id")
-            if (!locationId) resolve(Alexa.endDialog(handlerInput, "Sorry, I don't know this location"))
+            if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-            const query = SEPA.GetValueIntent(`<${locationId}>`, slotType)
+            const query = SEPA.GetValueQuery(`<${locationId}>`, type)
             SEPA.query(query)
                 .then((result) => {
                     const data = result.map((sensor, i) => {
@@ -134,9 +136,9 @@ const GetValueIntentHandler = {
                         const value = _.get(sensor, 'val.value')
 
                         return `\u{2022} #${i+1}, ${label}: ${value}° .`
-                    }).join("\n");
+                    }).join("\n")
 
-                    const locationLabel = _.get(location, "[0].label", "this location");
+                    const locationLabel = _.get(location, "[0].label", "this location")
                     const speechText = `The most recent observations in ${locationLabel} are: ${data}`
 
                     resolve(Alexa.endDialog(handlerInput, speechText))
@@ -146,23 +148,71 @@ const GetValueIntentHandler = {
                 })
         })
     }
-};
+}
+
+const GetLastUpdateTimeIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+            Alexa.checkIntentName(handlerInput, 'GetLastUpdateTimeIntent')
+    },
+    handle(handlerInput) {
+        if (!Alexa.checkDialogState(handlerInput, 'COMPLETED')) return Alexa.elicitSlots(handlerInput)
+
+        const locationName = Alexa.getSlot(handlerInput, 'location')
+        if (!locationName) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+
+        const type = Alexa.getSlot(handlerInput, 'type')
+        if (!type) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+
+        return new Promise((resolve, reject) => {
+            var location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+
+            const locationId = _.get(location, "[0].id")
+            if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+            const query = SEPA.GetLastUpdateTimeQuery(`<${locationId}>`, type)
+            SEPA.query(query)
+                .then((result) => {
+                    const data = result.map((sensor, i) => {
+                        const label = _.get(sensor, 'label.value')
+                        const timestamp = _.get(sensor, 'lastTs.value')
+                        let lastTs = 'unknown'
+                        if (timestamp) lastTs = new Date(timestamp).toLocaleString()
+                        return `\u{2022} #${i+1}, ${label}: updated at ${lastTs} .`
+                    }).join("\n")
+
+                    const locationLabel = _.get(location, "[0].label", "this location")
+                    const speechText = `The most recent observations in ${locationLabel} are: ${data}`
+
+                    resolve(Alexa.endDialog(handlerInput, speechText))
+                })
+                .catch((error) => {
+                    resolve(Alexa.endDialog(handlerInput, '🙀'))
+                })
+        })
+    }
+}
+
+
+
+
+
 
 const ErrorHandler = {
     canHandle(handlerInput) {
-        return true;
+        return true
     },
     handle(handlerInput, error) {
-        console.log(`Error handled: ${error}`);
+        console.log(`Error handled: ${error}`)
 
         return handlerInput.responseBuilder
             .speak('Sorry, I can\'t understand the command. Please say again.')
             .reprompt('Sorry, I can\'t understand the command. Please say again.')
-            .getResponse();
+            .getResponse()
     },
-};
+}
 
-const skillBuilder = Ask_SDK.SkillBuilders.custom();
+const skillBuilder = Ask_SDK.SkillBuilders.custom()
 
 exports.handler = skillBuilder
     .addRequestHandlers(
@@ -171,10 +221,10 @@ exports.handler = skillBuilder
         ListLocationsIntentHandler,
         ListByLocationIntentHandler,
         GetValueIntentHandler,
-        ErrorHandler
+        GetLastUpdateTimeIntentHandler
     )
     .addErrorHandlers(ErrorHandler)
-    .lambda();
+    .lambda()
 
 
 
@@ -184,42 +234,42 @@ exports.handler = skillBuilder
 // const HelpIntentHandler = {
 //     canHandle(handlerInput) {
 //         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-//             handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
+//             handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent'
 //     },
 //     handle(handlerInput) {
-//         const speechText = 'You can say hello to me!';
+//         const speechText = 'You can say hello to me!'
 
 //         return handlerInput.responseBuilder
 //             .speak(speechText)
 //             .reprompt(speechText)
 //             .withSimpleCard('Sensor Speak', speechText)
-//             .getResponse();
+//             .getResponse()
 //     },
-// };
+// }
 
 // const CancelAndStopIntentHandler = {
 //     canHandle(handlerInput) {
 //         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
 //             (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent' ||
-//                 handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
+//                 handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent')
 //     },
 //     handle(handlerInput) {
-//         const speechText = 'Goodbye!';
+//         const speechText = 'Goodbye!'
 
 //         return handlerInput.responseBuilder
 //             .speak(speechText)
 //             .withSimpleCard('Sensor Speak', speechText)
-//             .getResponse();
+//             .getResponse()
 //     },
-// };
+// }
 
 // const SessionEndedRequestHandler = {
 //     canHandle(handlerInput) {
-//         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
+//         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest'
 //     },
 //     handle(handlerInput) {
-//         console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
+//         console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`)
 
-//         return handlerInput.responseBuilder.getResponse();
+//         return handlerInput.responseBuilder.getResponse()
 //     },
-// };
+// }
