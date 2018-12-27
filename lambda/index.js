@@ -193,8 +193,89 @@ const GetLastUpdateTimeIntentHandler = {
     }
 }
 
+const GetMaxOfLocationIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+            Alexa.checkIntentName(handlerInput, 'GetMaxOfLocationIntent')
+    },
+    handle(handlerInput) {
+        if (!Alexa.checkDialogState(handlerInput, 'COMPLETED')) return Alexa.elicitSlots(handlerInput)
 
+        const locationName = Alexa.getSlot(handlerInput, 'location')
+        if (!locationName) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
+        const type = Alexa.getSlot(handlerInput, 'type')
+        if (!type) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+
+        return new Promise((resolve, reject) => {
+            var location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+
+            const locationId = _.get(location, "[0].id")
+            if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+            const query = SEPA.GetMaxOfLocationQuery(`<${locationId}>`, type)
+            SEPA.query(query)
+                .then((result) => {
+                    const data = result.map((sensor, i) => {
+                        const label = _.get(sensor, 'label.value')
+                        const maxVal = _.get(sensor, 'maxVal.value')
+
+                        return `\u{2022} #${i+1}, ${label}, detected ${maxVal}° .`
+                    }).join("\n")
+
+                    const locationLabel = _.get(location, "[0].label", "this location")
+                    const speechText = `Those are the maximum values observed in ${locationLabel}: ${data}`
+
+                    resolve(Alexa.endDialog(handlerInput, speechText))
+                })
+                .catch((error) => {
+                    resolve(Alexa.endDialog(handlerInput, '🙀' + error)) // TODO mai printare error
+                })
+        })
+    }
+}
+
+const GetMinOfLocationIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+            Alexa.checkIntentName(handlerInput, 'GetMinOfLocationIntent')
+    },
+    handle(handlerInput) {
+        if (!Alexa.checkDialogState(handlerInput, 'COMPLETED')) return Alexa.elicitSlots(handlerInput)
+
+        const locationName = Alexa.getSlot(handlerInput, 'location')
+        if (!locationName) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+
+        const type = Alexa.getSlot(handlerInput, 'type')
+        if (!type) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+
+        return new Promise((resolve, reject) => {
+            var location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+
+            const locationId = _.get(location, "[0].id")
+            if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+            const query = SEPA.GetMinOfLocationQuery(`<${locationId}>`, type)
+            SEPA.query(query)
+                .then((result) => {
+                    const data = result.map((sensor, i) => {
+                        const label = _.get(sensor, 'label.value')
+                        const minVal = _.get(sensor, 'minVal.value')
+
+                        return `\u{2022} #${i+1}, ${label}, detected ${minVal}° .`
+                    }).join("\n")
+
+                    const locationLabel = _.get(location, "[0].label", "this location")
+                    const speechText = `Those are the minimum values observed in ${locationLabel}: ${data}`
+
+                    resolve(Alexa.endDialog(handlerInput, speechText))
+                })
+                .catch((error) => {
+                    resolve(Alexa.endDialog(handlerInput, '🙀' + error)) // TODO mai printare error
+                })
+        })
+    }
+}
 
 
 
@@ -221,7 +302,9 @@ exports.handler = skillBuilder
         ListLocationsIntentHandler,
         ListByLocationIntentHandler,
         GetValueIntentHandler,
-        GetLastUpdateTimeIntentHandler
+        GetLastUpdateTimeIntentHandler,
+        GetMaxOfLocationIntentHandler,
+        GetMinOfLocationIntentHandler
     )
     .addErrorHandlers(ErrorHandler)
     .lambda()
