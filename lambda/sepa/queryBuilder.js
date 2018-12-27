@@ -57,7 +57,7 @@ const GetLastUpdateTimeQuery = (location, type) => `
 
 // TODO aggiungere type e time
 const GetMaxOfLocationQuery = (location, type) => `
-    SELECT DISTINCT ?label max(?val) as ?maxVal
+    SELECT DISTINCT ?label MAX(?val) as ?maxVal
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
             rdf:label ?label ;
@@ -72,7 +72,22 @@ const GetMaxOfLocationQuery = (location, type) => `
 
 // TODO aggiungere type e time
 const GetMinOfLocationQuery = (location, type) => `
-    SELECT DISTINCT ?label min(?val) as ?minVal
+    SELECT DISTINCT ?label MIN(?val) as ?minVal
+    WHERE {
+        ?obs sosa:hasFeatureOfInterest ${location} ;
+            rdf:label ?label ;
+            sosa:hasResult ?r .
+        ?r a qudt-1-1:QuantityValue .
+        ?node arces-monitor:refersTo ?r ;
+            time:inXSDDateTimeStamp ?t ;
+            qudt-1-1:numericValue ?val
+    }
+    GROUP BY ?label
+`
+
+// TODO aggiungere type e time
+const GetAverageOfLocationQuery = (location, type) => `
+    SELECT DISTINCT ?label AVG(?val) as ?avgVal
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
             rdf:label ?label ;
@@ -93,5 +108,6 @@ module.exports = {
     GetValueQuery,
     GetLastUpdateTimeQuery,
     GetMaxOfLocationQuery,
-    GetMinOfLocationQuery
+    GetMinOfLocationQuery,
+    GetAverageOfLocationQuery
 }

@@ -277,7 +277,47 @@ const GetMinOfLocationIntentHandler = {
     }
 }
 
+const GetAverageOfLocationIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+            Alexa.checkIntentName(handlerInput, 'GetAverageOfLocationIntent')
+    },
+    handle(handlerInput) {
+        if (!Alexa.checkDialogState(handlerInput, 'COMPLETED')) return Alexa.elicitSlots(handlerInput)
 
+        const locationName = Alexa.getSlot(handlerInput, 'location')
+        if (!locationName) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+
+        const type = Alexa.getSlot(handlerInput, 'type')
+        if (!type) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+
+        return new Promise((resolve, reject) => {
+            var location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+
+            const locationId = _.get(location, "[0].id")
+            if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+            const query = SEPA.GetAverageOfLocationQuery(`<${locationId}>`, type)
+            SEPA.query(query)
+                .then((result) => {
+                    const data = result.map((sensor, i) => {
+                        const label = _.get(sensor, 'label.value')
+                        const acgVal = _.get(sensor, 'avgVal.value')
+
+                        return `\u{2022} #${i+1}, ${label}, detected ${acgVal}° .`
+                    }).join("\n")
+
+                    const locationLabel = _.get(location, "[0].label", "this location")
+                    const speechText = `Those are the average values observed in ${locationLabel}: ${data}`
+
+                    resolve(Alexa.endDialog(handlerInput, speechText))
+                })
+                .catch((error) => {
+                    resolve(Alexa.endDialog(handlerInput, '🙀' + error)) // TODO mai printare error
+                })
+        })
+    }
+}
 
 const ErrorHandler = {
     canHandle(handlerInput) {
@@ -304,7 +344,8 @@ exports.handler = skillBuilder
         GetValueIntentHandler,
         GetLastUpdateTimeIntentHandler,
         GetMaxOfLocationIntentHandler,
-        GetMinOfLocationIntentHandler
+        GetMinOfLocationIntentHandler,
+        GetAverageOfLocationIntentHandler
     )
     .addErrorHandlers(ErrorHandler)
     .lambda()

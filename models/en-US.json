@@ -483,6 +483,30 @@
                     ]
                 },
                 {
+                    "name": "GetAverageOfLocationIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [{
+                            "name": "type",
+                            "type": "DeviceType",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.IntentSlot-type"
+                            }
+                        },
+                        {
+                            "name": "location",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.IntentSlot-location"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "RemoveDeviceIntent",
                     "confirmationRequired": true,
                     "prompts": {
