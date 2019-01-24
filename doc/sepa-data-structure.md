@@ -4,7 +4,7 @@ O a sosa:Observation
 O sosa:hasResult R
 O sosa:hasFeatureOfInterest P
 O rdf:label (XMLSchema#string) "MML Core 3 (Mars)"
-O comment (XMLSchema#string) 'Temperatura Server MML Core 3'
+O rdf:comment (XMLSchema#string) 'Temperatura Server MML Core 3'
 O arces-monitor:hasMqttTopic 'arces/servers/mars/mml/cpu/core-3/temperature'
 
 P a schema:Place
