@@ -49,3 +49,9 @@ Smart home Actions rely on Home Graph, a database that stores and provides conte
 ### Test
 
 - [echosim.io](https://echosim.io/)
+
+### Ontologies
+- [m3lite](https://github.com/fiesta-iot/ontology/blob/master/m3-lite.owl)
+- [sosa](https://github.com/w3c/sdw/blob/gh-pages/ssn/integrated/sosa.ttl)
+- [saref](http://ontology.tno.nl/saref/)
+- [seasb](https://ci.mines-stetienne.fr/seas/BatteryOntology-1.0.ttl)

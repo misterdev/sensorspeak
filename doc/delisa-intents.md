@@ -42,49 +42,57 @@
 
 ### DATI DA INSERIRE IN SEPA
 - [x] **Type**, tipo del dato rilevato dal sensore. I dati presenti sul SEPA sono di tipo:
-  - temperature
-  - moisture
-  - humidity
-  - voltage
+  - Temperature 
+  - Board temperature
+  - Room temperature
+  - Moisture    
+  - Humidity    
+  - Voltage     
+  - Athmospheric Pressure
   
-  La struttura semantica da aggiungere è:
+  L'ontologia scelta è [m3lite](https://github.com/fiesta-iot/ontology/blob/master/m3-lite.owl): 
   ```
-  arces-monitor:Temperature a sosa:ObservableProperty .
-  arces-monitor:Humidity a sosa:ObservableProperty .
-  arces-monitor:Moisture a sosa:ObservableProperty .
-  arces-monitor:Voltage a sosa:ObservableProperty .
-  arces-monitor:Pressure a sosa:ObservableProperty .
-
-  O a sosa:Observation ;
-    sosa:observedProperty T .
-  T a sosa:ObservableProperty .
+  saref:measuresProperty m3lite:Temperature
+  saref:measuresProperty m3lite:BoardTemperature
+  saref:measuresProperty m3lite:BuildingTemperature
+  saref:measuresProperty m3lite:SoilHumidity
+  saref:measuresProperty m3lite:Humidity
+  saref:measuresProperty m3lite:Voltage
+  saref:measuresProperty m3lite:AtmosphericPressure
   ```
 
-- [] **Energy**, vale solo per i dispositivi dotati di batteria.
+- [ ] **Energy**, vale solo per i dispositivi dotati di batteria.
   
   **Requisiti:** è necessario che i sensori aggiornino il dato sul SEPA.
 
-  La struttura semantica da aggiungere è:
+  L'ontologia scelta per rappresentare lo stato di carica della batteria è [seasb](https://ci.mines-stetienne.fr/seas/BatteryOntology-1.0.ttl):
   ```
-  O a sosa:Observation ;
-    arces-monitor:batteryStatus R .
-  R a qudt:QuantityValue ;
-    qudt:unit qudt-unit:Percentage ;
-    qudt:numericValue 99 .
+  seas:stateOfChargeRatio 55
   ```
 
-- [] **Status**, indica lo stato on/off di un sensore.
+
+- [ ] **Status**, indica lo stato on/off di un sensore.
 
   **Requisiti:** è necessario che i sensori aggiornino/leggano costantemente il dato sul SEPA
 
-  La struttura semantica da aggiungere è:
+  L'ontologia scelta per definire gli stati è [saref](http://ontology.tno.nl/saref/):
+
   ```
-  O a sosa:Observation ;
-    arces-monitor:switchedOn qudt-1-1:TRUE .
-  O2 arces-monitor:switchedOn qudt-1-1:FALSE .
+  saref:has_state saref:Off_state
+  saref:has_state saref:On_state
   ```
 
-- [] **Update Interval**, intervallo fra una rilevazione e l'altra
+  La struttura semantica da aggiungere è quindi:
+  ```
+  O sosa:isObservedBy S .
+
+  S a sosa:Sensor ;
+    saref:measuresProperty <TYPE> ;
+    saref:has_state <STATE> ;
+    seas:stateOfChargeRatio 55 .
+  ```
+
+- [ ] **Update Interval**, intervallo fra una rilevazione e l'altra
   
   **Requisiti:** i sensori devono leggere questo dato dal SEPA e modificare il proprio intervallo di conseguenza
   ```
@@ -96,7 +104,7 @@
   ```  
   
 
-- [] **Create Sensor**, aggiunge i dati relativi ad un sensore
+- [ ] **Create Sensor**, aggiunge i dati relativi ad un sensore
   
   **Requisiti:**
   - label, del sensore
@@ -117,6 +125,6 @@
       qudt:unit qudt-unit:[UNIT] .
   ```
 
-- [] **Remove Sensor**, rimuove i dati relativi ad un sensore
+- [ ] **Remove Sensor**, rimuove i dati relativi ad un sensore
   
   **Requisiti:** nome del sensore

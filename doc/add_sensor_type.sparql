@@ -1,5 +1,10 @@
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
-PREFIX arces-monitor: <ttp://wot.arces.unibo.it/monitor#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX arces-monitor: <http://wot.arces.unibo.it/monitor#>
+PREFIX m3lite: <http://purl.org/iot/vocab/m3-lite#>
+PREFIX seasb: <https://w3id.org/seas/>
+PREFIX saref: <http://ontology.tno.nl/saref/#>
+
 INSERT DATA
 { 
     arces-monitor:Temperature a sosa:ObservableProperty .

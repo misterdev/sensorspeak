@@ -302,9 +302,9 @@ const GetAverageOfLocationIntentHandler = {
                 .then((result) => {
                     const data = result.map((sensor, i) => {
                         const label = _.get(sensor, 'label.value')
-                        const acgVal = _.get(sensor, 'avgVal.value')
+                        const avgVal = _.get(sensor, 'avgVal.value')
 
-                        return `\u{2022} #${i+1}, ${label}, detected ${acgVal}° .`
+                        return `\u{2022} #${i+1}, ${label}, detected ${avgVal}° .`
                     }).join("\n")
 
                     const locationLabel = _.get(location, "[0].label", "this location")
