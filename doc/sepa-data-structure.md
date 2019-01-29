@@ -1,5 +1,5 @@
 # SEPA DATA STRUCTURE
-```
+```sparql
 O a sosa:Observation
 O sosa:hasResult R
 O sosa:hasFeatureOfInterest P
@@ -32,7 +32,7 @@ Questa e' la struttura proposta per aggiungere i seguenti dati al SEPA:
 - Update Interval del sensore
 - Stato on/off di accensione del sensore
 
-```
+```sparql
 m3lite:Temperature a sosa:ObservableProperty .
 m3lite:BoardTemperature a sosa:ObservableProperty .
 m3lite:BuildingTemperature a sosa:ObservableProperty .
@@ -44,17 +44,21 @@ m3lite:BatteryLevel a sosa:ObservableProperty .
 
 // --- TYPE
 // Ogni Observation è fatta da un sensore S = <sensor/XXXX> con X = 1, 2, 3, ...
+
 O sosa:madeBySensor S .
 
 // Ogni sensore S osserva una sosa:ObservedProperty, che corrisponde ad una delle Classi di m3lite
 // che estendono http://purl.org/NET/ssnx/qu/qu#QuantityValue
+
 S sosa:observes m3lite:Temperature .
 
 // --- ON/OFF State
 // Ogni sensore ha il proprio stato
+
 <sensor/XXX> ssn:hasProperty <sensor/XXXX#state> . 
 
 // Ogni stato è una ActuatableProperty gestita da un attuatore
+
 <sensor/XXXX#state> a sosa:ActuatableProperty ;
   sosa:isActedOnBy <actuation/XXXX> .
 
@@ -71,7 +75,8 @@ S sosa:observes m3lite:Temperature .
 // Per ogni sensore con batteria si crea una Observation che ha come featureOfInterest il sensore stesso
 // e come tipo m3lite:BatteryLevel
 
-// Update Interval
+// --- Update Interval
+
 O arces-monitor:hasUpdateInterval R .
 R a qudt:QuantityValue ;
     qudt:unit qudt-unit:Hour ;
