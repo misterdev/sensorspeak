@@ -13,7 +13,7 @@ const ListDevicesQuery = () => `
     }
 `
 
-const ListByLocationQuery = (location) => `
+const ListByLocationQuery = ({ location }) => `
     SELECT DISTINCT ?x
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -31,7 +31,7 @@ const ListLocationsQuery = () => `
 `
 
 // TODO mettere type
-const GetValueQuery = (location, type) => `
+const GetValueQuery = ({ location, type }) => `
     SELECT DISTINCT ?label ?val
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -42,7 +42,7 @@ const GetValueQuery = (location, type) => `
 `
 
 // TODO mettere type
-const GetLastUpdateTimeQuery = (location, type) => `
+const GetLastUpdateTimeQuery = ({ location, type }) => `
     SELECT DISTINCT ?label max(?t) as ?lastTs
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -56,7 +56,7 @@ const GetLastUpdateTimeQuery = (location, type) => `
 `
 
 // TODO aggiungere type e time
-const GetMaxOfLocationQuery = (location, type) => `
+const GetMaxOfLocationQuery = ({ location, type }) => `
     SELECT DISTINCT ?label MAX(?val) as ?maxVal
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -71,7 +71,7 @@ const GetMaxOfLocationQuery = (location, type) => `
 `
 
 // TODO aggiungere type e time
-const GetMinOfLocationQuery = (location, type) => `
+const GetMinOfLocationQuery = ({ location, type }) => `
     SELECT DISTINCT ?label MIN(?val) as ?minVal
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;
@@ -86,7 +86,7 @@ const GetMinOfLocationQuery = (location, type) => `
 `
 
 // TODO aggiungere type e time
-const GetAverageOfLocationQuery = (location, type) => `
+const GetAverageOfLocationQuery = ({ location, type }) => `
     SELECT DISTINCT ?label AVG(?val) as ?avgVal
     WHERE {
         ?obs sosa:hasFeatureOfInterest ${location} ;

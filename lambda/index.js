@@ -24,7 +24,7 @@ const LaunchRequestHandler = {
         return Alexa.checkRequestType(handlerInput, 'LaunchRequest')
     },
     handle(handlerInput) {
-        return new Promise((resolve, reject) => SEPA.query(SEPA.LaunchRequestQuery())
+        return new Promise((resolve, reject) => SEPA.query(SEPA.LaunchRequestQuery)
             .then((results) => {
                 const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA.
                     For example, I know that the label of the sensor "Italy-Site1-Pressure" is: 
@@ -43,7 +43,7 @@ const ListLocationsIntentHandler = {
         return Alexa.checkIntentName(handlerInput, 'ListLocationsIntent')
     },
     handle(handlerInput) {
-        return new Promise((resolve, reject) => SEPA.query(SEPA.ListLocationsQuery())
+        return new Promise((resolve, reject) => SEPA.query(SEPA.ListLocationsQuery)
             .then((results) => {
                 const locations = results.map((l, i) => `\u{2022} #${i+1}, ${_.get(l, 'x.value')} .`).join("\n")
                 const speechText = `There are ${results.length} locations: ${locations}`
@@ -62,7 +62,7 @@ const ListDevicesIntentHandler = {
         return Alexa.checkIntentName(handlerInput, 'ListDevicesIntent')
     },
     handle(handlerInput) {
-        return new Promise((resolve, reject) => SEPA.query(SEPA.ListDevicesQuery())
+        return new Promise((resolve, reject) => SEPA.query(SEPA.ListDevicesQuery)
             .then((results) => {
                 const devices = results.map((s, i) => `\u{2022} #${i+1}, ${_.get(s, 'x.value')} .`).join("\n")
                 const speechText = `There are ${results.length} devices: ${devices}`
@@ -91,9 +91,10 @@ const ListByLocationIntentHandler = {
             const locationId = _.get(location, "[0].id")
             if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-            const query = SEPA.ListByLocationQuery(`<${locationId}>`)
-            SEPA.query(query)
+            const query = SEPA.ListByLocationQuery
+            SEPA.query(query, { location: `<${locationId}>` })
                 .then((result) => {
+                    console.log(result)
                     const sensors = result.map((sensor, i) =>
                         `\u{2022} #${i+1}, ${_.get(sensor, 'x.value')
                     } .`).join("\n")
@@ -128,8 +129,8 @@ const GetValueIntentHandler = {
             const locationId = _.get(location, "[0].id")
             if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-            const query = SEPA.GetValueQuery(`<${locationId}>`, type)
-            SEPA.query(query)
+            const query = SEPA.GetValueQuery
+            SEPA.query(query, { location: `<${locationId}>`, type })
                 .then((result) => {
                     const data = result.map((sensor, i) => {
                         const label = _.get(sensor, 'label.value')
@@ -170,8 +171,8 @@ const GetLastUpdateTimeIntentHandler = {
             const locationId = _.get(location, "[0].id")
             if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-            const query = SEPA.GetLastUpdateTimeQuery(`<${locationId}>`, type)
-            SEPA.query(query)
+            const query = SEPA.GetLastUpdateTimeQuery
+            SEPA.query(query, { location: `<${locationId}>`, type })
                 .then((result) => {
                     const data = result.map((sensor, i) => {
                         const label = _.get(sensor, 'label.value')
@@ -213,8 +214,8 @@ const GetMaxOfLocationIntentHandler = {
             const locationId = _.get(location, "[0].id")
             if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-            const query = SEPA.GetMaxOfLocationQuery(`<${locationId}>`, type)
-            SEPA.query(query)
+            const query = SEPA.GetMaxOfLocationQuery
+            SEPA.query(query, { location: `<${locationId}>`, type })
                 .then((result) => {
                     const data = result.map((sensor, i) => {
                         const label = _.get(sensor, 'label.value')
@@ -255,8 +256,8 @@ const GetMinOfLocationIntentHandler = {
             const locationId = _.get(location, "[0].id")
             if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-            const query = SEPA.GetMinOfLocationQuery(`<${locationId}>`, type)
-            SEPA.query(query)
+            const query = SEPA.GetMinOfLocationQuery
+            SEPA.query(query, { location: `<${locationId}>`, type })
                 .then((result) => {
                     const data = result.map((sensor, i) => {
                         const label = _.get(sensor, 'label.value')
@@ -297,8 +298,8 @@ const GetAverageOfLocationIntentHandler = {
             const locationId = _.get(location, "[0].id")
             if (!locationId) resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-            const query = SEPA.GetAverageOfLocationQuery(`<${locationId}>`, type)
-            SEPA.query(query)
+            const query = SEPA.GetAverageOfLocationQuery
+            SEPA.query(query, { location: `<${locationId}>`, type })
                 .then((result) => {
                     const data = result.map((sensor, i) => {
                         const label = _.get(sensor, 'label.value')
