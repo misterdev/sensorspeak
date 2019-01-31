@@ -1,614 +1,635 @@
 {
-    "interactionModel": {
-        "languageModel": {
-            "invocationName": "sensor speak",
-            "intents": [{
-                    "name": "AMAZON.CancelIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.StopIntent",
-                    "samples": []
-                },
-                {
-                    "name": "ListLocationsIntent",
-                    "samples": [
-                        "list all locations",
-                        "list locations"
-                    ]
-                },
-                {
-                    "name": "CreateDeviceIntent",
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "samples": [
-                                "{type}",
-                                "{type} sensor",
-                                "{type} type",
-                                "type {type}",
-                                "with type {type}"
-                            ]
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "{location} ",
-                                "in {location} ",
-                                "to {location} ",
-                                "is located in {location} ",
-                                "is in {location} ",
-                                "is {location} ",
-                                "is located {location} ",
-                                "for {location} "
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "create {type} sensor",
-                        "create {type} device",
-                        "create sensor",
-                        "create device",
-                        "create",
-                        "create sensor in {location}",
-                        "create device in {location}"
-                    ]
-                },
-                {
-                    "name": "GetAverageOfLocationIntent",
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType"
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery"
-                        }
-                    ],
-                    "samples": [
-                        "get average {type}",
-                        "get average {type} of today",
-                        "get daily average {type}",
-                        "get average of {location}",
-                        "get average in {location}",
-                        "get average for {location}",
-                        "get daily average in {location}"
-                    ]
-                },
-                {
-                    "name": "GetInfoIntent",
-                    "slots": [{
-                        "name": "location",
-                        "type": "AMAZON.SearchQuery"
-                    }],
-                    "samples": [
-                        "get info in {location}",
-                        "get info",
-                        "get info in the {location}"
-                    ]
-                },
-                {
-                    "name": "GetLastUpdateTimeIntent",
-                    "slots": [{
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "{location}",
-                                "in {location}"
-                            ]
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType",
-                            "samples": [
-                                "{type}",
-                                "{type} sensor",
-                                "{type} type",
-                                "type {type}",
-                                "with type {type}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "get last update time of {location}",
-                        "get last update of {type} ",
-                        "get last update time"
-                    ]
-                },
-                {
-                    "name": "GetMaxOfLocationIntent",
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType"
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "{location}",
-                                "of {location}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "get maximum {type}",
-                        "get max {type}",
-                        "get maximum of {location}",
-                        "get max of {location}",
-                        "get max in {location}",
-                        "get maximum",
-                        "get max"
-                    ]
-                },
-                {
-                    "name": "GetMinOfLocationIntent",
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType"
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "{location}",
-                                "of {location}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "get minimum {type}",
-                        "get min {type}",
-                        "get minimum of {location}",
-                        "get min of {location}",
-                        "get minimum",
-                        "get min"
-                    ]
-                },
-                {
-                    "name": "GetUpdateIntervalIntent",
-                    "slots": [{
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery"
-                        },
-                        {
-                            "name": "type",
-                            "type": "DeviceType"
-                        }
-                    ],
-                    "samples": [
-                        "get update interval",
-                        "get update interval of {location}",
-                        "get update interval of {location}",
-                        "get update interval of {type} sensor"
-                    ]
-                },
-                {
-                    "name": "GetValueIntent",
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "samples": [
-                                "{type}",
-                                "the {type}"
-                            ]
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "{location} ",
-                                "in {location} ",
-                                "of {location} "
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "get value",
-                        "get {type}",
-                        "get value {location} ",
-                        "what is {type}",
-                        "what is {location}"
-                    ]
-                },
-                {
-                    "name": "ListByLocationIntent",
-                    "slots": [{
-                        "name": "location",
-                        "type": "AMAZON.SearchQuery"
-                    }],
-                    "samples": [
-                        "list sensors in the {location}",
-                        "list sensors on {location}",
-                        "list sensors on the {location}",
-                        "list sensors inside {location}",
-                        "list sensors in {location}",
-                        "list by location",
-                        "list by place",
-                        "list devices in {location}",
-                        "list devices inside {location}",
-                        "list devices in the {location}",
-                        "list devices on {location}",
-                        "list devices on the {location}"
-                    ]
-                },
-                {
-                    "name": "ListByTypeIntent",
-                    "slots": [{
-                        "name": "type",
-                        "type": "DeviceType"
-                    }],
-                    "samples": [
-                        "list {type} sensors",
-                        "list sensors of {type} type",
-                        "list all {type} sensors",
-                        "list by type",
-                        "list all {type} devices",
-                        "list {type} devices"
-                    ]
-                },
-                {
-                    "name": "ListDevicesIntent",
-                    "slots": [],
-                    "samples": [
-                        "list all sensors",
-                        "list all devices"
-                    ]
-                },
-                {
-                    "name": "RemoveDeviceIntent",
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "samples": [
-                                "{type} ",
-                                "{type} sensor"
-                            ]
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "samples": [
-                                "in {location} ",
-                                "in the {location} ",
-                                "on {location} ",
-                                "for {location} ",
-                                "for the {location} ",
-                                "from {location} ",
-                                "from the {location} ",
-                                "{location} "
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "remove {type} sensor",
-                        "delete sensor {location} ",
-                        "remove sensor {location} ",
-                        "remove from {location} ",
-                        "delete from {location} ",
-                        "remove sensor",
-                        "delete sensor",
-                        "delete",
-                        "remove",
-                        "delete device",
-                        "remove device"
-                    ]
-                }
-            ],
-            "types": [{
-                "name": "DeviceType",
-                "values": [{
-                        "name": {
-                            "value": "temperature"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "humidity"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "moisture"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "speed"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "air pollution"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "pollution"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "acceleration"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "wind speed"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "altitude"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "air pressure"
-                        }
-                    },
-                    {
-                        "name": {
-                            "value": "pressure"
-                        }
-                    }
-                ]
-            }]
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "sensor speak",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
         },
-        "dialog": {
-            "intents": [{
-                    "name": "CreateDeviceIntent",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent-CreateDeviceIntent"
-                    },
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type"
-                            }
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "GetValueIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-type"
-                            }
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "GetLastUpdateTimeIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-type"
-                            }
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "GetMaxOfLocationIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-type"
-                            }
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "GetMinOfLocationIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-type"
-                            }
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "GetAverageOfLocationIntent",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-type"
-                            }
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.IntentSlot-location"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "RemoveDeviceIntent",
-                    "confirmationRequired": true,
-                    "prompts": {
-                        "confirmation": "Confirm.Intent-RemoveDeviceIntent"
-                    },
-                    "slots": [{
-                            "name": "type",
-                            "type": "DeviceType",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type"
-                            }
-                        },
-                        {
-                            "name": "location",
-                            "type": "AMAZON.SearchQuery",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location"
-                            }
-                        }
-                    ]
-                }
-            ]
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
         },
-        "prompts": [{
-                "id": "Confirm.Intent-CreateDeviceIntent",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "creating {type}  sensor in {location} . Are you sure?"
-                }]
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "ListLocationsIntent",
+          "samples": ["list all locations", "list locations"]
+        },
+        {
+          "name": "CreateDeviceIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": [
+                "{type}",
+                "{type} sensor",
+                "{type} type",
+                "type {type}",
+                "with type {type}"
+              ]
             },
             {
-                "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type",
-                "variations": [{
-                        "type": "PlainText",
-                        "value": "what's the type of the sensor?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "which type of sensor is?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "where is located the sensor?"
-                }]
-            },
-            {
-                "id": "Elicit.IntentSlot-type",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "which value do you want to know?"
-                }]
-            },
-            {
-                "id": "Elicit.IntentSlot-location",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "in which location?"
-                }]
-            },
-            {
-                "id": "Confirm.Intent-RemoveDeviceIntent",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "{type} sensor of {location} will be removed. Are you sure?"
-                }]
-            },
-            {
-                "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "what's the type of the sensor to remove?"
-                }]
-            },
-            {
-                "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "where is located the sensor to remove?"
-                }]
-            },
-            {
-                "id": "Confirm.Intent-TurnOnOffIntent",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "do you want to turn {on_off} {location} {type}?"
-                }]
-            },
-            {
-                "id": "Confirm.Intent-RemoveDeviceIntent",
-                "variations": [{
-                    "type": "PlainText",
-                    "value": "{type} sensor of {location} will be removed. Are you sure?"
-                }]
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                "{location} ",
+                "in {location} ",
+                "to {location} ",
+                "is located in {location} ",
+                "is in {location} ",
+                "is {location} ",
+                "is located {location} ",
+                "for {location} "
+              ]
             }
+          ],
+          "samples": [
+            "create {type} sensor",
+            "create {type} device",
+            "create sensor",
+            "create device",
+            "create",
+            "create sensor in {location}",
+            "create device in {location}"
+          ]
+        },
+        {
+          "name": "GetAverageOfLocationIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType"
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "get average {type}",
+            "get average {type} of today",
+            "get daily average {type}",
+            "get average of {location}",
+            "get average in {location}",
+            "get average for {location}",
+            "get daily average in {location}"
+          ]
+        },
+        {
+          "name": "GetInfoIntent",
+          "slots": [
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "get info in {location}",
+            "get info",
+            "get info in the {location}"
+          ]
+        },
+        {
+          "name": "GetLastUpdateTimeIntent",
+          "slots": [
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": ["{location}", "in {location}"]
+            },
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": [
+                "{type}",
+                "{type} sensor",
+                "{type} type",
+                "type {type}",
+                "with type {type}"
+              ]
+            }
+          ],
+          "samples": [
+            "get last update time of {location}",
+            "get last update of {type} ",
+            "get last update time"
+          ]
+        },
+        {
+          "name": "GetMaxOfLocationIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType"
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": ["{location}", "of {location}"]
+            }
+          ],
+          "samples": [
+            "get maximum {type}",
+            "get max {type}",
+            "get maximum of {location}",
+            "get max of {location}",
+            "get max in {location}",
+            "get maximum",
+            "get max"
+          ]
+        },
+        {
+          "name": "GetMinOfLocationIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType"
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": ["{location}", "of {location}"]
+            }
+          ],
+          "samples": [
+            "get minimum {type}",
+            "get min {type}",
+            "get minimum of {location}",
+            "get min of {location}",
+            "get minimum",
+            "get min"
+          ]
+        },
+        {
+          "name": "GetUpdateIntervalIntent",
+          "slots": [
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery"
+            },
+            {
+              "name": "type",
+              "type": "DeviceType"
+            }
+          ],
+          "samples": [
+            "get update interval",
+            "get update interval of {location}",
+            "get update interval of {location}",
+            "get update interval of {type} sensor"
+          ]
+        },
+        {
+          "name": "GetValueIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": ["{type}", "the {type}"]
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": ["{location} ", "in {location} ", "of {location} "]
+            }
+          ],
+          "samples": [
+            "get value",
+            "get {type}",
+            "get value {location} ",
+            "what is {type}",
+            "what is {location}"
+          ]
+        },
+        {
+          "name": "ListByLocationIntent",
+          "slots": [
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "list sensors in the {location}",
+            "list sensors on {location}",
+            "list sensors on the {location}",
+            "list sensors inside {location}",
+            "list sensors in {location}",
+            "list by location",
+            "list by place",
+            "list devices in {location}",
+            "list devices inside {location}",
+            "list devices in the {location}",
+            "list devices on {location}",
+            "list devices on the {location}"
+          ]
+        },
+        {
+          "name": "ListByTypeIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType"
+            }
+          ],
+          "samples": [
+            "list {type} sensors",
+            "list sensors of {type} type",
+            "list all {type} sensors",
+            "list by type",
+            "list all {type} devices",
+            "list {type} devices"
+          ]
+        },
+        {
+          "name": "ListDevicesIntent",
+          "slots": [],
+          "samples": ["list all sensors", "list all devices"]
+        },
+        {
+          "name": "RemoveDeviceIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": ["{type} ", "{type} sensor"]
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                "in {location} ",
+                "in the {location} ",
+                "on {location} ",
+                "for {location} ",
+                "for the {location} ",
+                "from {location} ",
+                "from the {location} ",
+                "{location} "
+              ]
+            }
+          ],
+          "samples": [
+            "remove {type} sensor",
+            "delete sensor {location} ",
+            "remove sensor {location} ",
+            "remove from {location} ",
+            "delete from {location} ",
+            "remove sensor",
+            "delete sensor",
+            "delete",
+            "remove",
+            "delete device",
+            "remove device"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "DeviceType",
+          "values": [
+            {
+              "name": {
+                "value": "temperature"
+              }
+            },
+            {
+              "name": {
+                "value": "humidity"
+              }
+            },
+            {
+              "name": {
+                "value": "moisture"
+              }
+            },
+            {
+              "name": {
+                "value": "speed"
+              }
+            },
+            {
+              "name": {
+                "value": "air pollution"
+              }
+            },
+            {
+              "name": {
+                "value": "pollution"
+              }
+            },
+            {
+              "name": {
+                "value": "acceleration"
+              }
+            },
+            {
+              "name": {
+                "value": "wind speed"
+              }
+            },
+            {
+              "name": {
+                "value": "altitude"
+              }
+            },
+            {
+              "name": {
+                "value": "air pressure"
+              }
+            },
+            {
+              "name": {
+                "value": "pressure"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "CreateDeviceIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent-CreateDeviceIntent"
+          },
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetValueIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetLastUpdateTimeIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetMaxOfLocationIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetMinOfLocationIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetAverageOfLocationIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "RemoveDeviceIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent-RemoveDeviceIntent"
+          },
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Confirm.Intent-CreateDeviceIntent",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "creating {type}  sensor in {location} . Are you sure?"
+          }
         ]
-    }
+      },
+      {
+        "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "what's the type of the sensor?"
+          },
+          {
+            "type": "PlainText",
+            "value": "which type of sensor is?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "where is located the sensor?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.IntentSlot-type",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "which value do you want to know?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.IntentSlot-location",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "in which location?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent-RemoveDeviceIntent",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "{type} sensor of {location} will be removed. Are you sure?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "what's the type of the sensor to remove?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "where is located the sensor to remove?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent-TurnOnOffIntent",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "do you want to turn {on_off} {location} {type}?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent-RemoveDeviceIntent",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "{type} sensor of {location} will be removed. Are you sure?"
+          }
+        ]
+      }
+    ]
+  }
 }

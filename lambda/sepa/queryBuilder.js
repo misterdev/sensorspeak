@@ -101,13 +101,13 @@ const GetAverageOfLocationQuery = ({ location, type }) => `
 `
 
 module.exports = {
-    LaunchRequestQuery,
-    ListDevicesQuery,
-    ListByLocationQuery,
-    ListLocationsQuery,
-    GetValueQuery,
-    GetLastUpdateTimeQuery,
-    GetMaxOfLocationQuery,
-    GetMinOfLocationQuery,
-    GetAverageOfLocationQuery
+  LaunchRequestQuery,
+  ListDevicesQuery,
+  ListByLocationQuery,
+  ListLocationsQuery,
+  GetValueQuery,
+  GetLastUpdateTimeQuery,
+  GetMaxOfLocationQuery,
+  GetMinOfLocationQuery,
+  GetAverageOfLocationQuery
 }

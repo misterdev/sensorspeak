@@ -1,37 +1,53 @@
 {
-    "name": "sensorspeak",
-    "version": "1.0.0",
-    "description": "SensorSpeak Skill & Lambda",
-    "main": " ",
-    "directories": {
-        "doc": "doc"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dialog": "ask dialog --locale en-US",
-        "deploy": "ask deploy --force",
-        "deploy:lambda": "ask deploy --target lambda --force",
-        "deploy:model": "ask deploy --target model --force",
-        "mock": "node lambda/test.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/misterdev/sensorspeak.git"
-    },
-    "keywords": [
-        "alexa",
-        "alexa-skills",
-        "aws",
-        "aws-lambda",
-        "sparql"
-    ],
-    "author": "Devid Farinelli",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/misterdev/sensorspeak/issues"
-    },
-    "homepage": "https://github.com/misterdev/sensorspeak#readme",
-    "dependencies": {
-        "sparql-client-2": "^0.6.3"
+  "name": "sensorspeak",
+  "version": "1.0.0",
+  "description": "SensorSpeak Skill & Lambda",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "dialog": "ask dialog --locale en-US",
+    "deploy": "ask deploy --force",
+    "deploy:lambda": "ask deploy --target lambda --force",
+    "deploy:model": "ask deploy --target model --force",
+    "mock": "node lambda/test.js",
+    "format": "prettier-standard '**/*.js' '**/*.json'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misterdev/sensorspeak.git"
+  },
+  "keywords": [
+    "alexa",
+    "alexa-skills",
+    "aws",
+    "aws-lambda",
+    "sparql"
+  ],
+  "author": "Devid Farinelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/misterdev/sensorspeak/issues"
+  },
+  "homepage": "https://github.com/misterdev/sensorspeak#readme",
+  "dependencies": {
+    "sparql-client-2": "^0.6.3"
+  },
+  "devDependencies": {
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.1",
+    "prettier-standard": "^9.1.1"
+  },
+  "lint-staged": {
+    "linters": {
+      "**/*.js": [
+        "prettier-standard",
+        "git add"
+      ],
+      "**/*.jsx": [
+        "prettier-standard",
+        "git add"
+      ]
     }
+  }
 }

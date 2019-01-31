@@ -1,31 +1,27 @@
 {
-    "manifest": {
-        "publishingInformation": {
-            "locales": {
-                "en-US": {
-                    "summary": "SEPA integration with Amazon Alexa",
-                    "examplePhrases": [
-                        "Alexa open sensor speak",
-                        "sensor speak",
-                        "help"
-                    ],
-                    "name": "Sensor Speak",
-                    "description": "This skills allows to read data from ARCES sensors"
-                }
-            },
-            "isAvailableWorldwide": true,
-            "testingInstructions": "Sample Testing Instructions.",
-            "category": "KNOWLEDGE_AND_TRIVIA",
-            "distributionCountries": []
-        },
-        "apis": {
-            "custom": {
-                "endpoint": {
-                    "sourceDir": "lambda",
-                    "uri": "sensor-speak-handler"
-                }
-            }
-        },
-        "manifestVersion": "1.0"
-    }
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "SEPA integration with Amazon Alexa",
+          "examplePhrases": ["Alexa open sensor speak", "sensor speak", "help"],
+          "name": "Sensor Speak",
+          "description": "This skills allows to read data from ARCES sensors"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda",
+          "uri": "sensor-speak-handler"
+        }
+      }
+    },
+    "manifestVersion": "1.0"
+  }
 }
