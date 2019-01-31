@@ -10,8 +10,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dialog": "ask dialog --locale en-US",
         "deploy": "ask deploy --force",
-        "deploy-lambda": "ask deploy --target lambda --force",
-        "deploy-model": "ask deploy --target model --force",
+        "deploy:lambda": "ask deploy --target lambda --force",
+        "deploy:model": "ask deploy --target model --force",
         "mock": "node lambda/test.js"
     },
     "repository": {
@@ -31,7 +31,6 @@
         "url": "https://github.com/misterdev/sensorspeak/issues"
     },
     "homepage": "https://github.com/misterdev/sensorspeak#readme",
-    "devDependencies": {},
     "dependencies": {
         "sparql-client-2": "^0.6.3"
     }
