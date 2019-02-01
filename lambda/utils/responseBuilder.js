@@ -8,5 +8,7 @@ module.exports = {
     ListDevices: ({devices, length}) =>  `There are ${length} devices: ${devices}`,
   ListDevicesError: () => "Sorry, I can't find this list at the moment",
   ListByLocation: ({location, sensors}) => `The list of sensors in ${location} is: ${sensors}`,
-  ListByLocationError: () => 'null'
+  ListByLocationError: () => 'null',
+  GetValue: ({location, observations}) => `The most recent observations in ${location} are: ${observations}`,
+  GetLastUpdateTime: ({location, data}) => `The most recent observations in ${location} are: ${data}`
 }
