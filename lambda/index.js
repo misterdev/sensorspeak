@@ -7,6 +7,10 @@ const Alexa = require('./utils/alexa')
 const LOCATIONS = require('./utils/locations')
 const RESPONSE = require('./utils/responseBuilder')
 
+const listify = (results) => results
+.map((entry, index) => `\u{2022} #${index + 1}, ${_.get(entry, 'x.value')} .`)
+.join('\n')
+
 const fuseOptions = {
   shouldSort: true,
   tokenize: true,
@@ -25,10 +29,10 @@ const LaunchRequestHandler = {
   async handle (handlerInput) {
     const results = await SEPA.query(SEPA.LaunchRequestQuery)
     const text = _.get(results, '[0].x.value')
-    const speechText = RESPONSE.LaunchRequest({text})
-    let ret = Alexa.continueDialog(handlerInput, speechText)
-    if (text === undefined) ret = Alexa.endDialog(handlerInput, '🙀')
-    return ret
+    if (text === undefined) return Alexa.endDialog(handlerInput, '🙀')
+
+    const speechText = RESPONSE.LaunchRequest({ text })
+    return Alexa.continueDialog(handlerInput, speechText)
   }
 }
 
@@ -36,24 +40,16 @@ const ListLocationsIntentHandler = {
   canHandle (handlerInput) {
     return Alexa.checkIntentName(handlerInput, 'ListLocationsIntent')
   },
-  handle (handlerInput) {
-    return new Promise((resolve, reject) =>
-      SEPA.query(SEPA.ListLocationsQuery)
-        .then(results => {
-          const locations = results
-            .map((l, i) => `\u{2022} #${i + 1}, ${_.get(l, 'x.value')} .`)
-            .join('\n')
-          const speechText = `There are ${
-            results.length
-          } locations: ${locations}`
-          resolve(Alexa.endDialog(handlerInput, speechText))
-        })
-        .catch(error => {
-          const speechText =
-            "Sorry, I can't find the list of location at the moment"
-          resolve(Alexa.endDialog(handlerInput, speechText))
-        })
-    )
+  async handle (handlerInput) {
+    const results = await SEPA.query(SEPA.ListLocationsQuery)
+    if (!results)
+      return Alexa.endDialog(handlerInput, RESPONSE.ListLocationsError())
+    const locations = listify(results)
+    const speechText = RESPONSE.ListLocations({
+      locations,
+      length: results.length
+    })
+    return Alexa.endDialog(handlerInput, speechText)
   }
 }
 
@@ -61,21 +57,13 @@ const ListDevicesIntentHandler = {
   canHandle (handlerInput) {
     return Alexa.checkIntentName(handlerInput, 'ListDevicesIntent')
   },
-  handle (handlerInput) {
-    return new Promise((resolve, reject) =>
-      SEPA.query(SEPA.ListDevicesQuery)
-        .then(results => {
-          const devices = results
-            .map((s, i) => `\u{2022} #${i + 1}, ${_.get(s, 'x.value')} .`)
-            .join('\n')
-          const speechText = `There are ${results.length} devices: ${devices}`
-          resolve(Alexa.endDialog(handlerInput, speechText))
-        })
-        .catch(error => {
-          const speechText = "Sorry, I can't find this list at the moment"
-          resolve(Alexa.endDialog(handlerInput, speechText))
-        })
-    )
+  async handle (handlerInput) {
+    const results = await SEPA.query(SEPA.ListDevicesQuery)
+    if (!results)
+      return Alexa.endDialog(handlerInput, RESPONSE.ListDevicesError())
+    const devices = listify(results)
+    const speechText = RESPONSE.ListDevices({ devices, length: results.length })
+    return Alexa.endDialog(handlerInput, speechText)
   }
 }
 
@@ -86,39 +74,25 @@ const ListByLocationIntentHandler = {
       Alexa.checkIntentName(handlerInput, 'ListByLocationIntent')
     )
   },
-  handle (handlerInput) {
+  async handle (handlerInput) {
     const locationName = Alexa.getSlot(handlerInput, 'location')
     if (!locationName)
       return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    return new Promise((resolve, reject) => {
-      var location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+    const location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+    const locationId = _.get(location, '[0].id')
+    if (!locationId)
+      resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
 
-      const locationId = _.get(location, '[0].id')
-      if (!locationId)
-        resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
-
-      const query = SEPA.ListByLocationQuery
-      SEPA.query(query, { location: `<${locationId}>` })
-        .then(result => {
-          console.log(result)
-          const sensors = result
-            .map(
-              (sensor, i) => `\u{2022} #${i + 1}, ${_.get(sensor, 'x.value')} .`
-            )
-            .join('\n')
-
-          const speechText = `The list of sensors in ${_.get(
-            location,
-            '[0].label',
-            'this location'
-          )} is: ${sensors}`
-          resolve(Alexa.endDialog(handlerInput, speechText))
-        })
-        .catch(error => {
-          resolve(Alexa.endDialog(handlerInput, '🙀'))
-        })
+    const results = await SEPA.query(SEPA.ListByLocationQuery, {
+      location: `<${locationId}>`
     })
+    if (!results) return Alexa.endDialog(handlerInput, '🙀')
+
+    const sensors = listify(results)
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    const speechText = RESPONSE.ListByLocation({ sensors, location: locationLabel })
+    return Alexa.endDialog(handlerInput, speechText)
   }
 }
 
