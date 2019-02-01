@@ -5,6 +5,7 @@ const Fuse = require('fuse.js')
 const SEPA = require('./sepa')
 const Alexa = require('./utils/alexa')
 const LOCATIONS = require('./utils/locations')
+const RESPONSE = require('./utils/responseBuilder')
 
 const fuseOptions = {
   shouldSort: true,
@@ -21,17 +22,13 @@ const LaunchRequestHandler = {
   canHandle (handlerInput) {
     return Alexa.checkRequestType(handlerInput, 'LaunchRequest')
   },
-  handle (handlerInput) {
-    return new Promise((resolve, reject) =>
-      SEPA.query(SEPA.LaunchRequestQuery)
-        .then(results => {
-          const speechText = "Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor \"Italy-Site1-Pressure\" is: "+`${results[0].x.value}`
-          resolve(Alexa.continueDialog(handlerInput, speechText))
-        })
-        .catch(error => {
-          resolve(Alexa.endDialog(handlerInput, '🙀'))
-        })
-    )
+  async handle (handlerInput) {
+    const results = await SEPA.query(SEPA.LaunchRequestQuery)
+    const text = _.get(results, '[0].x.value')
+    const speechText = RESPONSE.LaunchRequest({text})
+    let ret = Alexa.continueDialog(handlerInput, speechText)
+    if (text === undefined) ret = Alexa.endDialog(handlerInput, '🙀')
+    return ret
   }
 }
 

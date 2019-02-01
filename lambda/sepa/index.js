@@ -16,7 +16,7 @@ const client = new SparqlClient(queryEndpoint, { updateEndpoint }).register({
   mqtt: 'http://wot.arces.unibo.it/mqtt#'
 })
 
-const query = (queryTemplate, parameters) =>
+const query = async (queryTemplate, parameters) =>
   new Promise((resolve, reject) =>
     client
       .query(queryTemplate(parameters))
