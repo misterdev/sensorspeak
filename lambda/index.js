@@ -25,9 +25,7 @@ const LaunchRequestHandler = {
     return new Promise((resolve, reject) =>
       SEPA.query(SEPA.LaunchRequestQuery)
         .then(results => {
-          const speechText = `Hi, I'm Alexa and I am able to talk with the SEPA.
-                    For example, I know that the label of the sensor "Italy-Site1-Pressure" is: 
-                    ${results[0].x.value}`
+          const speechText = "Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor \"Italy-Site1-Pressure\" is: "+`${results[0].x.value}`
           resolve(Alexa.continueDialog(handlerInput, speechText))
         })
         .catch(error => {
