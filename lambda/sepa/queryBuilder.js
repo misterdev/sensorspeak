@@ -30,13 +30,15 @@ const ListLocationsQuery = () => `
     }  
 `
 
-// TODO mettere type
 const GetValueQuery = ({ location, type }) => `
     SELECT DISTINCT ?label ?val
     WHERE {
-        ?obs sosa:hasFeatureOfInterest ${location} ;
+        ?obs sosa:hasFeatureOfInterest <${location}> ;
             rdf:label ?label ;
-            sosa:hasResult ?result .
+            sosa:hasResult ?result ;
+            sosa:madeBySensor ?sensor .
+        ?sensor a sosa:Sensor ;
+            sosa:observes <${type}> .
         ?result qudt-1-1:numericValue ?val .
     }
 `

@@ -189,8 +189,7 @@
           "slots": [
             {
               "name": "type",
-              "type": "DeviceType",
-              "samples": ["{type}", "the {type}"]
+              "type": "DeviceType"
             },
             {
               "name": "location",
@@ -199,8 +198,12 @@
             }
           ],
           "samples": [
-            "get value",
+            "get value in {location}",
+            "get the value in {location}",
+            "get value for {location}",
+            "get the value in {location}",
             "get {type}",
+            "get the {type}",
             "get value {location} ",
             "what is {type}",
             "what is {location}"
@@ -300,42 +303,22 @@
             },
             {
               "name": {
+                "value": "board temperature"
+              }
+            },
+            {
+              "name": {
+                "value": "building temperature"
+              }
+            },
+            {
+              "name": {
                 "value": "humidity"
               }
             },
             {
               "name": {
-                "value": "moisture"
-              }
-            },
-            {
-              "name": {
-                "value": "speed"
-              }
-            },
-            {
-              "name": {
-                "value": "air pollution"
-              }
-            },
-            {
-              "name": {
-                "value": "pollution"
-              }
-            },
-            {
-              "name": {
-                "value": "acceleration"
-              }
-            },
-            {
-              "name": {
-                "value": "wind speed"
-              }
-            },
-            {
-              "name": {
-                "value": "altitude"
+                "value": "soil humidity"
               }
             },
             {
@@ -345,7 +328,12 @@
             },
             {
               "name": {
-                "value": "pressure"
+                "value": "voltage"
+              }
+            },
+            {
+              "name": {
+                "value": "battery level"
               }
             }
           ]

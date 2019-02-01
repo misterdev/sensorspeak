@@ -1,6 +1,9 @@
 const SparqlClient = require('sparql-client-2')
-const queryBuilder = require('./queryBuilder.js')
 const _ = require('lodash/object')
+
+const queryBuilder = require('./queryBuilder.js')
+const locations = require('./locations.js')
+const types = require('./types.js')
 
 const queryEndpoint = 'http://mml.arces.unibo.it:8000/query'
 const updateEndpoint = 'http://mml.arces.unibo.it:8000/update'
@@ -13,7 +16,8 @@ const client = new SparqlClient(queryEndpoint, { updateEndpoint }).register({
   'qudt-1-1': 'http://qudt.org/1.1/schema/qudt#',
   'qudt-unit-1-1': 'http://qudt.org/1.1/vocab/unit#',
   'arces-monitor': 'http://wot.arces.unibo.it/monitor#',
-  mqtt: 'http://wot.arces.unibo.it/mqtt#'
+  mqtt: 'http://wot.arces.unibo.it/mqtt#',
+  m3lite: 'http://purl.org/iot/vocab/m3-lite#'
 })
 
 const query = async (queryTemplate, parameters) =>
@@ -27,5 +31,7 @@ const query = async (queryTemplate, parameters) =>
 
 module.exports = {
   query,
-  ...queryBuilder
+  ...queryBuilder,
+  locations,
+  types
 }

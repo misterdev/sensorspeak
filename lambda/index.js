@@ -4,12 +4,14 @@ const Fuse = require('fuse.js')
 
 const SEPA = require('./sepa')
 const Alexa = require('./utils/alexa')
-const LOCATIONS = require('./utils/locations')
 const RESPONSE = require('./utils/responseBuilder')
 
-const listify = (results) => results
-.map((entry, index) => `\u{2022} #${index + 1}, ${_.get(entry, 'x.value')} .`)
-.join('\n')
+const listify = results =>
+  results
+    .map(
+      (entry, index) => `\u{2022} #${index + 1}, ${_.get(entry, 'x.value')} .`
+    )
+    .join('\n')
 
 const fuseOptions = {
   shouldSort: true,
@@ -79,7 +81,7 @@ const ListByLocationIntentHandler = {
     if (!locationName)
       return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
     const locationId = _.get(location, '[0].id')
     if (!locationId)
       resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
@@ -91,7 +93,10 @@ const ListByLocationIntentHandler = {
 
     const sensors = listify(results)
     const locationLabel = _.get(location, '[0].label', 'this location')
-    const speechText = RESPONSE.ListByLocation({ sensors, location: locationLabel })
+    const speechText = RESPONSE.ListByLocation({
+      sensors,
+      location: locationLabel
+    })
     return Alexa.endDialog(handlerInput, speechText)
   }
 }
@@ -111,16 +116,26 @@ const GetValueIntentHandler = {
     if (!locationName)
       return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const type = Alexa.getSlot(handlerInput, 'type')
-    if (!type) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
-
-    const location = new Fuse(LOCATIONS, fuseOptions).search(locationName)
+    const typeLabel = Alexa.getSlot(handlerInput, 'type')
+    if (!typeLabel && !SEPA.types[typeLabel]) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    
+    const type = SEPA.types[typeLabel]
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
     const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
     if (!locationId)
       resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
-      const query = SEPA.GetValueQuery
-      const results = await SEPA.query(query, { location: `<${locationId}>`, type })
-      if(!results) return Alexa.endDialog(handlerInput, '🙀')
+
+    const query = SEPA.GetValueQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      type
+    })
+    if (!results) return Alexa.endDialog(handlerInput, '🙀')
+    if(results.length == 0) return Alexa.endDialog(handlerInput, RESPONSE.NoValue({
+      location: locationLabel,
+      type: typeLabel
+    }))
     const observations = results
       .map((sensor, i) => {
         const label = _.get(sensor, 'label.value')
@@ -130,8 +145,10 @@ const GetValueIntentHandler = {
       })
       .join('\n')
 
-    const locationLabel = _.get(location, '[0].label', 'this location')
-    const speechText = RESPONSE.GetValue({location: locationLabel, observations})
+    const speechText = RESPONSE.GetValue({
+      location: locationLabel,
+      observations
+    })
     return Alexa.endDialog(handlerInput, speechText)
   }
 }
@@ -159,7 +176,7 @@ exports.handler = skillBuilder
     ListDevicesIntentHandler,
     ListLocationsIntentHandler,
     ListByLocationIntentHandler,
-    GetValueIntentHandler,
+    GetValueIntentHandler
     // GetLastUpdateTimeIntentHandler,
     // GetMaxOfLocationIntentHandler,
     // GetMinOfLocationIntentHandler,
