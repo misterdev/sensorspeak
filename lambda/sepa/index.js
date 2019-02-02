@@ -2,8 +2,8 @@ const SparqlClient = require('sparql-client-2')
 const _ = require('lodash/object')
 
 const queryBuilder = require('./queryBuilder.js')
-const locations = require('./locations.js')
 const types = require('./types.js')
+const locations = require('./locations.js')
 
 const queryEndpoint = 'http://mml.arces.unibo.it:8000/query'
 const updateEndpoint = 'http://mml.arces.unibo.it:8000/update'
