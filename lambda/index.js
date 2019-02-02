@@ -117,8 +117,9 @@ const GetValueIntentHandler = {
       return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
     const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel]) return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
-    
+    if (!typeLabel && !SEPA.types[typeLabel])
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+
     const type = SEPA.types[typeLabel]
     const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
     const locationId = _.get(location, '[0].id')
@@ -132,10 +133,14 @@ const GetValueIntentHandler = {
       type
     })
     if (!results) return Alexa.endDialog(handlerInput, '🙀')
-    if(results.length == 0) return Alexa.endDialog(handlerInput, RESPONSE.NoValue({
-      location: locationLabel,
-      type: typeLabel
-    }))
+    if (results.length == 0)
+      return Alexa.endDialog(
+        handlerInput,
+        RESPONSE.NoValue({
+          location: locationLabel,
+          type: typeLabel
+        })
+      )
     const observations = results
       .map((sensor, i) => {
         const label = _.get(sensor, 'label.value')

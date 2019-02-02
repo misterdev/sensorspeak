@@ -1,7 +1,8 @@
 module.exports = {
-  NoValue: ({location, type}) => `There aren't data about the ${type} in ${location}. I'm sorry 🤷‍`,
+  NoValue: ({ location, type }) =>
+    `There aren't data about the ${type} in ${location}. I'm sorry 🤷‍`,
   LaunchRequest: ({ text }) =>
-    `Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor \"Italy-Site1-Pressure\" is: ${text}`,
+    `Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor \"Italy-Site1-Pressure\" is ${text}`,
   ListLocations: ({ locations, length }) =>
     `There are ${length} locations: ${locations}`,
   ListLocationsError: () =>
