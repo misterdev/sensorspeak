@@ -5,9 +5,9 @@ cache:
   directories:
   - lambda/node_modules
 install:
-  - npm install bespoken-tools -g
-  - npm install codecov -g
+  - npm install bespoken-tools -d
+  - npm install codecov -d
   - cd lambda && npm install && cd ..
 script:
- - bst test
+ - npm run test
  - codecov
