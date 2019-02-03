@@ -9,14 +9,14 @@
 - [x] ListDevicesIntent           - "list all sensors"
 
 ### TYPE
-- [x] GetValueIntent              - "get {type} of {location}" (//TODO Type)
-- [ ] ListByTypeIntent            - "list {type} sensors"
+- [x] GetValueIntent              - "get {type} of {location}"
+- [x] ListByTypeIntent            - "list {type} sensors"
 - [ ] GetAverageIntent            - "get average {type}"
-- [x] GetAverageOfLocationIntent  - "get average {type} of {location}"
+- [ ] GetAverageOfLocationIntent  - "get average {type} of {location}"
 - [ ] GetEnergyIntent             - "get energy of {location} {type} sensor"
-- [x] GetLastUpdateTimeIntent     - "get last update time of {location} {type} sensor"  (//TODO Type)
-- [x] GetMaxOfLocationIntent      - "get maximum {type} of {location}"
-- [x] GetMinOfLocationIntent      - "get minimum {type} of {location}"
+- [ ] GetLastUpdateTimeIntent     - "get last update time of {location} {type} sensor"  (//TODO Type)
+- [ ] GetMaxOfLocationIntent      - "get maximum {type} of {location}"
+- [ ] GetMinOfLocationIntent      - "get minimum {type} of {location}"
 - [ ] CreateDeviceIntent          - "create {type} sensor in {location} "
 - [ ] RemoveDeviceIntent          - "remove {type} sensor in the 
 {location}"

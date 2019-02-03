@@ -30,6 +30,17 @@ const ListLocationsQuery = () => `
     }  
 `
 
+const ListByTypeQuery = ({type}) => `
+    SELECT ?x
+    WHERE {
+        ?obs a sosa:Observation ;
+            rdf:label ?x ;
+            sosa:madeBySensor ?sensor .
+        ?sensor a sosa:Sensor ;
+            sosa:observes <${type}> .
+    }
+`
+
 const GetValueQuery = ({ location, type }) => `
     SELECT DISTINCT ?label ?val
     WHERE {
@@ -106,6 +117,7 @@ module.exports = {
   LaunchRequestQuery,
   ListDevicesQuery,
   ListByLocationQuery,
+  ListByTypeQuery,
   ListLocationsQuery,
   GetValueQuery,
   GetLastUpdateTimeQuery,

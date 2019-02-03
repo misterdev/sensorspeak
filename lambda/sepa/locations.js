@@ -54,5 +54,41 @@ module.exports = [
   {
     label: 'Hercules server CPU (Ares)',
     id: 'http://wot.arces.unibo.it/monitor#ERCOLE_CPU'
+  },
+  {
+    label: 'Devid Test 1(Temperature)',
+    id: 'place://devid-temp-1'
+  },
+  {
+    label: 'Devid Test 2(Temperature)',
+    id: 'place://devid-temp-2'
+  },
+  {
+    label: 'Devid Test 3(Temperature)',
+    id: 'place://devid-temp-3'
+  },
+  {
+    label: 'Devid Test 4(BoardTemperature)',
+    id: 'place://devid-temp-4'
+  },
+  {
+    label: 'Devid Test 5(SoilHumidity)',
+    id: 'place://devid-temp-5'
+  },
+  {
+    label: 'Devid Test 6(Humidity)',
+    id: 'place://devid-temp-6'
+  },
+  {
+    label: 'Devid Test 7(Voltage)',
+    id: 'place://devid-temp-7'
+  },
+  {
+    label: 'Devid Test 8(AtmosphericPressure)',
+    id: 'place://devid-temp-8'
+  },
+  {
+    label: 'Devid Test 9(BatteryLevel)',
+    id: 'place://devid-temp-9'
   }
 ]

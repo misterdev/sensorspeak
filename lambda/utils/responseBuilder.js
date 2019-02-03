@@ -1,6 +1,7 @@
 module.exports = {
   NoValue: ({ location, type }) =>
     `There aren't data about the ${type} in ${location}. I'm sorry 🤷‍`,
+  NoResults: () => `Something went wrong 🙀, I can't communicate with the SEPA. Try again later.`,
   LaunchRequest: ({ text }) =>
     `Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor \"Italy-Site1-Pressure\" is ${text}`,
   ListLocations: ({ locations, length }) =>
@@ -16,5 +17,7 @@ module.exports = {
   GetValue: ({ location, observations }) =>
     `The most recent observations in ${location} are: ${observations}`,
   GetLastUpdateTime: ({ location, data }) =>
-    `The most recent observations in ${location} are: ${data}`
+    `The most recent observations in ${location} are: ${data}`,
+  ListByType: ({type, sensors, length}) => `There are ${length} ${type} sensors: ${sensors}`, 
+  ListByTypeError: ({type}) => `There aren't ${type} sensors.`
 }

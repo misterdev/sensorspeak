@@ -158,6 +158,37 @@ const GetValueIntentHandler = {
   }
 }
 
+const ListByTypeIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'ListByTypeIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const typeLabel = Alexa.getSlot(handlerInput, 'type')
+    if (!typeLabel && !SEPA.types[typeLabel])
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+  
+    const type = SEPA.types[typeLabel]
+
+    const results = await SEPA.query(SEPA.ListByTypeQuery, {type})
+    if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
+
+    const sensors = listify(results)
+
+    const speechText = RESPONSE.ListByType({
+      type: typeLabel,
+      sensors,
+      length: results.length
+    })
+    return Alexa.endDialog(handlerInput, speechText)
+  }
+}
+
 const ErrorHandler = {
   canHandle (handlerInput) {
     console.log(handlerInput)
@@ -181,6 +212,7 @@ exports.handler = skillBuilder
     ListDevicesIntentHandler,
     ListLocationsIntentHandler,
     ListByLocationIntentHandler,
+    ListByTypeIntentHandler,
     GetValueIntentHandler
     // GetLastUpdateTimeIntentHandler,
     // GetMaxOfLocationIntentHandler,
