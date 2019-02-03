@@ -59,6 +59,17 @@
           ]
         },
         {
+          "name": "GetAverageIntent",
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": []
+            }
+          ],
+          "samples": ["get average {type}", "get average"]
+        },
+        {
           "name": "GetAverageOfLocationIntent",
           "slots": [
             {

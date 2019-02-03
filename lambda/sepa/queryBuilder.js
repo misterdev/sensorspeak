@@ -44,7 +44,8 @@ const ListByTypeQuery = ({type}) => `
 const GetValueQuery = ({ location, type }) => `
     SELECT DISTINCT ?label ?val
     WHERE {
-        ?obs sosa:hasFeatureOfInterest <${location}> ;
+        ?obs a sosa:Observation ; 
+            sosa:hasFeatureOfInterest <${location}> ;
             rdf:label ?label ;
             sosa:hasResult ?result ;
             sosa:madeBySensor ?sensor .
@@ -54,64 +55,76 @@ const GetValueQuery = ({ location, type }) => `
     }
 `
 
-// TODO mettere type
-const GetLastUpdateTimeQuery = ({ location, type }) => `
-    SELECT DISTINCT ?label max(?t) as ?lastTs
+const GetAverageQuery = ({type}) => `
+    SELECT AVG(?val) as ?x
     WHERE {
-        ?obs sosa:hasFeatureOfInterest ${location} ;
-            rdf:label ?label ;
-            sosa:hasResult ?r .
-        ?r a qudt-1-1:QuantityValue .
-        ?node arces-monitor:refersTo ?r ;
-            time:inXSDDateTimeStamp ?t .
+        ?obs a sosa:Observation ;
+            sosa:hasResult ?result ;
+            sosa:madeBySensor ?sensor .
+        ?sensor a sosa:Sensor ;
+            sosa:observes <${type}> .
+        ?result qudt-1-1:numericValue ?val .
     }
-    GROUP BY ?label
 `
 
-// TODO aggiungere type e time
-const GetMaxOfLocationQuery = ({ location, type }) => `
-    SELECT DISTINCT ?label MAX(?val) as ?maxVal
-    WHERE {
-        ?obs sosa:hasFeatureOfInterest ${location} ;
-            rdf:label ?label ;
-            sosa:hasResult ?r .
-        ?r a qudt-1-1:QuantityValue .
-        ?node arces-monitor:refersTo ?r ;
-            time:inXSDDateTimeStamp ?t ;
-            qudt-1-1:numericValue ?val
-    }
-    GROUP BY ?label
-`
+// // TODO mettere type
+// const GetLastUpdateTimeQuery = ({ location, type }) => `
+//     SELECT DISTINCT ?label max(?t) as ?lastTs
+//     WHERE {
+//         ?obs sosa:hasFeatureOfInterest ${location} ;
+//             rdf:label ?label ;
+//             sosa:hasResult ?r .
+//         ?r a qudt-1-1:QuantityValue .
+//         ?node arces-monitor:refersTo ?r ;
+//             time:inXSDDateTimeStamp ?t .
+//     }
+//     GROUP BY ?label
+// `
 
-// TODO aggiungere type e time
-const GetMinOfLocationQuery = ({ location, type }) => `
-    SELECT DISTINCT ?label MIN(?val) as ?minVal
-    WHERE {
-        ?obs sosa:hasFeatureOfInterest ${location} ;
-            rdf:label ?label ;
-            sosa:hasResult ?r .
-        ?r a qudt-1-1:QuantityValue .
-        ?node arces-monitor:refersTo ?r ;
-            time:inXSDDateTimeStamp ?t ;
-            qudt-1-1:numericValue ?val
-    }
-    GROUP BY ?label
-`
+// // TODO aggiungere type e time
+// const GetMaxOfLocationQuery = ({ location, type }) => `
+//     SELECT DISTINCT ?label MAX(?val) as ?maxVal
+//     WHERE {
+//         ?obs sosa:hasFeatureOfInterest ${location} ;
+//             rdf:label ?label ;
+//             sosa:hasResult ?r .
+//         ?r a qudt-1-1:QuantityValue .
+//         ?node arces-monitor:refersTo ?r ;
+//             time:inXSDDateTimeStamp ?t ;
+//             qudt-1-1:numericValue ?val
+//     }
+//     GROUP BY ?label
+// `
 
-// TODO aggiungere type e time
-const GetAverageOfLocationQuery = ({ location, type }) => `
-    SELECT DISTINCT ?label AVG(?val) as ?avgVal
-    WHERE {
-        ?obs sosa:hasFeatureOfInterest ${location} ;
-            rdf:label ?label ;
-            sosa:hasResult ?r .
-        ?r a qudt-1-1:QuantityValue .
-        ?node arces-monitor:refersTo ?r ;
-            time:inXSDDateTimeStamp ?t ;
-            qudt-1-1:numericValue ?val
-    }
-    GROUP BY ?label
-`
+// // TODO aggiungere type e time
+// const GetMinOfLocationQuery = ({ location, type }) => `
+//     SELECT DISTINCT ?label MIN(?val) as ?minVal
+//     WHERE {
+//         ?obs sosa:hasFeatureOfInterest ${location} ;
+//             rdf:label ?label ;
+//             sosa:hasResult ?r .
+//         ?r a qudt-1-1:QuantityValue .
+//         ?node arces-monitor:refersTo ?r ;
+//             time:inXSDDateTimeStamp ?t ;
+//             qudt-1-1:numericValue ?val
+//     }
+//     GROUP BY ?label
+// `
+
+// // TODO aggiungere type e time
+// const GetAverageOfLocationQuery = ({ location, type }) => `
+//     SELECT DISTINCT ?label AVG(?val) as ?avgVal
+//     WHERE {
+//         ?obs sosa:hasFeatureOfInterest ${location} ;
+//             rdf:label ?label ;
+//             sosa:hasResult ?r .
+//         ?r a qudt-1-1:QuantityValue .
+//         ?node arces-monitor:refersTo ?r ;
+//             time:inXSDDateTimeStamp ?t ;
+//             qudt-1-1:numericValue ?val
+//     }
+//     GROUP BY ?label
+// `
 
 module.exports = {
   LaunchRequestQuery,
@@ -120,8 +133,9 @@ module.exports = {
   ListByTypeQuery,
   ListLocationsQuery,
   GetValueQuery,
-  GetLastUpdateTimeQuery,
-  GetMaxOfLocationQuery,
-  GetMinOfLocationQuery,
-  GetAverageOfLocationQuery
+  GetAverageQuery
+//   GetLastUpdateTimeQuery,
+//   GetMaxOfLocationQuery,
+//   GetMinOfLocationQuery,
+//   GetAverageOfLocationQuery
 }

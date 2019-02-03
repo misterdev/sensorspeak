@@ -177,6 +177,13 @@ const ListByTypeIntentHandler = {
 
     const results = await SEPA.query(SEPA.ListByTypeQuery, {type})
     if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
+    if (results.length == 0)
+      return Alexa.endDialog(
+        handlerInput,
+        RESPONSE.NoValueType({
+          type: typeLabel
+        })
+      )
 
     const sensors = listify(results)
 
@@ -184,6 +191,43 @@ const ListByTypeIntentHandler = {
       type: typeLabel,
       sensors,
       length: results.length
+    })
+    return Alexa.endDialog(handlerInput, speechText)
+  }
+}
+
+const GetAverageIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'GetAverageIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const typeLabel = Alexa.getSlot(handlerInput, 'type')
+    if (!typeLabel && !SEPA.types[typeLabel])
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+
+    const type = SEPA.types[typeLabel]
+
+    const query = SEPA.GetAverageQuery
+    const results = await SEPA.query(query, {type})
+    if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
+    if (results.length == 0)
+      return Alexa.endDialog(
+        handlerInput,
+        RESPONSE.NoValueType({
+          type: typeLabel
+        })
+      )
+
+    const average = _.get(results, '[0].x.value')
+    const speechText = RESPONSE.GetAverage({
+      type: typeLabel,
+      average
     })
     return Alexa.endDialog(handlerInput, speechText)
   }
@@ -213,7 +257,8 @@ exports.handler = skillBuilder
     ListLocationsIntentHandler,
     ListByLocationIntentHandler,
     ListByTypeIntentHandler,
-    GetValueIntentHandler
+    GetValueIntentHandler,
+    GetAverageIntentHandler
     // GetLastUpdateTimeIntentHandler,
     // GetMaxOfLocationIntentHandler,
     // GetMinOfLocationIntentHandler,
