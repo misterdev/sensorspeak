@@ -21,5 +21,6 @@ module.exports = {
     `The most recent observations in ${location} are: ${data}`,
   ListByType: ({type, sensors, length}) => `There are ${length} ${type} sensors: ${sensors}`, 
   ListByTypeError: ({type}) => `There aren't ${type} sensors.`,
-  GetAverage: ({type, average}) => `The average ${type} is ${average}`
+  GetAverage: ({type, average}) => `The average ${type} is ${average}`,
+  GetAverageOfLocation: ({location, type, average}) => `The daily average ${type} in ${location} is ${average}`
 }

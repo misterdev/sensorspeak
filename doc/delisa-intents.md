@@ -12,7 +12,7 @@
 - [x] GetValueIntent              - "get {type} of {location}"
 - [x] ListByTypeIntent            - "list {type} sensors"
 - [x] GetAverageIntent            - "get average {type}"
-- [ ] GetAverageOfLocationIntent  - "get average {type} of {location}"
+- [x] GetAverageOfLocationIntent  - "get average {type} of {location}"
 - [ ] GetLastUpdateTimeIntent     - "get last update time of {location} {type} sensor"  (//TODO Type)
 - [ ] GetMaxOfLocationIntent      - "get maximum {type} of {location}"
 - [ ] GetMinOfLocationIntent      - "get minimum {type} of {location}"

@@ -67,6 +67,23 @@ const GetAverageQuery = ({type}) => `
     }
 `
 
+// TODO implementare type
+const GetAverageOfLocationQuery = ({ location, type }) => {
+    const date = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString()
+    return `
+    SELECT AVG(?val) as ?x
+    WHERE {
+        ?obs sosa:hasFeatureOfInterest <${location}> ;
+            sosa:hasResult ?result .
+        ?result a qudt-1-1:QuantityValue .
+        ?node arces-monitor:refersTo ?result ;
+            time:inXSDDateTimeStamp ?date ;
+            qudt-1-1:numericValue ?val .
+        FILTER (?date > "${date}"^^xsd:dateTime)
+    }`
+}
+
+
 // // TODO mettere type
 // const GetLastUpdateTimeQuery = ({ location, type }) => `
 //     SELECT DISTINCT ?label max(?t) as ?lastTs
@@ -111,20 +128,6 @@ const GetAverageQuery = ({type}) => `
 //     GROUP BY ?label
 // `
 
-// // TODO aggiungere type e time
-// const GetAverageOfLocationQuery = ({ location, type }) => `
-//     SELECT DISTINCT ?label AVG(?val) as ?avgVal
-//     WHERE {
-//         ?obs sosa:hasFeatureOfInterest ${location} ;
-//             rdf:label ?label ;
-//             sosa:hasResult ?r .
-//         ?r a qudt-1-1:QuantityValue .
-//         ?node arces-monitor:refersTo ?r ;
-//             time:inXSDDateTimeStamp ?t ;
-//             qudt-1-1:numericValue ?val
-//     }
-//     GROUP BY ?label
-// `
 
 module.exports = {
   LaunchRequestQuery,
@@ -133,9 +136,9 @@ module.exports = {
   ListByTypeQuery,
   ListLocationsQuery,
   GetValueQuery,
-  GetAverageQuery
+  GetAverageQuery,
+  GetAverageOfLocationQuery
 //   GetLastUpdateTimeQuery,
 //   GetMaxOfLocationQuery,
 //   GetMinOfLocationQuery,
-//   GetAverageOfLocationQuery
 }

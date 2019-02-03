@@ -233,6 +233,60 @@ const GetAverageIntentHandler = {
   }
 }
 
+const GetAverageOfLocationIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'GetAverageOfLocationIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const locationName = Alexa.getSlot(handlerInput, 'location')
+    if (!locationName)
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+
+    const typeLabel = Alexa.getSlot(handlerInput, 'type')
+    if (!typeLabel && !SEPA.types[typeLabel])
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeLabel]
+
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const query = SEPA.GetAverageOfLocationQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      type
+    })
+    if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
+    if (results.length == 0)
+      return Alexa.endDialog(
+        handlerInput,
+        RESPONSE.NoValue({
+          location: locationLabel,
+          type: typeLabel
+        })
+      )
+    
+      // TODO mettere unita' di misura
+      // TODO arrotondare, al momento viene 63.76776
+    const average = _.get(results, '[0].x.value')
+    const speechText = RESPONSE.GetAverageOfLocation({
+      location: locationLabel,
+      type: typeLabel,
+      average
+    })
+
+    return Alexa.endDialog(handlerInput, speechText)
+  }
+}
+
 const ErrorHandler = {
   canHandle (handlerInput) {
     console.log(handlerInput)
@@ -258,7 +312,8 @@ exports.handler = skillBuilder
     ListByLocationIntentHandler,
     ListByTypeIntentHandler,
     GetValueIntentHandler,
-    GetAverageIntentHandler
+    GetAverageIntentHandler,
+    GetAverageOfLocationIntentHandler
     // GetLastUpdateTimeIntentHandler,
     // GetMaxOfLocationIntentHandler,
     // GetMinOfLocationIntentHandler,
