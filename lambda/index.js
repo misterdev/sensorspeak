@@ -13,6 +13,20 @@ const listify = results =>
     )
     .join('\n')
 
+    const units = {
+      temperature: '°',
+      'board temperature': '°',
+      'building temperature': '°',
+      humidity: '%',
+      'soil humidity': '%',
+      'air pressure': 'TODO',
+      voltage: 'TODO',
+      'battery level': '%'
+    }
+    
+
+const wrapMeasurement = (value, type) => ''+(Math.round(value * 10) / 10).toFixed(1) + units[type]
+
 const fuseOptions = {
   shouldSort: true,
   tokenize: true,
@@ -280,7 +294,7 @@ const GetAverageOfLocationIntentHandler = {
     const speechText = RESPONSE.GetAverageOfLocation({
       location: locationLabel,
       type: typeLabel,
-      average
+      average: wrapMeasurement(average, typeLabel)
     })
 
     return Alexa.endDialog(handlerInput, speechText)
