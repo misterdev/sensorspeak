@@ -86,10 +86,10 @@ const GetAverageOfLocationQuery = ({ location, type }) => {
 }
 
 const GetMaxOfLocationQuery = ({ location, type }) => {
-    const date = new Date(
-        new Date().setDate(new Date().getDate() - 7)
-      ).toISOString()
-    return `
+  const date = new Date(
+    new Date().setDate(new Date().getDate() - 7)
+  ).toISOString()
+  return `
     SELECT MAX(?val) as ?x
     WHERE {
         ?obs sosa:hasFeatureOfInterest <${location}> ;
@@ -103,11 +103,11 @@ const GetMaxOfLocationQuery = ({ location, type }) => {
 }
 
 const GetMinOfLocationQuery = ({ location, type }) => {
-    const date = new Date(
-        new Date().setDate(new Date().getDate() - 1)
-      ).toISOString()
-    return `
-    SELECT MAX(?val) as ?x
+  const date = new Date(
+    new Date().setDate(new Date().getDate() - 7)
+  ).toISOString()
+  return `
+    SELECT MIN(?val) as ?x
     WHERE {
         ?obs sosa:hasFeatureOfInterest <${location}> ;
             sosa:hasResult ?result .
@@ -115,6 +115,7 @@ const GetMinOfLocationQuery = ({ location, type }) => {
         ?node arces-monitor:refersTo ?result ;
             time:inXSDDateTimeStamp ?date ;
             qudt-1-1:numericValue ?val .
+        FILTER (?date > "${date}"^^xsd:dateTime)
     }`
 }
 

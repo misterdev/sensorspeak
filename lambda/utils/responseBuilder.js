@@ -28,5 +28,7 @@ module.exports = {
   GetAverageOfLocation: ({ location, type, average }) =>
     `The daily average ${type} in ${location} is ${average}`,
   GetMaxOfLocation: ({ location, type, max }) =>
-    `The maximum ${type} observed in ${location} is ${max}`
+    `The maximum ${type} observed in ${location} is ${max}`,
+  GetMinOfLocation: ({ location, type, min }) =>
+    `The minimum ${type} observed in ${location} is ${min}`
 }
