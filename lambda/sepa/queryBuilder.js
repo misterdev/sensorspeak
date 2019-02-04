@@ -30,7 +30,7 @@ const ListLocationsQuery = () => `
     }  
 `
 
-const ListByTypeQuery = ({type}) => `
+const ListByTypeQuery = ({ type }) => `
     SELECT ?x
     WHERE {
         ?obs a sosa:Observation ;
@@ -55,7 +55,7 @@ const GetValueQuery = ({ location, type }) => `
     }
 `
 
-const GetAverageQuery = ({type}) => `
+const GetAverageQuery = ({ type }) => `
     SELECT AVG(?val) as ?x
     WHERE {
         ?obs a sosa:Observation ;
@@ -69,8 +69,10 @@ const GetAverageQuery = ({type}) => `
 
 // TODO implementare type
 const GetAverageOfLocationQuery = ({ location, type }) => {
-    const date = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString()
-    return `
+  const date = new Date(
+    new Date().setDate(new Date().getDate() - 1)
+  ).toISOString()
+  return `
     SELECT AVG(?val) as ?x
     WHERE {
         ?obs sosa:hasFeatureOfInterest <${location}> ;
@@ -83,6 +85,38 @@ const GetAverageOfLocationQuery = ({ location, type }) => {
     }`
 }
 
+const GetMaxOfLocationQuery = ({ location, type }) => {
+    const date = new Date(
+        new Date().setDate(new Date().getDate() - 7)
+      ).toISOString()
+    return `
+    SELECT MAX(?val) as ?x
+    WHERE {
+        ?obs sosa:hasFeatureOfInterest <${location}> ;
+            sosa:hasResult ?result .
+        ?result a qudt-1-1:QuantityValue .
+        ?node arces-monitor:refersTo ?result ;
+            time:inXSDDateTimeStamp ?date ;
+            qudt-1-1:numericValue ?val .
+        FILTER (?date > "${date}"^^xsd:dateTime)
+    }`
+}
+
+const GetMinOfLocationQuery = ({ location, type }) => {
+    const date = new Date(
+        new Date().setDate(new Date().getDate() - 1)
+      ).toISOString()
+    return `
+    SELECT MAX(?val) as ?x
+    WHERE {
+        ?obs sosa:hasFeatureOfInterest <${location}> ;
+            sosa:hasResult ?result .
+        ?result a qudt-1-1:QuantityValue .
+        ?node arces-monitor:refersTo ?result ;
+            time:inXSDDateTimeStamp ?date ;
+            qudt-1-1:numericValue ?val .
+    }`
+}
 
 // // TODO mettere type
 // const GetLastUpdateTimeQuery = ({ location, type }) => `
@@ -128,7 +162,6 @@ const GetAverageOfLocationQuery = ({ location, type }) => {
 //     GROUP BY ?label
 // `
 
-
 module.exports = {
   LaunchRequestQuery,
   ListDevicesQuery,
@@ -137,8 +170,8 @@ module.exports = {
   ListLocationsQuery,
   GetValueQuery,
   GetAverageQuery,
-  GetAverageOfLocationQuery
-//   GetLastUpdateTimeQuery,
-//   GetMaxOfLocationQuery,
-//   GetMinOfLocationQuery,
+  GetAverageOfLocationQuery,
+  GetMaxOfLocationQuery,
+  GetMinOfLocationQuery
+  //   GetLastUpdateTimeQuery,
 }

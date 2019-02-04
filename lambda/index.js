@@ -13,19 +13,19 @@ const listify = results =>
     )
     .join('\n')
 
-    const units = {
-      temperature: '°',
-      'board temperature': '°',
-      'building temperature': '°',
-      humidity: '%',
-      'soil humidity': '%',
-      'air pressure': 'TODO',
-      voltage: 'TODO',
-      'battery level': '%'
-    }
-    
+const units = {
+  'http://purl.org/iot/vocab/m3-lite#Temperature': '°',
+  'http://purl.org/iot/vocab/m3-lite#BoardTemperature': '°',
+  'http://purl.org/iot/vocab/m3-lite#BuildingTemperature': '°',
+  'http://purl.org/iot/vocab/m3-lite#Humidity': '%',
+  'http://purl.org/iot/vocab/m3-lite#SoilHumidity': '%',
+  'http://purl.org/iot/vocab/m3-lite#AtmosphericPressure': 'TODO',
+  'http://purl.org/iot/vocab/m3-lite#Voltage': 'TODO',
+  'http://purl.org/iot/vocab/m3-lite#BatteryLevel': '%'
+}
 
-const wrapMeasurement = (value, type) => ''+(Math.round(value * 10) / 10).toFixed(1) + units[type]
+const wrapMeasurement = (value, type) =>
+  '' + (Math.round(value * 10) / 10).toFixed(1) + units[type]
 
 const fuseOptions = {
   shouldSort: true,
@@ -186,10 +186,10 @@ const ListByTypeIntentHandler = {
     const typeLabel = Alexa.getSlot(handlerInput, 'type')
     if (!typeLabel && !SEPA.types[typeLabel])
       return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
-  
+
     const type = SEPA.types[typeLabel]
 
-    const results = await SEPA.query(SEPA.ListByTypeQuery, {type})
+    const results = await SEPA.query(SEPA.ListByTypeQuery, { type })
     if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
     if (results.length == 0)
       return Alexa.endDialog(
@@ -228,7 +228,7 @@ const GetAverageIntentHandler = {
     const type = SEPA.types[typeLabel]
 
     const query = SEPA.GetAverageQuery
-    const results = await SEPA.query(query, {type})
+    const results = await SEPA.query(query, { type })
     if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
     if (results.length == 0)
       return Alexa.endDialog(
@@ -287,14 +287,64 @@ const GetAverageOfLocationIntentHandler = {
           type: typeLabel
         })
       )
-    
-      // TODO mettere unita' di misura
-      // TODO arrotondare, al momento viene 63.76776
+
     const average = _.get(results, '[0].x.value')
     const speechText = RESPONSE.GetAverageOfLocation({
       location: locationLabel,
       type: typeLabel,
-      average: wrapMeasurement(average, typeLabel)
+      average: wrapMeasurement(average, type)
+    })
+
+    return Alexa.endDialog(handlerInput, speechText)
+  }
+}
+
+const GetMaxOfLocationIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'GetMaxOfLocationIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const locationName = Alexa.getSlot(handlerInput, 'location')
+    if (!locationName)
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+
+    const typeLabel = Alexa.getSlot(handlerInput, 'type')
+    if (!typeLabel && !SEPA.types[typeLabel])
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeLabel]
+
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const query = SEPA.GetMaxOfLocationQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      type
+    })
+    if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
+    if (results.length == 0)
+      return Alexa.endDialog(
+        handlerInput,
+        RESPONSE.NoValue({
+          location: locationLabel,
+          type: typeLabel
+        })
+      )
+
+    const max = _.get(results, '[0].x.value')
+    const speechText = RESPONSE.GetMaxOfLocation({
+      location: locationLabel,
+      type: typeLabel,
+      max: wrapMeasurement(max, type)
     })
 
     return Alexa.endDialog(handlerInput, speechText)
@@ -327,11 +377,11 @@ exports.handler = skillBuilder
     ListByTypeIntentHandler,
     GetValueIntentHandler,
     GetAverageIntentHandler,
-    GetAverageOfLocationIntentHandler
+    GetAverageOfLocationIntentHandler,
+    GetMaxOfLocationIntentHandler
     // GetLastUpdateTimeIntentHandler,
     // GetMaxOfLocationIntentHandler,
     // GetMinOfLocationIntentHandler,
-    // GetAverageOfLocationIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()
