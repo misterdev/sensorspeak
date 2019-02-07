@@ -67,7 +67,11 @@
               "samples": []
             }
           ],
-          "samples": ["get average {type}", "get average"]
+          "samples": [
+            "get average {type}",
+            "get average",
+            "get the average {type}"
+          ]
         },
         {
           "name": "GetAverageOfLocationIntent",
@@ -83,11 +87,17 @@
           ],
           "samples": [
             "get average {type}",
+            "get the average {type}",
             "get average {type} of today",
+            "get the daily average {type}",
             "get daily average {type}",
+            "get the average of {location}",
+            "get the average in {location}",
+            "get the average for {location}",
             "get average of {location}",
             "get average in {location}",
             "get average for {location}",
+            "get the daily average in {location}",
             "get daily average in {location}"
           ]
         },
@@ -100,9 +110,11 @@
             }
           ],
           "samples": [
-            "get info in {location}",
             "get info",
-            "get info in the {location}"
+            "get info in {location}",
+            "get info for {location}",
+            "get info in the {location}",
+            "get info for the {location}"
           ]
         },
         {
@@ -140,18 +152,18 @@
             },
             {
               "name": "location",
-              "type": "AMAZON.SearchQuery",
-              "samples": ["{location}", "of {location}"]
+              "type": "AMAZON.SearchQuery"
             }
           ],
           "samples": [
-            "get maximum {type}",
+            "get max",
+            "get maximum",
             "get max {type}",
-            "get maximum of {location}",
+            "get maximum {type}",
             "get max of {location}",
             "get max in {location}",
-            "get maximum",
-            "get max"
+            "get maximum of {location}",
+            "get maximum in {location}"
           ]
         },
         {
@@ -163,17 +175,18 @@
             },
             {
               "name": "location",
-              "type": "AMAZON.SearchQuery",
-              "samples": ["{location}", "of {location}"]
+              "type": "AMAZON.SearchQuery"
             }
           ],
           "samples": [
-            "get minimum {type}",
-            "get min {type}",
-            "get minimum of {location}",
-            "get min of {location}",
+            "get min",
             "get minimum",
-            "get min"
+            "get min {type}",
+            "get minimum {type}",
+            "get min of {location}",
+            "get min in {location}",
+            "get minimum of {location}",
+            "get minimum in {location}"
           ]
         },
         {
@@ -190,9 +203,15 @@
           ],
           "samples": [
             "get update interval",
+            "get the update interval",
+            "get update interval of {type} sensor",
+            "get update interval of the {type} sensor",
+            "get the update interval of {type} sensor",
+            "get the update interval of the {type} sensor",
             "get update interval of {location}",
-            "get update interval of {location}",
-            "get update interval of {type} sensor"
+            "get update interval of the {location}",
+            "get the update interval of {location}",
+            "get the update interval of the {location}"
           ]
         },
         {
@@ -204,20 +223,24 @@
             },
             {
               "name": "location",
-              "type": "AMAZON.SearchQuery",
-              "samples": ["{location} ", "in {location} ", "of {location} "]
+              "type": "AMAZON.SearchQuery"
             }
           ],
           "samples": [
+            "get {type}",
+            "get the {type}",
+            "what is {type}",
+            "what is the {type}",
+            "get value {location} ",
             "get value in {location}",
             "get the value in {location}",
             "get value for {location}",
-            "get the value in {location}",
-            "get {type}",
-            "get the {type}",
-            "get value {location} ",
-            "what is {type}",
-            "what is {location}"
+            "get the value for {location}",
+            "get observation {location} ",
+            "get observation in {location}",
+            "get the observation in {location}",
+            "get observation for {location}",
+            "get the observation for {location}"
           ]
         },
         {
@@ -229,18 +252,14 @@
             }
           ],
           "samples": [
+            "list by place",
+            "list by location",
+            "list sensors in {location}",
             "list sensors in the {location}",
             "list sensors on {location}",
             "list sensors on the {location}",
             "list sensors inside {location}",
-            "list sensors in {location}",
-            "list by location",
-            "list by place",
-            "list devices in {location}",
-            "list devices inside {location}",
-            "list devices in the {location}",
-            "list devices on {location}",
-            "list devices on the {location}"
+            "list sensors inside the {location}"
           ]
         },
         {
@@ -252,12 +271,28 @@
             }
           ],
           "samples": [
+            "list by type",
+            "list for type",
+            "list sensors by type",
+            "list sensors for type",
+            "list all sensors by type",
+            "list all sensors for type",
             "list {type} sensors",
+            "list the {type} sensors",
+            "list sensors of {type}",
             "list sensors of {type} type",
             "list all {type} sensors",
-            "list by type",
+            "list all the {type} sensors",
+            "list devices by type",
+            "list all devices by type",
+            "list devices for type",
+            "list all devices for type",
+            "list {type} devices",
+            "list the {type} devices",
+            "list devices of {type}",
+            "list devices of {type} type",
             "list all {type} devices",
-            "list {type} devices"
+            "list all the {type} devices"
           ]
         },
         {
@@ -270,8 +305,7 @@
           "slots": [
             {
               "name": "type",
-              "type": "DeviceType",
-              "samples": ["{type} ", "{type} sensor"]
+              "type": "DeviceType"
             },
             {
               "name": "location",
