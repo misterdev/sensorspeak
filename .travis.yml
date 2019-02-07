@@ -11,5 +11,3 @@ install:
 script:
  - npm run test
  - codecov
-env:
- - DEBUG=nock.*
