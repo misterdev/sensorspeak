@@ -16,6 +16,7 @@ module.exports = {
 
 function LaunchRequestFilter () {
   nock('http://mml.arces.unibo.it:8000')
+    .persist()
     .post('/query')
     .reply(200, (uri, requestBody) => {
       const query = queryString.parse(requestBody).query
