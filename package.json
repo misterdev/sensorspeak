@@ -42,8 +42,17 @@
     "prettier-standard": "^9.1.1",
     "query-string": "^6.2.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "linters": {
+      "**/*.json": [
+        "prettier-standard",
+        "git add"
+      ],
       "**/*.js": [
         "prettier-standard",
         "git add"
