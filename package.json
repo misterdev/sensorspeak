@@ -12,7 +12,7 @@
     "deploy:model": "ask deploy --target model --force",
     "mock": "node lambda/test.js",
     "format": "prettier-standard '**/*.js' '**/*.json'",
-    "test": "DEBUG=nock.* bst test"
+    "test": "bst test"
   },
   "repository": {
     "type": "git",
