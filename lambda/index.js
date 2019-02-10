@@ -403,6 +403,59 @@ const GetMinOfLocationIntentHandler = {
   }
 }
 
+const GetLastUpdateTimeIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'GetLastUpdateTimeIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const locationName = Alexa.getSlot(handlerInput, 'location')
+    if (!locationName)
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+
+    const typeLabel = Alexa.getSlot(handlerInput, 'type')
+    if (!typeLabel && !SEPA.types[typeLabel])
+      return Alexa.endDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeLabel]
+
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.endDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const query = SEPA.GetLastUpdateTimeQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      type
+    })
+    if (!results) return Alexa.endDialog(handlerInput, RESPONSE.NoResults())
+    if (results.length == 0)
+      return Alexa.endDialog(
+        handlerInput,
+        RESPONSE.NoValue({
+          location: locationLabel,
+          type: typeLabel
+        })
+      )
+
+    const sensor = _.get(results, '[0].label.value')
+    const date = _.get(results, '[0].date.value')
+    const speechText = RESPONSE.GetLastUpdateTime({
+      location: locationLabel,
+      type: typeLabel,
+      sensor,
+      date: new Date(date).toString()
+    })
+    return Alexa.endDialog(handlerInput, speechText)
+  }
+}
+
 const ErrorHandler = {
   canHandle (handlerInput) {
     console.log(handlerInput)
@@ -474,8 +527,8 @@ exports.handler = skillBuilder
     GetAverageIntentHandler,
     GetAverageOfLocationIntentHandler,
     GetMaxOfLocationIntentHandler,
-    GetMinOfLocationIntentHandler
-    // GetLastUpdateTimeIntentHandler,
+    GetMinOfLocationIntentHandler,
+    GetLastUpdateTimeIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()

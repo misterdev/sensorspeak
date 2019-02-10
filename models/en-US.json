@@ -140,7 +140,10 @@
           "samples": [
             "get last update time of {location}",
             "get last update of {type} ",
-            "get last update time"
+            "get last update time",
+            "get the last update time of {location}",
+            "get the last update of {type} ",
+            "get the last update time"
           ]
         },
         {

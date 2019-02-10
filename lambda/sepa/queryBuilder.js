@@ -67,7 +67,8 @@ const GetAverageQuery = ({ type }) => `
     }
 `
 
-// TODO implementare type
+// TODO mettere type
+// TODO in sepa i result non sono QUANTITY VALUE
 const GetAverageOfLocationQuery = ({ location, type }) => {
   const date = new Date(
     new Date().setDate(new Date().getDate() - 1)
@@ -77,13 +78,14 @@ const GetAverageOfLocationQuery = ({ location, type }) => {
     WHERE {
         ?obs sosa:hasFeatureOfInterest <${location}> ;
             sosa:hasResult ?result .
-        ?result a qudt-1-1:QuantityValue .
         ?node arces-monitor:refersTo ?result ;
             time:inXSDDateTimeStamp ?date ;
             qudt-1-1:numericValue ?val .
         FILTER (?date > "${date}"^^xsd:dateTime)
     }`
 }
+// TODO mettere type
+// TODO in sepa i result non sono QUANTITY VALUE
 
 const GetMaxOfLocationQuery = ({ location, type }) => {
   const date = new Date(
@@ -94,14 +96,14 @@ const GetMaxOfLocationQuery = ({ location, type }) => {
     WHERE {
         ?obs sosa:hasFeatureOfInterest <${location}> ;
             sosa:hasResult ?result .
-        ?result a qudt-1-1:QuantityValue .
         ?node arces-monitor:refersTo ?result ;
             time:inXSDDateTimeStamp ?date ;
             qudt-1-1:numericValue ?val .
         FILTER (?date > "${date}"^^xsd:dateTime)
     }`
 }
-
+// TODO mettere type
+// TODO in sepa i result non sono QUANTITY VALUE
 const GetMinOfLocationQuery = ({ location, type }) => {
   const date = new Date(
     new Date().setDate(new Date().getDate() - 7)
@@ -111,7 +113,6 @@ const GetMinOfLocationQuery = ({ location, type }) => {
     WHERE {
         ?obs sosa:hasFeatureOfInterest <${location}> ;
             sosa:hasResult ?result .
-        ?result a qudt-1-1:QuantityValue .
         ?node arces-monitor:refersTo ?result ;
             time:inXSDDateTimeStamp ?date ;
             qudt-1-1:numericValue ?val .
@@ -119,19 +120,30 @@ const GetMinOfLocationQuery = ({ location, type }) => {
     }`
 }
 
-// // TODO mettere type
-// const GetLastUpdateTimeQuery = ({ location, type }) => `
-//     SELECT DISTINCT ?label max(?t) as ?lastTs
-//     WHERE {
-//         ?obs sosa:hasFeatureOfInterest ${location} ;
-//             rdf:label ?label ;
-//             sosa:hasResult ?r .
-//         ?r a qudt-1-1:QuantityValue .
-//         ?node arces-monitor:refersTo ?r ;
-//             time:inXSDDateTimeStamp ?t .
-//     }
-//     GROUP BY ?label
-// `
+// TODO mettere type
+// TODO in sepa i result non sono QUANTITY VALUE
+const GetLastUpdateTimeQuery = ({ location, type }) => {
+  // Filtriamo solo le observation relative all'ultimo anno
+  // altrimenti il tempo necessario alla query e' ~10s e la
+  // lambda function muore. Cosi' facendo abbiamo tempi 1.42s
+  const date = new Date(
+    new Date().setDate(new Date().getDate() - 12 * 30)
+  ).toISOString()
+  return `
+        SELECT ?label ?date
+        WHERE {
+            ?obs sosa:hasFeatureOfInterest <${location}> ;
+                rdf:label ?label ;
+                sosa:hasResult ?result .
+            ?node arces-monitor:refersTo ?result ;
+                time:inXSDDateTimeStamp ?date ;
+                qudt-1-1:numericValue ?val .
+            FILTER (?date > "${date}"^^xsd:dateTime)
+        }
+        ORDER BY DESC(?date)
+        LIMIT 1
+`
+}
 
 // // TODO aggiungere type e time
 // const GetMaxOfLocationQuery = ({ location, type }) => `
@@ -173,6 +185,6 @@ module.exports = {
   GetAverageQuery,
   GetAverageOfLocationQuery,
   GetMaxOfLocationQuery,
-  GetMinOfLocationQuery
-  //   GetLastUpdateTimeQuery,
+  GetMinOfLocationQuery,
+  GetLastUpdateTimeQuery
 }
