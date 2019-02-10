@@ -1,5 +1,0 @@
----
-- test: "Launch Request"
-- LaunchRequest:
-  - response.outputSpeech.ssml: launchRequestResponse
-  - exit

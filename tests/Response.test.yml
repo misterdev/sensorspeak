@@ -1,0 +1,19 @@
+---
+- test: "Launch Request"
+- LaunchRequest:
+  - response.outputSpeech.ssml: "<speak>Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor \"Italy-Site1-Pressure\" is: Italy-Site1-Pressure-label</speak>"
+  - exit
+
+---
+- test: "List Devices"
+- "ListDevicesIntent":
+  - request.SEPAResponse: [sensor1, sensor2]
+  - response.outputSpeech.ssml: "<speak>There are 2 devices: • #1, sensor1 .\n• #2, sensor2 .</speak>"
+  - exit
+
+---
+- test: "List Devices - No Devices"
+- "list all devices":
+  - request.SEPAResponse: []
+  - response.outputSpeech.ssml: "<speak>There are 0 devices:</speak>"
+  - exit
