@@ -2,18 +2,16 @@
 
 
 # Table of Contents
-1. [Previous Work](#previous-work)
-2. [Project Structure+ link setup / deployment](#project-structure)
-3. [Intent List](#intent-list)
-4. [SEPA Structure](#sepa-structure)
-5. [Work Done](#work-done)
-6. [User Manual](#user-manual)
-
-## Previous Work
-
+1. [Project Structure](#project-structure)
+2. [Intent List](#intent-list)
+3. [SEPA Structure](#sepa-structure)
+4. [User Manual](#user-manual)
 
 
 ## Project Structure
+
+See the [README](../README.md) for the setup/development instructions.
+
 ```
 |_ .ask
     |_ config                   // Skill & Lambda deployment config (skill_id, functionName, ...)
@@ -159,3 +157,4 @@ Ogni switch di stato è registrato come `sosa:Actuation`:
     sosa:hasSimplResult true ;
     sosa:resultTime "2017-04-18T17:24:00+02:00"^^xsd:dateTimeStamp .
 ```
+

@@ -74,3 +74,10 @@ You can customize your skill name and settings in `skill.json`
 
 ## 3. Deploy
 Running `yarn deploy` for the first time will create an Alexa Skills and an AWS lambda function
+
+
+# Read More
+- [Alexa SDK for Node Examples](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs)
+- [Code Deep Dive ask-sdk-core](https://developer.amazon.com/blogs/alexa/post/dff6f892-ee90-4fef-954f-27ad84eb7739/code-deep-dive-introduction-to-the-ask-software-development-kit-for-node-js)
+- [Skill Availability by Region](https://developer.amazon.com/docs/custom-skills/develop-skills-in-multiple-languages.html)
+- [Alexa Emulator](https://echosim.io/)
