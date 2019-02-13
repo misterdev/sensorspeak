@@ -13,16 +13,12 @@
 - [x] ListByTypeIntent            - "list {type} sensors"
 - [x] GetAverageIntent            - "get average {type}"
 - [x] GetAverageOfLocationIntent  - "get average {type} of {location}"
-- [ ] GetLastUpdateTimeIntent     - "get last update time of {location} {type} sensor"  (//TODO Type)
+- [x] GetLastUpdateTimeIntent     - "get last update time of {location} {type} sensor"  (//TODO Type)
 - [x] GetMaxOfLocationIntent      - "get maximum {type} of {location}"
 - [x] GetMinOfLocationIntent      - "get minimum {type} of {location}"
 
 ### INTERVAL
 - [ ] GetUpdateIntervalIntent     - "get update interval of {location} {type}"
-
-### ENERGY
-- [ ] GetAllEnergyIntent          - "get energy of all sensors"
-- [ ] GetEnergyIntent             - "get energy of {location} {type} sensor"
 
 ### ON/OFF
 - [ ] GetStateIntent              - "get state of {location} {type}"
@@ -32,10 +28,6 @@
 - [ ] TurnOnOffByTypeIntent       - "turn {on_off} all {type} "
 - [ ] TurnOnOffIntent             - "turn {on_off} {location} {type}"
 - [ ] ListByStateIntent           - "list all sensor in {on_off} mode"
-
-### UPDATE
-- [ ] CreateDeviceIntent          - "create {type} sensor in {location} "
-- [ ] RemoveDeviceIntent          - "remove {type} sensor in the {location}"
 
 ### AGGIUNTE DA ME
 - [x] ListLocationsIntent         - "list all locations"
@@ -93,16 +85,15 @@
   ```
 
 - [ ] **Update Interval**, intervallo fra una rilevazione e l'altra
-  
+
   **Requisiti:** i sensori devono leggere questo dato dal SEPA e modificare il proprio intervallo di conseguenza
   ```
   O a sosa:Observation ;
     arces-monitor:hasUpdateInterval R .
     R a qudt:QuantityValue ;
-      qudt:unit qudt-unit:Hour ;
-      qudt:numericValue (XMLSchema#decimal) 2 .
-  ```  
-  
+  qudt:unit qudt-unit:Hour ;
+  qudt:numericValue (XMLSchema#decimal) 2 .
+  ```
 
 - [ ] **Create Sensor**, aggiunge i dati relativi ad un sensore
   
