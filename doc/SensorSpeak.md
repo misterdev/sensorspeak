@@ -9,6 +9,34 @@
 5. [Work Done](#work-done)
 6. [User Manual](#user-manual)
 
+## Previous Work
+
+
+
+## Project Structure
+```
+|_ .ask
+    |_ config                   // Skill & Lambda deployment config (skill_id, functionName, ...)
+|_ lambda
+    |_ index.js                 // lambda function entry
+    |_ sepa
+        |_ index.js             // SEPA utility entry point
+        |_ queryBuilder.js      // query templates
+    |_ utils
+        |_ alexa.js             // alexa utility
+        |_ responseBuilder.js   // alexa response templates
+|_ hooks
+    |_ pre_deply_hook.sh        // no touch pls thx
+|_ models
+    |_ en-US.json               // english skill model
+    |_ (it-IT.json)             // here you can define new localized models
+|_ tests
+    |_ response.test.yml        // tests
+    |_ SEPAFilter.json          // SEPA server mock
+|_ skill.json                   // Skill settings (name, description, ...)
+|_ testing.json                 // bst testing config
+```
+
 
 ## Intent List
 
@@ -65,7 +93,6 @@
 
 ### Additions
 
-
 #### 1. TYPE
 Per definire il tipo dei sensori è stato usato [m3lite](https://github.com/fiesta-iot/ontology/blob/master/m3-lite.owl):
 
@@ -108,11 +135,12 @@ L'update interval è stato definito come:
 
 Ogni sensore ha il proprio stato on/off:
 
-    ```sparql
-        <sensor/XXX> ssn:hasProperty <sensor/XXXX#state> . 
-    ```
+```sparql
+    <sensor/XXX> ssn:hasProperty <sensor/XXXX#state> . 
+```
 
 Ogni stato è una `sosa:ActuatableProperty` gestita dall'attuatore `arces-monitor:alexa-actuator`
+
 ```sparql
 <sensor/XXXX#state> a sosa:ActuatableProperty ;
     sosa:isActedOnBy <actuation/XXXX> .
@@ -123,6 +151,7 @@ arces-monitor:alexa-actuator a sosa:Actuator ;
 ```
 
 Ogni switch di stato è registrato come `sosa:Actuation`:
+
 ```sparql
 <actuation/XXXX> a sosa:Actuation ;
     sosa:actsOnProperty  <sensor/XXXX#state> ;

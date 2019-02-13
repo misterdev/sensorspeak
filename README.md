@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/misterdev/sensorspeak.svg?branch=master)](https://travis-ci.com/misterdev/sensorspeak)[![codecov](https://codecov.io/gh/misterdev/sensorspeak/branch/master/graph/badge.svg)](https://codecov.io/gh/misterdev/sensorspeak)
+[![Build Status](https://travis-ci.com/misterdev/sensorspeak.svg?branch=master)](https://travis-ci.com/misterdev/sensorspeak) [![codecov](https://codecov.io/gh/misterdev/sensorspeak/branch/master/graph/badge.svg)](https://codecov.io/gh/misterdev/sensorspeak)
 
 # SensorSpeak
 Repo of SensorSpeak's Skill & AWS Lambda
@@ -69,7 +69,7 @@ NB: You can mock the SEPA while running tests adding an interceptor in `tests/SE
 }
 ```
 
-## 2. Customize Informations
+## 2. Customize Informations ([doc](https://developer.amazon.com/docs/smapi/skill-manifest.html))
 You can customize your skill name and settings in `skill.json`
 
 ## 3. Deploy
