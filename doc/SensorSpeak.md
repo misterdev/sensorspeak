@@ -158,3 +158,21 @@ Ogni switch di stato è registrato come `sosa:Actuation`:
     sosa:resultTime "2017-04-18T17:24:00+02:00"^^xsd:dateTimeStamp .
 ```
 
+### User Manual
+La skill risponde a richieste in inglese, per una lista vedi la lista di [intent](#intent-list).
+
+Alcune skill richiedono dei parametri (slot) che possono essere: tipo, location, stato e interval, es: `alexa tell sensor speak to get all devices in mars garden`.
+**NB** per le richieste che hanno come parametri il luogo ed un altro slot, l'unica modalità di interazione possibile è quella dialogo:
+```
+User> alexa tell sensor speak to get the temperature in mars garden ❌
+
+User> alexa tell sensor speak to get the temperature ✔️
+    Alexa> In which location?
+    User> Mars garden
+    Alexa> The temperature in mars garden is 20°
+
+User> alexa tell sensor speak to get the value for mars garden ✔️
+    Alexa> Which type?
+    User> Temperature
+    Alexa> The temperature in mars garden is 20°
+```
