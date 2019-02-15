@@ -20,45 +20,6 @@
           "samples": ["list all locations", "list locations"]
         },
         {
-          "name": "CreateDeviceIntent",
-          "slots": [
-            {
-              "name": "type",
-              "type": "DeviceType",
-              "samples": [
-                "{type}",
-                "{type} sensor",
-                "{type} type",
-                "type {type}",
-                "with type {type}"
-              ]
-            },
-            {
-              "name": "location",
-              "type": "AMAZON.SearchQuery",
-              "samples": [
-                "{location} ",
-                "in {location} ",
-                "to {location} ",
-                "is located in {location} ",
-                "is in {location} ",
-                "is {location} ",
-                "is located {location} ",
-                "for {location} "
-              ]
-            }
-          ],
-          "samples": [
-            "create {type} sensor",
-            "create {type} device",
-            "create sensor",
-            "create device",
-            "create",
-            "create sensor in {location}",
-            "create device in {location}"
-          ]
-        },
-        {
           "name": "GetAverageIntent",
           "slots": [
             {
@@ -388,33 +349,6 @@
     },
     "dialog": {
       "intents": [
-        {
-          "name": "CreateDeviceIntent",
-          "confirmationRequired": true,
-          "prompts": {
-            "confirmation": "Confirm.Intent-CreateDeviceIntent"
-          },
-          "slots": [
-            {
-              "name": "type",
-              "type": "DeviceType",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type"
-              }
-            },
-            {
-              "name": "location",
-              "type": "AMAZON.SearchQuery",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location"
-              }
-            }
-          ]
-        },
         {
           "name": "GetValueIntent",
           "confirmationRequired": false,

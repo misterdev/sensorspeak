@@ -6,7 +6,7 @@
 2. [Intent List](#intent-list)
 3. [SEPA Structure](#sepa-structure)
 4. [User Manual](#user-manual)
-
+5. [Presentation](https://docs.google.com/presentation/d/1z1K3b1ayt4vse97CCCZw-YXvw6vxNNqit3ZHSa7MjD0/edit#slide=id.g4f1755e562_4_30)
 
 ## Project Structure
 
@@ -19,7 +19,7 @@ See the [README](../README.md) for the setup/development instructions.
     |_ index.js                 // lambda function entry
     |_ sepa
         |_ index.js             // SEPA utility entry point
-        |_ queryBuilder.js      // query templates
+        |_ queryBuilder.js      // SEPA query templates
     |_ utils
         |_ alexa.js             // alexa utility
         |_ responseBuilder.js   // alexa response templates
@@ -32,7 +32,7 @@ See the [README](../README.md) for the setup/development instructions.
     |_ response.test.yml        // tests
     |_ SEPAFilter.json          // SEPA server mock
 |_ skill.json                   // Skill settings (name, description, ...)
-|_ testing.json                 // bst testing config
+|_ testing.json                 // bespoked testing configurations
 ```
 
 
@@ -162,7 +162,9 @@ Ogni switch di stato è registrato come `sosa:Actuation`:
 La skill risponde a richieste in inglese, per una lista vedi la lista di [intent](#intent-list).
 
 Alcune skill richiedono dei parametri (slot) che possono essere: tipo, location, stato e interval, es: `alexa tell sensor speak to get all devices in mars garden`.
+
 **NB** per le richieste che hanno come parametri il luogo ed un altro slot, l'unica modalità di interazione possibile è quella dialogo:
+
 ```
 User> alexa tell sensor speak to get the temperature in mars garden ❌
 
