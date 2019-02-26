@@ -465,6 +465,44 @@ const GetLastUpdateTimeIntentHandler = {
   }
 }
 
+const ListByStateIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'ListByStateIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const statusSlot = Alexa.getSlot(handlerInput, 'on_off')
+    if (statusSlot !== 'on' || statusSlot !== 'off')
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_STATE)
+
+    const status = statusSlot === 'on'
+    const results = await SEPA.query(SEPA.ListByStateQuery, { status })
+    if (!results)
+      return Alexa.continueDialog(handlerInput, RESPONSE.NoResults())
+    if (results.length == 0)
+      return Alexa.continueDialog(
+        handlerInput,
+        RESPONSE.NoValueStatus({
+          status: statusSlot
+        })
+      )
+
+    const sensors = listify(results)
+
+    const speechText = RESPONSE.ListByState({
+      status: statusSlot,
+      sensors,
+      length: results.length
+    })
+    return Alexa.continueDialog(handlerInput, speechText)
+  }
+}
+
 const ErrorHandler = {
   canHandle (handlerInput) {
     console.log(handlerInput)
@@ -537,7 +575,8 @@ exports.handler = skillBuilder
     GetAverageOfLocationIntentHandler,
     GetMaxOfLocationIntentHandler,
     GetMinOfLocationIntentHandler,
-    GetLastUpdateTimeIntentHandler
+    GetLastUpdateTimeIntentHandler,
+    ListByStateIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()

@@ -34,7 +34,8 @@ const getSlot = (handlerInput, slotName) =>
 
 const ERROR = {
   NO_LOCATION: `Sorry, I don't know this location`,
-  NO_TYPE: `Sorry, I don't know this type`
+  NO_TYPE: `Sorry, I don't know this type`,
+  NO_STATE: `Sorry, I don't know this state`
 }
 
 module.exports = {

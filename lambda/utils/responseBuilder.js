@@ -3,6 +3,7 @@ module.exports = {
     `There aren't data about the ${type} in ${location}. I'm sorry 🤷‍`,
   NoValueType: ({ type }) =>
     `There aren't data about the ${type} sensors. I'm sorry 🤷‍`,
+  NoValueStatus: ({ status }) => `There are no sensor with status: ${status}`,
   NoResults: () =>
     `Something went wrong 🙀, I can't communicate with the SEPA. Try again later.`,
   LaunchRequest: ({ sensor, label }) =>
@@ -17,6 +18,8 @@ module.exports = {
   ListByLocation: ({ location, sensors }) =>
     `The list of sensors in ${location} is: ${sensors}`,
   ListByLocationError: () => 'null',
+  ListByState: ({ status, sensors, length }) =>
+    `There are ${length} sensor with state ${status}: ${sensors}`,
   GetValue: ({ location, observations }) =>
     `The most recent observations in ${location} are: ${observations}`,
   GetLastUpdateTime: ({ location, data }) =>

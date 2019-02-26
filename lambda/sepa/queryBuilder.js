@@ -145,6 +145,20 @@ const GetLastUpdateTimeQuery = ({ location, type }) => {
 `
 }
 
+const ListByStateQuery = ({ isOn }) => `
+    SELECT ?x
+    WHERE {
+        ?obs a sosa:Observation ;
+          sosa:madeBySensor ?sensor ;
+          rdf:label ?x .
+        ?sensor a sosa:Sensor ;
+          ssn:hasProperty ?sensorstate .
+        ?actuation sosa:actsOnProperty ?sensorstate ;
+          sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+          sosa:hasSimpleResult ${isOn} .
+    }
+`
+
 // // TODO aggiungere type e time
 // const GetMaxOfLocationQuery = ({ location, type }) => `
 //     SELECT DISTINCT ?label MAX(?val) as ?maxVal
@@ -186,5 +200,6 @@ module.exports = {
   GetAverageOfLocationQuery,
   GetMaxOfLocationQuery,
   GetMinOfLocationQuery,
-  GetLastUpdateTimeQuery
+  GetLastUpdateTimeQuery,
+  ListByStateQuery
 }

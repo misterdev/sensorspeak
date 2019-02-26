@@ -281,9 +281,53 @@
             "delete device",
             "remove device"
           ]
+        },
+        {
+          "name": "ListByStateIntent",
+          "samples": [
+            "list all sensor in {status} mode",
+            "list all sensor in {status} state",
+            "list {status} sensors",
+            "list turned {status} devices",
+            "list turned {status} device",
+            "list turned {status} sensors",
+            "list turned {status} sensor",
+            "list {status} devices",
+            "list devices {status}",
+            "list device {status}",
+            "list all device in {status} state",
+            "list by state",
+            "list by status"
+          ],
+          "slots": [
+            {
+              "name": "status",
+              "type": "DeviceStatus",
+              "samples": []
+            }
+          ]
         }
       ],
       "types": [
+        {
+          "name": "DeviceStatus",
+          "values": [
+            {
+              "id": null,
+              "name": {
+                "value": "on",
+                "synonyms": []
+              }
+            },
+            {
+              "id": null,
+              "name": {
+                "value": "off",
+                "synonyms": []
+              }
+            }
+          ]
+        },
         {
           "name": "DeviceType",
           "values": [
@@ -569,7 +613,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "do you want to turn {on_off} {location} {type}?"
+            "value": "do you want to turn {status} {location} {type}?"
           }
         ]
       },
