@@ -503,28 +503,17 @@
           ]
         },
         {
-          "name": "RemoveDeviceIntent",
-          "confirmationRequired": true,
-          "prompts": {
-            "confirmation": "Confirm.Intent-RemoveDeviceIntent"
-          },
+          "name": "ListByStateIntent",
+          "confirmationRequired": false,
+          "prompts": {},
           "slots": [
             {
-              "name": "type",
-              "type": "DeviceType",
+              "name": "status",
+              "type": "DeviceStatus",
               "confirmationRequired": false,
               "elicitationRequired": true,
               "prompts": {
-                "elicitation": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type"
-              }
-            },
-            {
-              "name": "location",
-              "type": "AMAZON.SearchQuery",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location"
+                "elicitation": "Elicit.IntentSlot-status"
               }
             }
           ]
@@ -532,37 +521,6 @@
       ]
     },
     "prompts": [
-      {
-        "id": "Confirm.Intent-CreateDeviceIntent",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "creating {type}  sensor in {location} . Are you sure?"
-          }
-        ]
-      },
-      {
-        "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "what's the type of the sensor?"
-          },
-          {
-            "type": "PlainText",
-            "value": "which type of sensor is?"
-          }
-        ]
-      },
-      {
-        "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "where is located the sensor?"
-          }
-        ]
-      },
       {
         "id": "Elicit.IntentSlot-type",
         "variations": [
@@ -582,47 +540,11 @@
         ]
       },
       {
-        "id": "Confirm.Intent-RemoveDeviceIntent",
+        "id": "Elicit.IntentSlot-status",
         "variations": [
           {
             "type": "PlainText",
-            "value": "{type} sensor of {location} will be removed. Are you sure?"
-          }
-        ]
-      },
-      {
-        "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "what's the type of the sensor to remove?"
-          }
-        ]
-      },
-      {
-        "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "where is located the sensor to remove?"
-          }
-        ]
-      },
-      {
-        "id": "Confirm.Intent-TurnOnOffIntent",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "do you want to turn {status} {location} {type}?"
-          }
-        ]
-      },
-      {
-        "id": "Confirm.Intent-RemoveDeviceIntent",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "{type} sensor of {location} will be removed. Are you sure?"
+            "value": "in which status?"
           }
         ]
       }

@@ -60,7 +60,7 @@ See the [README](../README.md) for the setup/development instructions.
 |-TurnOnOffByLocationIntent|"turn {on_off} all sensors in {location}"|location, state|
 |-TurnOnOffByTypeIntent|"turn {on_off} all {type} "|type, state|
 |-TurnOnOffIntent|"turn {on_off} {location} {type}"|type, location, state|
-|-ListByStateIntent|"list all sensor in {on_off} mode"|state|
+|ListByStateIntent|"list all sensor in {on_off} mode"|state|
 
 ## SEPA Structure
 ### Current Structure (as of Feb. 2019)
