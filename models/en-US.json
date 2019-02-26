@@ -285,24 +285,68 @@
         {
           "name": "ListByStateIntent",
           "samples": [
-            "list all sensor in {status} mode",
-            "list all sensor in {status} state",
+            "list by state",
+            "list by status",
             "list {status} sensors",
-            "list turned {status} devices",
-            "list turned {status} device",
+            "list sensors {status}",
+            "list sensors in {status} state",
+            "list all sensors {status}",
+            "list all sensors in {status} state",
             "list turned {status} sensors",
-            "list turned {status} sensor",
+            "list switched {status} sensors",
             "list {status} devices",
             "list devices {status}",
-            "list device {status}",
-            "list all device in {status} state",
-            "list by state",
-            "list by status"
+            "list devices in {status} state",
+            "list all devices {status}",
+            "list all devices in {status} state",
+            "list turned {status} devices",
+            "list switched {status} devices"
           ],
           "slots": [
             {
               "name": "status",
               "type": "DeviceStatus",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "GetStateIntent",
+          "samples": [
+            "get state",
+            "get state of {type} sensors",
+            "get state of the {type} sensors",
+            "get state of sensors {location}",
+            "get state of sensors in {location}",
+            "get state of sensors of {location}",
+            "get status",
+            "get status of {type} sensors",
+            "get status of the {type} sensors",
+            "get status of sensors {location}",
+            "get status of sensors in {location}",
+            "get status of sensors of {location}",
+            "get the state",
+            "get the state of {type} sensors",
+            "get the state of the {type} sensors",
+            "get the state of sensors {location}",
+            "get the state of sensors in {location}",
+            "get the state of sensors of {location}",
+            "get the status",
+            "get the status of {type} sensors",
+            "get the status of the {type} sensors",
+            "get the status of sensors {location}",
+            "get the status of sensors in {location}",
+            "get the status of sensors of {location}"
+          ],
+          "slots": [
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": []
+            },
+            {
+              "name": "type",
+              "type": "DeviceType",
               "samples": []
             }
           ]
@@ -517,6 +561,31 @@
               }
             }
           ]
+        },
+        {
+          "name": "GetStateIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
         }
       ]
     },
@@ -526,7 +595,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "which value do you want to know?"
+            "value": "which type of sensor?"
           }
         ]
       },

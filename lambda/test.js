@@ -321,24 +321,27 @@ const type = () => `
           sosa:observes m3lite:Humidity .
     }
 `
-const LaunchRequestQuery = () => `
-    SELECT *
-    WHERE {
-        ?x a sosa:Observation .
-    }
-`
-const GetInfoIntentQuery = () => `
-    SELECT *
-    WHERE {
-        ?x a sosa:Observation .
-    }
+const GetStateQuery = ({ location, type }) => `
+  SELECT DISTINCT ?label ?status
+  WHERE {
+    ?obs a sosa:Observation ;
+      sosa:madeBySensor ?sensor ;
+      sosa:hasFeatureOfInterest <${location}> ;
+      rdf:label ?label .
+    ?sensor a sosa:Sensor ;
+      ssn:hasProperty ?sensorstate ;
+      sosa:observes <${type}> .
+    ?actuation sosa:actsOnProperty ?sensorstate ;
+      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+      sosa:hasSimpleResult ?status .
+  }
 `
 
 async function x () {
   let query
-  query = SEPA.ListByStateQuery
+  query = GetStateQuery
   const result = await SEPA.query(query, {
-    location: 'http://wot.arces.unibo.it/monitor#Mars_Garden',
+    location: 'place://devid-temp-1',
     type: 'http://purl.org/iot/vocab/m3-lite#Temperature',
     status: 'on'
   })

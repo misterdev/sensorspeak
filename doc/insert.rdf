@@ -20,6 +20,28 @@ INSERT {
       sosa:madeActuation <actuation://devid-temp-8> ;
       sosa:madeActuation <actuation://devid-temp-9> .
 
+    arces-monitor:devid-temp-1bis a sosa:Observation ;
+      rdf:label "Devid Test 1bis(Temperature)" ;
+      sosa:madeBySensor <sensor://devid-temp-1bis> ;
+      sosa:hasResult <result://devid-temp-1bis> ;
+      sosa:hasFeatureOfInterest <place://devid-temp-1> ;
+      arces-monitor:hasUpdateInterval <interval://devid-temp-1bis> .
+    <interval://devid-temp-1bis> a qudt-1-1:QuantityValue ;
+        qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
+        qudt-1-1:numericValue 3600000 .
+    <result://devid-temp-1bis> a qudt-1-1:QuantityValue ;
+      qudt-1-1:numericValue 0.36 .
+    <sensor://devid-temp-1bis> a sosa:Sensor ;
+      sosa:observes m3lite:Temperature ;
+      ssn:hasProperty <sensor://devid-temp-1bis#state> .
+    <sensor://devid-temp-1bis#state> a sosa:ActuatableProperty ;
+      sosa:isActedOnBy <actuation://devid-temp-1bis> .
+    <actuation://devid-temp-1bis> a sosa:Actuation ;
+      sosa:actsOnProperty  <sensor://devid-temp-1bis#state> ;
+      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+      sosa:hasSimpleResult true ;
+      sosa:resultTime "2017-04-17T17:24:00+02:00" .
+
     arces-monitor:devid-temp-1 a sosa:Observation ;
       rdf:label "Devid Test 1(Temperature)" ;
       sosa:madeBySensor <sensor://devid-temp-1> ;

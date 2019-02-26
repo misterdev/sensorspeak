@@ -46,21 +46,20 @@ See the [README](../README.md) for the setup/development instructions.
 |ListDevicesIntent|"list all sensors"||
 |ListLocationsIntent|"list all locations"||
 |ListByLocationIntent|"list sensors in the {location}"|location|
-|GetValueIntent|"get {type} of {location}"|type, location|
 |ListByTypeIntent|"list {type} sensors"|type|
+|ListByStateIntent|"list all sensor in {on_off} mode"|state|
+|GetValueIntent|"get {type} of {location}"|type, location|
 |GetAverageIntent|"get average {type}"|type|
 |GetAverageOfLocationIntent|"get average {type} of {location}"|type, location|
 |==GetLastUpdateTimeIntent|"get last update time of {location} {type} sensor"  (//TODO |type, location|
 |==GetMaxOfLocationIntent| "get maximum {type} of {location}"|type, location|
 |==GetMinOfLocationIntent| "get minimum {type} of {location}"|type, location|
-|=GetUpdateIntervalIntent|"get update interval of {location} {type}"|type, location|
 |-GetStateIntent|"get state of {location} {type}"|type, location|
-|-SetUpdateIntervalIntent|"set update interval of {location} {type} to {interval}"|type, location|
-|-TurnOnOffAllIntent|"turn {on_off} all sensors"|state|
+|-TurnOnOffIntent|"turn {on_off} {location} {type}"|type, location, state|
 |-TurnOnOffByLocationIntent|"turn {on_off} all sensors in {location}"|location, state|
 |-TurnOnOffByTypeIntent|"turn {on_off} all {type} "|type, state|
-|-TurnOnOffIntent|"turn {on_off} {location} {type}"|type, location, state|
-|ListByStateIntent|"list all sensor in {on_off} mode"|state|
+|-SetUpdateIntervalIntent|"set update interval of {location} {type} to {interval}"|type, location|
+|-GetUpdateIntervalIntent|"get update interval of {location} {type}"|type, location|
 
 ## SEPA Structure
 ### Current Structure (as of Feb. 2019)

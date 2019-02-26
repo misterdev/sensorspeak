@@ -502,6 +502,69 @@ const ListByStateIntentHandler = {
   }
 }
 
+const GetStateIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'GetStateIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeSlot]
+
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const query = SEPA.GetStateQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      type
+    })
+    if (!results)
+      return Alexa.continueDialog(handlerInput, RESPONSE.NoResults())
+    if (results.length == 0)
+      return Alexa.continueDialog(
+        handlerInput,
+        RESPONSE.NoValue({
+          location: locationLabel,
+          type: typeSlot
+        })
+      )
+
+    const sensors = results
+      .map((sensor, index) => {
+        const label = _.get(sensor, 'label.value')
+        const status = _.get(sensor, 'status.value')
+        let on_off = 'unknown'
+        if (status == 1 || status == 0) on_off = status ? 'on' : 'off'
+        return `\u{2022} #${index + 1}, ${label} is ${on_off}.`
+      })
+      .join('\n')
+    console.log(sensors)
+
+    const speechText = RESPONSE.GetState({
+      location: locationLabel,
+      type: typeSlot,
+      length: results.length,
+      sensors
+    })
+
+    return Alexa.continueDialog(handlerInput, speechText)
+  }
+}
+
 const ErrorHandler = {
   canHandle (handlerInput) {
     console.log(handlerInput)
@@ -575,7 +638,8 @@ exports.handler = skillBuilder
     GetMaxOfLocationIntentHandler,
     GetMinOfLocationIntentHandler,
     GetLastUpdateTimeIntentHandler,
-    ListByStateIntentHandler
+    ListByStateIntentHandler,
+    GetStateIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()
