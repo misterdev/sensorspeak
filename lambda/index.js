@@ -94,11 +94,11 @@ const ListByLocationIntentHandler = {
     )
   },
   async handle (handlerInput) {
-    const locationName = Alexa.getSlot(handlerInput, 'location')
-    if (!locationName)
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
     const locationId = _.get(location, '[0].id')
     if (!locationId)
       resolve(Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
@@ -129,16 +129,16 @@ const GetValueIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const locationName = Alexa.getSlot(handlerInput, 'location')
-    if (!locationName)
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel])
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
 
-    const type = SEPA.types[typeLabel]
-    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const type = SEPA.types[typeSlot]
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
     const locationId = _.get(location, '[0].id')
     const locationLabel = _.get(location, '[0].label', 'this location')
     if (!locationId)
@@ -155,7 +155,7 @@ const GetValueIntentHandler = {
         handlerInput,
         RESPONSE.NoValue({
           location: locationLabel,
-          type: typeLabel
+          type: typeSlot
         })
       )
     const observations = results
@@ -186,11 +186,11 @@ const ListByTypeIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel])
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
 
-    const type = SEPA.types[typeLabel]
+    const type = SEPA.types[typeSlot]
 
     const results = await SEPA.query(SEPA.ListByTypeQuery, { type })
     if (!results)
@@ -199,14 +199,14 @@ const ListByTypeIntentHandler = {
       return Alexa.continueDialog(
         handlerInput,
         RESPONSE.NoValueType({
-          type: typeLabel
+          type: typeSlot
         })
       )
 
     const sensors = listify(results)
 
     const speechText = RESPONSE.ListByType({
-      type: typeLabel,
+      type: typeSlot,
       sensors,
       length: results.length
     })
@@ -225,11 +225,11 @@ const GetAverageIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel])
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
 
-    const type = SEPA.types[typeLabel]
+    const type = SEPA.types[typeSlot]
 
     const query = SEPA.GetAverageQuery
     const results = await SEPA.query(query, { type })
@@ -239,13 +239,13 @@ const GetAverageIntentHandler = {
       return Alexa.continueDialog(
         handlerInput,
         RESPONSE.NoValueType({
-          type: typeLabel
+          type: typeSlot
         })
       )
 
     const average = _.get(results, '[0].x.value')
     const speechText = RESPONSE.GetAverage({
-      type: typeLabel,
+      type: typeSlot,
       average
     })
     return Alexa.continueDialog(handlerInput, speechText)
@@ -263,16 +263,16 @@ const GetAverageOfLocationIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const locationName = Alexa.getSlot(handlerInput, 'location')
-    if (!locationName)
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel])
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
-    const type = SEPA.types[typeLabel]
+    const type = SEPA.types[typeSlot]
 
-    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
     const locationId = _.get(location, '[0].id')
     const locationLabel = _.get(location, '[0].label', 'this location')
     if (!locationId)
@@ -290,14 +290,14 @@ const GetAverageOfLocationIntentHandler = {
         handlerInput,
         RESPONSE.NoValue({
           location: locationLabel,
-          type: typeLabel
+          type: typeSlot
         })
       )
 
     const average = _.get(results, '[0].x.value')
     const speechText = RESPONSE.GetAverageOfLocation({
       location: locationLabel,
-      type: typeLabel,
+      type: typeSlot,
       average: wrapMeasurement(average, type)
     })
 
@@ -316,16 +316,16 @@ const GetMaxOfLocationIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const locationName = Alexa.getSlot(handlerInput, 'location')
-    if (!locationName)
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel])
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
-    const type = SEPA.types[typeLabel]
+    const type = SEPA.types[typeSlot]
 
-    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
     const locationId = _.get(location, '[0].id')
     const locationLabel = _.get(location, '[0].label', 'this location')
     if (!locationId)
@@ -343,14 +343,14 @@ const GetMaxOfLocationIntentHandler = {
         handlerInput,
         RESPONSE.NoValue({
           location: locationLabel,
-          type: typeLabel
+          type: typeSlot
         })
       )
 
     const max = _.get(results, '[0].x.value')
     const speechText = RESPONSE.GetMaxOfLocation({
       location: locationLabel,
-      type: typeLabel,
+      type: typeSlot,
       max: wrapMeasurement(max, type)
     })
 
@@ -369,16 +369,16 @@ const GetMinOfLocationIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const locationName = Alexa.getSlot(handlerInput, 'location')
-    if (!locationName)
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel])
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
-    const type = SEPA.types[typeLabel]
+    const type = SEPA.types[typeSlot]
 
-    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
     const locationId = _.get(location, '[0].id')
     const locationLabel = _.get(location, '[0].label', 'this location')
     if (!locationId)
@@ -396,14 +396,14 @@ const GetMinOfLocationIntentHandler = {
         handlerInput,
         RESPONSE.NoValue({
           location: locationLabel,
-          type: typeLabel
+          type: typeSlot
         })
       )
 
     const min = _.get(results, '[0].x.value')
     const speechText = RESPONSE.GetMinOfLocation({
       location: locationLabel,
-      type: typeLabel,
+      type: typeSlot,
       min: wrapMeasurement(min, type)
     })
 
@@ -422,16 +422,16 @@ const GetLastUpdateTimeIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const locationName = Alexa.getSlot(handlerInput, 'location')
-    if (!locationName)
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
 
-    const typeLabel = Alexa.getSlot(handlerInput, 'type')
-    if (!typeLabel && !SEPA.types[typeLabel])
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
-    const type = SEPA.types[typeLabel]
+    const type = SEPA.types[typeSlot]
 
-    const location = new Fuse(SEPA.locations, fuseOptions).search(locationName)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
     const locationId = _.get(location, '[0].id')
     const locationLabel = _.get(location, '[0].label', 'this location')
     if (!locationId)
@@ -449,7 +449,7 @@ const GetLastUpdateTimeIntentHandler = {
         handlerInput,
         RESPONSE.NoValue({
           location: locationLabel,
-          type: typeLabel
+          type: typeSlot
         })
       )
 
@@ -457,7 +457,7 @@ const GetLastUpdateTimeIntentHandler = {
     const date = _.get(results, '[0].date.value')
     const speechText = RESPONSE.GetLastUpdateTime({
       location: locationLabel,
-      type: typeLabel,
+      type: typeSlot,
       sensor,
       date: new Date(date).toString()
     })
