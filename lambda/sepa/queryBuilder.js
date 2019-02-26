@@ -13,10 +13,6 @@ const ListDevicesQuery = () => `
     }
 `
 
-const GetInfoIntentQuery = () => `
-
-`
-
 const ListByLocationQuery = ({ location }) => `
     SELECT DISTINCT ?x
     WHERE {
