@@ -1,0 +1,1099 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "CreateDeviceIntent",
+      "samples": [
+        "create {type} sensor in {location} ",
+        "create {type} sensor {location} ",
+        "create {type} sensor for {location} ",
+        "create {type} sensor",
+        "create sensor in the {location} ",
+        "create sensor",
+        "create",
+        "create device",
+        "create {location} {type} sensor",
+        "create {location} {type} device"
+      ],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": ["{type}", "{type} sensor", "{type} type", "type {type} "]
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": [
+            "in {location} ",
+            "{location} ",
+            "to {location} ",
+            "is located in {location} ",
+            "is in {location} ",
+            "is {location} ",
+            "is located {location} "
+          ]
+        }
+      ]
+    },
+    {
+      "name": "GetAllEnergyIntent",
+      "samples": [
+        "get energy of all sensors",
+        "get battery of all sensors",
+        "get battery level of all sensors",
+        "get battery of all",
+        "get battery of all devices",
+        "get energy of all devices"
+      ],
+      "slots": []
+    },
+    {
+      "name": "GetAllStateIntent",
+      "samples": [
+        "get state of all sensors",
+        "get state of all",
+        "get state of all devices",
+        "get status of all devices",
+        "get status of all",
+        "get status of all sensors"
+      ],
+      "slots": []
+    },
+    {
+      "name": "GetAverageIntent",
+      "samples": ["get average {type}", "get average"],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetAverageOfLocationIntent",
+      "samples": [
+        "get average {type} of {location}",
+        "get average of {location}",
+        "get daily average {type}",
+        "get daily average {type} of {location}",
+        "get average {type} of today",
+        "get daily average {type} in {location}",
+        "get average {type} in {location}",
+        "get average in {location}"
+      ],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetEnergyIntent",
+      "samples": [
+        "get energy",
+        "get energy of {location} {type} sensor",
+        "get energy of {location} {type}"
+      ],
+      "slots": [
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        },
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetInfoIntent",
+      "samples": [
+        "get info in {location}",
+        "get info",
+        "get info in the {location}"
+      ],
+      "slots": [
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetLastUpdateTimeIntent",
+      "samples": [
+        "get last update time of {location} {type} sensor",
+        "get last update time of {location} {type} ",
+        "get last update of {location} {type} sensor",
+        "get last update of {location} {type} ",
+        "get last update time"
+      ],
+      "slots": [
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        },
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetMaxOfLocationIntent",
+      "samples": [
+        "get maximum {type} of {location}",
+        "get max {type} of {location}",
+        "get maximum of {location}",
+        "get max of {location}",
+        "get max in {location}",
+        "get maximum {type} in {location}",
+        "get maximum",
+        "get max"
+      ],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetMinOfLocationIntent",
+      "samples": [
+        "get minimum {type} of {location}",
+        "get min {type} of {location}",
+        "get minimum of {location}",
+        "get min of {location}",
+        "get minimum",
+        "get min"
+      ],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetStateIntent",
+      "samples": [
+        "get state",
+        "get state of {location} {type}",
+        "get status",
+        "get status of {location} {type}"
+      ],
+      "slots": [
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        },
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetUpdateIntervalIntent",
+      "samples": [
+        "get update interval of {location} {type}",
+        "get update interval",
+        "get update interval of {location} {type} sensor"
+      ],
+      "slots": [
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        },
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "GetValueIntent",
+      "samples": [
+        "get {type} of {location}",
+        "get {location} {type}",
+        "get value in {location} ",
+        "get {type} ",
+        "get value",
+        "what is {location} {type}"
+      ],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": ["{type}"]
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": ["{location} ", "in {location} "]
+        }
+      ]
+    },
+    {
+      "name": "ListByLocationIntent",
+      "samples": [
+        "list sensors in the {location}",
+        "list sensors on {location}",
+        "list sensors on the {location}",
+        "list sensors inside {location}",
+        "list sensors in {location}",
+        "list by location",
+        "list by place",
+        "list devices in {location}",
+        "list devices inside {location}",
+        "list devices in the {location}",
+        "list devices on {location}",
+        "list devices on the {location}"
+      ],
+      "slots": [
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ListByStateIntent",
+      "samples": [
+        "list all sensor in {on_off} mode",
+        "list all sensor in {on_off} state",
+        "list {on_off} sensors",
+        "list turned {on_off} devices",
+        "list turned {on_off} device",
+        "list turned {on_off} sensors",
+        "list turned {on_off} sensor",
+        "list {on_off} devices",
+        "list devices {on_off}",
+        "list device {on_off}",
+        "list all device in {on_off} state",
+        "list by state",
+        "list by status"
+      ],
+      "slots": [
+        {
+          "name": "on_off",
+          "type": "DeviceStatus",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ListByTypeIntent",
+      "samples": [
+        "list {type} sensors",
+        "list sensors of {type} type",
+        "list all {type} sensors",
+        "list by type",
+        "list all {type} devices",
+        "list {type} devices"
+      ],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "ListDevicesIntent",
+      "samples": [
+        "list all sensors",
+        "list sensors",
+        "list devices",
+        "list all devices"
+      ],
+      "slots": []
+    },
+    {
+      "name": "RemoveDeviceIntent",
+      "samples": [
+        "remove {type} sensor in the {location}",
+        "remove {type} sensor for {location}",
+        "remove {type} sensor for the {location}",
+        "remove {type} sensor in {location}",
+        "delete {type} sensor in {location}",
+        "delete {type} sensor in the {location}",
+        "delete {type} sensor for the {location}",
+        "delete {type} sensor for {location}",
+        "remove {type} sensor of {location} ",
+        "delete {type} sensor of the {location} ",
+        "remove {type} sensor of the {location} ",
+        "remove {type} sensor",
+        "remove sensor in {location} ",
+        "remove sensor in the {location} ",
+        "remove sensor for {location} ",
+        "delete sensor for {location}",
+        "delete sensor in {location} ",
+        "delete sensor in the {location} ",
+        "delete sensor {location} ",
+        "remove sensor {location} ",
+        "remove {type} sensor from {location} ",
+        "delete {type} sensor from {location} ",
+        "remove from {location} ",
+        "delete from {location} ",
+        "remove {location} {type} sensor",
+        "remove sensor from {location} ",
+        "remove {location} {type}",
+        "remove sensor",
+        "delete sensor",
+        "delete",
+        "remove",
+        "delete device",
+        "remove device"
+      ],
+      "slots": [
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": ["{type} ", "{type} sensor"]
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": [
+            "in {location} ",
+            "in the {location} ",
+            "on {location} ",
+            "{location} "
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SetUpdateIntervalIntent",
+      "samples": [
+        "set update interval",
+        "set update interval of {location} {type} to {interval}",
+        "set update interval of {location} {type}",
+        "set update interval to {interval}",
+        "set update interval of {type}",
+        "set update interval of {location} {type} sensor",
+        "set update interval of {location} {type} device",
+        "set update interval of {type} sensor"
+      ],
+      "slots": [
+        {
+          "name": "interval",
+          "type": "AMAZON.DURATION",
+          "samples": []
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        },
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "TurnOnOffAllIntent",
+      "samples": [
+        "turn {on_off} all sensors",
+        "turn {on_off} all devices",
+        "turn {on_off} all"
+      ],
+      "slots": [
+        {
+          "name": "on_off",
+          "type": "DeviceStatus",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "TurnOnOffByLocationIntent",
+      "samples": [
+        "turn {on_off} all sensors in {location}",
+        "turn {on_off} by location",
+        "turn {on_off} all devices in {location}",
+        "turn {on_off} devices in {location}"
+      ],
+      "slots": [
+        {
+          "name": "on_off",
+          "type": "DeviceStatus",
+          "samples": []
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "TurnOnOffByTypeIntent",
+      "samples": [
+        "turn {on_off} by type",
+        "turn {on_off} all {type} ",
+        "turn {on_off} all {type} devices",
+        "turn {on_off} all {type} sensors"
+      ],
+      "slots": [
+        {
+          "name": "on_off",
+          "type": "DeviceStatus",
+          "samples": []
+        },
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "TurnOnOffIntent",
+      "samples": [
+        "turn {on_off} ",
+        "turn {on_off} {location} {type}",
+        "turn {on_off} {location} ",
+        "turn {on_off} {type} ",
+        "turn {on_off} {location} {type} sensor",
+        "turn {on_off} {type} sensor"
+      ],
+      "slots": [
+        {
+          "name": "on_off",
+          "type": "DeviceStatus",
+          "samples": []
+        },
+        {
+          "name": "location",
+          "type": "Location",
+          "samples": []
+        },
+        {
+          "name": "type",
+          "type": "DeviceType",
+          "samples": []
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "DeviceStatus",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "on",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "off",
+            "synonyms": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "DeviceType",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "temperature",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "humidity",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "light",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "proximity",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "alarm",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "moisture",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "speed",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "air pollution",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "pollution",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "acceleration",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "wind speed",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "altitude",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "air pressure",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "pressure",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "water level",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "motion",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "movement",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "presence",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "occupancy",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "contact",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "fire detector",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "gas detector",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "flame detector",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "smoke detector",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "leak detector",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "fire alarm",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "gas alarm",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "flame alarm",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "smoke alarm",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "pollution alarm",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "door",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "window",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "gate",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "irrigator",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "led",
+            "synonyms": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "Location",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "blue hall",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "server room",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "office",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "kitchen",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "living room",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "bathroom",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "bedroom",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "garden",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "outside",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "hall",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "study room",
+            "synonyms": []
+          }
+        }
+      ]
+    }
+  ],
+  "prompts": [
+    {
+      "id": "Confirm.Intent-CreateDeviceIntent",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "creating {type}  sensor in {location} . Are you sure?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "what's the type of the sensor?"
+        },
+        {
+          "type": "PlainText",
+          "value": "which type of sensor is?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "where is located the sensor?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-GetValueIntent.IntentSlot-type",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "which value?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-GetValueIntent.IntentSlot-location",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "in which location?"
+        }
+      ]
+    },
+    {
+      "id": "Confirm.Intent-RemoveDeviceIntent",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "{type} sensor of {location} will be removed. Are you sure?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "what's the type of the sensor to remove?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "where is located the sensor to remove?"
+        }
+      ]
+    },
+    {
+      "id": "Confirm.Intent-TurnOnOffIntent",
+      "promptVersion": "1.0",
+      "definitionVersion": "1.0",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "do you want to turn {on_off} {location} {type}?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "version": "1.0",
+    "intents": [
+      {
+        "name": "CreateDeviceIntent",
+        "confirmationRequired": true,
+        "prompts": {
+          "confirm": "Confirm.Intent-CreateDeviceIntent"
+        },
+        "slots": [
+          {
+            "name": "type",
+            "type": "DeviceType",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-CreateDeviceIntent.IntentSlot-type"
+            }
+          },
+          {
+            "name": "location",
+            "type": "Location",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-CreateDeviceIntent.IntentSlot-location"
+            }
+          }
+        ]
+      },
+      {
+        "name": "GetValueIntent",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "type",
+            "type": "DeviceType",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-GetValueIntent.IntentSlot-type"
+            }
+          },
+          {
+            "name": "location",
+            "type": "Location",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-GetValueIntent.IntentSlot-location"
+            }
+          }
+        ]
+      },
+      {
+        "name": "RemoveDeviceIntent",
+        "confirmationRequired": true,
+        "prompts": {
+          "confirm": "Confirm.Intent-RemoveDeviceIntent"
+        },
+        "slots": [
+          {
+            "name": "type",
+            "type": "DeviceType",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-type"
+            }
+          },
+          {
+            "name": "location",
+            "type": "Location",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicit": "Elicit.Intent-RemoveDeviceIntent.IntentSlot-location"
+            }
+          }
+        ]
+      },
+      {
+        "name": "TurnOnOffIntent",
+        "confirmationRequired": true,
+        "prompts": {
+          "confirm": "Confirm.Intent-TurnOnOffIntent"
+        },
+        "slots": [
+          {
+            "name": "on_off",
+            "type": "DeviceStatus",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          },
+          {
+            "name": "location",
+            "type": "Location",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          },
+          {
+            "name": "type",
+            "type": "DeviceType",
+            "elicitationRequired": false,
+            "confirmationRequired": false,
+            "prompts": {}
+          }
+        ]
+      }
+    ]
+  }
+}
