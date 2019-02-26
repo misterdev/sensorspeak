@@ -28,7 +28,7 @@ function LaunchRequestFilter () {
       const query = queryString.parse(requestBody).query
       const expectedQuery = SEPA.LaunchRequestQuery()
       if (query.indexOf(expectedQuery) > 0)
-        return simpleResponse('Italy-Site1-Pressure-label')
+        return simpleResponse('Battery voltage (SWAMP sensor)')
       else return 'error'
     })
 }
