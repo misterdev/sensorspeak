@@ -63,22 +63,6 @@
           ]
         },
         {
-          "name": "GetInfoIntent",
-          "slots": [
-            {
-              "name": "location",
-              "type": "AMAZON.SearchQuery"
-            }
-          ],
-          "samples": [
-            "get info",
-            "get info in {location}",
-            "get info for {location}",
-            "get info in the {location}",
-            "get info for the {location}"
-          ]
-        },
-        {
           "name": "GetLastUpdateTimeIntent",
           "slots": [
             {

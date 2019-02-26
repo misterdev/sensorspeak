@@ -10,7 +10,7 @@
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "a902a7c05ea4dc0c1082ddf8adb08ff2"
+            "eTag": "53443b6a8f146872c669e3e674e41ed6"
           }
         },
         "lambda": [
@@ -23,7 +23,7 @@
             "codeUri": "lambda",
             "functionName": "sensor-speak-handler",
             "handler": "index.handler",
-            "revisionId": "c69156ba-aa41-4b23-b60c-6e2224b72f73",
+            "revisionId": "b5d94664-e86b-4d31-81e7-7bcd23282080",
             "runtime": "nodejs8.10"
           }
         ]

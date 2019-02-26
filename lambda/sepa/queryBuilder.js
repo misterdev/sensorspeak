@@ -1,7 +1,7 @@
 const LaunchRequestQuery = () => `
     SELECT DISTINCT ?x
     WHERE {
-        arces-monitor:Italy-Site1-Pressure ?p ?o ;
+        arces-monitor:swamp_devices_moisture1_up_Battery_Level ?p ?o ;
             rdf:label ?x .
     }
 `
@@ -13,11 +13,29 @@ const ListDevicesQuery = () => `
     }
 `
 
+const GetInfoIntentQuery = () => `
+
+`
+
 const ListByLocationQuery = ({ location }) => `
     SELECT DISTINCT ?x
     WHERE {
-        ?obs sosa:hasFeatureOfInterest ${location} ;
+        ?obs sosa:hasFeatureOfInterest <${location}> ;
             rdf:label ?x .
+    }
+`
+
+const GetValueQuery = ({ location, type }) => `
+    SELECT DISTINCT ?label ?val
+    WHERE {
+        ?obs a sosa:Observation ; 
+            sosa:hasFeatureOfInterest <${location}> ;
+            rdf:label ?label ;
+            sosa:hasResult ?result ;
+            sosa:madeBySensor ?sensor .
+        ?sensor a sosa:Sensor ;
+            sosa:observes <${type}> .
+        ?result qudt-1-1:numericValue ?val .
     }
 `
 
@@ -38,20 +56,6 @@ const ListByTypeQuery = ({ type }) => `
             sosa:madeBySensor ?sensor .
         ?sensor a sosa:Sensor ;
             sosa:observes <${type}> .
-    }
-`
-
-const GetValueQuery = ({ location, type }) => `
-    SELECT DISTINCT ?label ?val
-    WHERE {
-        ?obs a sosa:Observation ; 
-            sosa:hasFeatureOfInterest <${location}> ;
-            rdf:label ?label ;
-            sosa:hasResult ?result ;
-            sosa:madeBySensor ?sensor .
-        ?sensor a sosa:Sensor ;
-            sosa:observes <${type}> .
-        ?result qudt-1-1:numericValue ?val .
     }
 `
 
