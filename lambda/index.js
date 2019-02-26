@@ -476,11 +476,10 @@ const ListByStateIntentHandler = {
     if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
       return Alexa.elicitSlots(handlerInput)
 
-    const statusSlot = Alexa.getSlot(handlerInput, 'on_off')
-    if (statusSlot !== 'on' || statusSlot !== 'off')
+    const status = Alexa.getSlot(handlerInput, 'status')
+    if (status !== 'on' && status !== 'off')
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_STATE)
 
-    const status = statusSlot === 'on'
     const results = await SEPA.query(SEPA.ListByStateQuery, { status })
     if (!results)
       return Alexa.continueDialog(handlerInput, RESPONSE.NoResults())
@@ -488,14 +487,14 @@ const ListByStateIntentHandler = {
       return Alexa.continueDialog(
         handlerInput,
         RESPONSE.NoValueStatus({
-          status: statusSlot
+          status
         })
       )
 
     const sensors = listify(results)
 
     const speechText = RESPONSE.ListByState({
-      status: statusSlot,
+      status,
       sensors,
       length: results.length
     })

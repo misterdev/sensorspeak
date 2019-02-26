@@ -336,10 +336,11 @@ const GetInfoIntentQuery = () => `
 
 async function x () {
   let query
-  query = LaunchRequestQuery
+  query = SEPA.ListByStateQuery
   const result = await SEPA.query(query, {
     location: 'http://wot.arces.unibo.it/monitor#Mars_Garden',
-    type: 'http://purl.org/iot/vocab/m3-lite#Temperature'
+    type: 'http://purl.org/iot/vocab/m3-lite#Temperature',
+    status: 'on'
   })
   console.log(result)
 }

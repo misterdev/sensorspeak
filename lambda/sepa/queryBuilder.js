@@ -145,7 +145,7 @@ const GetLastUpdateTimeQuery = ({ location, type }) => {
 `
 }
 
-const ListByStateQuery = ({ isOn }) => `
+const ListByStateQuery = ({ status }) => `
     SELECT ?x
     WHERE {
         ?obs a sosa:Observation ;
@@ -155,7 +155,7 @@ const ListByStateQuery = ({ isOn }) => `
           ssn:hasProperty ?sensorstate .
         ?actuation sosa:actsOnProperty ?sensorstate ;
           sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-          sosa:hasSimpleResult ${isOn} .
+          sosa:hasSimpleResult ${status === 'on'} .
     }
 `
 
