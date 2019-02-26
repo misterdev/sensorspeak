@@ -23,8 +23,7 @@ See the [README](../README.md) for the setup/development instructions.
     |_ utils
         |_ alexa.js             // alexa utility
         |_ responseBuilder.js   // alexa response templates
-|_ hooks
-    |_ pre_deply_hook.sh        // no touch pls thx
+|_ hooks/                       // no touch pls thx
 |_ models
     |_ en-US.json               // english skill model
     |_ (it-IT.json)             // here you can define new localized models
