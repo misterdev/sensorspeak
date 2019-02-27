@@ -1,6 +1,6 @@
 module.exports = {
   NoValue: ({ location, type }) =>
-    `There aren't data about the ${type} in ${location}. I'm sorry 🤷‍`,
+    `There aren't data about the ${type} sensor in ${location}. I'm sorry 🤷‍`,
   NoValueType: ({ type }) =>
     `There aren't data about the ${type} sensors. I'm sorry 🤷‍`,
   NoValueStatus: ({ status }) => `There are no sensor with status: ${status}`,
@@ -37,5 +37,7 @@ module.exports = {
   GetLastUpdateTime: ({ location, type, sensor, date }) =>
     `The last update for the ${type} in ${location} has been made by sensor ${sensor} on ${date}`,
   GetState: ({ location, type, length, sensors }) =>
-    `There are ${length} ${type} sensors in ${location}: ${sensors}`
+    `There are ${length} ${type} sensors in ${location}: ${sensors}`,
+  TurnOnOff: ({ location, type, status }) =>
+    `The ${type} sensors in ${location} have been turned ${status}`
 }

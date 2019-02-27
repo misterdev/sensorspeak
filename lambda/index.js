@@ -564,6 +564,53 @@ const GetStateIntentHandler = {
     return Alexa.continueDialog(handlerInput, speechText)
   }
 }
+// TurnOnOffByLocation,TurnOnOffByType
+
+const TurnOnOffIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'TurnOnOffIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeSlot]
+
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const status = Alexa.getSlot(handlerInput, 'status')
+    if (status !== 'on' && status !== 'off')
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_STATE)
+
+    const query = SEPA.TurnOnOffQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      type,
+      status
+    })
+
+    const speechText = RESPONSE.TurnOnOff({
+      location: locationLabel,
+      type: typeSlot,
+      status
+    })
+
+    return Alexa.continueDialog(handlerInput, speechText)
+  }
+}
 
 const ErrorHandler = {
   canHandle (handlerInput) {
@@ -639,7 +686,8 @@ exports.handler = skillBuilder
     GetMinOfLocationIntentHandler,
     GetLastUpdateTimeIntentHandler,
     ListByStateIntentHandler,
-    GetStateIntentHandler
+    GetStateIntentHandler,
+    TurnOnOffIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()

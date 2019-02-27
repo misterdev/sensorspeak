@@ -321,28 +321,38 @@ const type = () => `
           sosa:observes m3lite:Humidity .
     }
 `
-const GetStateQuery = ({ location, type }) => `
-  SELECT DISTINCT ?label ?status
+const TurnOnOffQuery = ({ location, type, status }) => `
+  WITH <http://devidtest/graph>
+  DELETE { 
+    ?actuation sosa:hasSimpleResult ?state ;
+        sosa:resultTime ?oldTimestamp .
+  }
+  INSERT {
+    ?actuation sosa:hasSimpleResult ${status === 'on'} ;
+      sosa:resultTime ?timestamp .
+  }
   WHERE {
     ?obs a sosa:Observation ;
       sosa:madeBySensor ?sensor ;
       sosa:hasFeatureOfInterest <${location}> ;
       rdf:label ?label .
     ?sensor a sosa:Sensor ;
-      ssn:hasProperty ?sensorstate ;
-      sosa:observes <${type}> .
+      sosa:observes <${type}> ;
+      ssn:hasProperty ?sensorstate .
     ?actuation sosa:actsOnProperty ?sensorstate ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult ?status .
+      sosa:hasSimpleResult ?state ;
+      sosa:resultTime ?oldTimestamp .
+      BIND(now() AS ?timestamp)
   }
 `
 
 async function x () {
   let query
-  query = GetStateQuery
+  query = TurnOnOffQuery
   const result = await SEPA.query(query, {
-    location: 'place://devid-temp-1',
-    type: 'http://purl.org/iot/vocab/m3-lite#Temperature',
+    location: 'place://devid-temp-4',
+    type: 'http://purl.org/iot/vocab/m3-lite#BoardTemperature',
     status: 'on'
   })
   console.log(result)

@@ -47,17 +47,17 @@ See the [README](../README.md) for the setup/development instructions.
 |ListLocationsIntent|"list all locations"||
 |ListByLocationIntent|"list sensors in the {location}"|location|
 |ListByTypeIntent|"list {type} sensors"|type|
-|ListByStateIntent|"list all sensor in {on_off} mode"|state|
+|ListByStateIntent|"list all sensor in {status} mode"|state|
 |GetValueIntent|"get {type} of {location}"|type, location|
 |GetAverageIntent|"get average {type}"|type|
 |GetAverageOfLocationIntent|"get average {type} of {location}"|type, location|
 |==GetLastUpdateTimeIntent|"get last update time of {location} {type} sensor"  (//TODO |type, location|
 |==GetMaxOfLocationIntent| "get maximum {type} of {location}"|type, location|
 |==GetMinOfLocationIntent| "get minimum {type} of {location}"|type, location|
-|-GetStateIntent|"get state of {location} {type}"|type, location|
-|-TurnOnOffIntent|"turn {on_off} {location} {type}"|type, location, state|
-|-TurnOnOffByLocationIntent|"turn {on_off} all sensors in {location}"|location, state|
-|-TurnOnOffByTypeIntent|"turn {on_off} all {type} "|type, state|
+|GetStateIntent|"get state of {location} {type}"|type, location|
+|-TurnOnOffIntent|"turn {status} {location} {type}"|type, location, state|
+|-TurnOnOffByLocationIntent|"turn {status} all sensors in {location}"|location, state|
+|-TurnOnOffByTypeIntent|"turn {status} all {type} "|type, state|
 |-SetUpdateIntervalIntent|"set update interval of {location} {type} to {interval}"|type, location|
 |-GetUpdateIntervalIntent|"get update interval of {location} {type}"|type, location|
 

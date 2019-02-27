@@ -175,6 +175,32 @@ const GetStateQuery = ({ location, type }) => `
   }
 `
 
+const TurnOnOffQuery = ({ location, type, status }) => `
+  WITH <http://devidtest/graph>
+  DELETE { 
+    ?actuation sosa:hasSimpleResult ?state ;
+        sosa:resultTime ?oldTimestamp .
+  }
+  INSERT {
+    ?actuation sosa:hasSimpleResult ${status === 'on'} ;
+      sosa:resultTime ?timestamp .
+  }
+  WHERE {
+    ?obs a sosa:Observation ;
+      sosa:madeBySensor ?sensor ;
+      sosa:hasFeatureOfInterest <${location}> ;
+      rdf:label ?label .
+    ?sensor a sosa:Sensor ;
+      sosa:observes <${type}> ;
+      ssn:hasProperty ?sensorstate .
+    ?actuation sosa:actsOnProperty ?sensorstate ;
+      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+      sosa:hasSimpleResult ?state ;
+      sosa:resultTime ?oldTimestamp .
+      BIND(now() AS ?timestamp)
+  }
+`
+
 // // TODO aggiungere type e time
 // const GetMaxOfLocationQuery = ({ location, type }) => `
 //     SELECT DISTINCT ?label MAX(?val) as ?maxVal
@@ -218,5 +244,6 @@ module.exports = {
   GetMinOfLocationQuery,
   GetLastUpdateTimeQuery,
   ListByStateQuery,
-  GetStateQuery
+  GetStateQuery,
+  TurnOnOffQuery
 }

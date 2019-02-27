@@ -350,6 +350,82 @@
               "samples": []
             }
           ]
+        },
+        {
+          "name": "TurnOnOffByLocationIntent",
+          "samples": [
+            "turn {status} sensors",
+            "turn {status} by location",
+            "turn {status} in location",
+            "turn {status} sensors by location",
+            "turn {status} sensors in location",
+            "turn {status} devices",
+            "turn {status} devices by location",
+            "turn {status} devices in location"
+          ],
+          "slots": [
+            {
+              "name": "status",
+              "type": "DeviceStatus",
+              "samples": []
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "TurnOnOffByTypeIntent",
+          "samples": [
+            "turn {status} by type",
+            "turn {status} all {type} ",
+            "turn {status} all {type} devices",
+            "turn {status} all {type} sensors",
+            "turn {status} all the {type} devices",
+            "turn {status} all the {type} sensors"
+          ],
+          "slots": [
+            {
+              "name": "status",
+              "type": "DeviceStatus",
+              "samples": []
+            },
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "TurnOnOffIntent",
+          "samples": [
+            "turn {status}",
+            "turn {status} {type}",
+            "turn {status} {type} sensor",
+            "turn {status} {type} device",
+            "turn {status} the {type} sensor",
+            "turn {status} the {type} device"
+          ],
+          "slots": [
+            {
+              "name": "status",
+              "type": "DeviceStatus",
+              "samples": []
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": []
+            },
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": []
+            }
+          ]
         }
       ],
       "types": [
@@ -583,6 +659,90 @@
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "TurnOnOffIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            },
+            {
+              "name": "status",
+              "type": "DeviceStatus",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-status"
+              }
+            }
+          ]
+        },
+        {
+          "name": "TurnOnOffByTypeIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "status",
+              "type": "DeviceStatus",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-status"
+              }
+            }
+          ]
+        },
+        {
+          "name": "TurnOnOffByLocationIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            },
+            {
+              "name": "status",
+              "type": "DeviceStatus",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-status"
               }
             }
           ]
