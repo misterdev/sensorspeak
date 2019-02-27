@@ -13,7 +13,6 @@ const queryString = require('query-string')
 const client = new SparqlClient(endpoint, { updateEndpoint }).register({
   schema: 'http://schema.org/',
   rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-  rdfs: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
   sosa: 'http://www.w3.org/ns/sosa/',
   'qudt-1-1': 'http://qudt.org/1.1/schema/qudt#',
   'qudt-unit-1-1': 'http://qudt.org/1.1/vocab/unit#',
@@ -21,7 +20,8 @@ const client = new SparqlClient(endpoint, { updateEndpoint }).register({
   mqtt: 'http://wot.arces.unibo.it/mqtt#',
   time: 'http://www.w3.org/2006/time#',
   xsd: 'http://www.w3.org/2001/XMLSchema#',
-  m3lite: 'http://purl.org/iot/vocab/m3-lite#'
+  m3lite: 'http://purl.org/iot/vocab/m3-lite#',
+  ssn: 'http://purl.oclc.org/NET/ssnx/ssn#'
 })
 
 // new Date(new Date(request.timestamp).getTime() - 24*60*60*1000)
@@ -321,7 +321,7 @@ const type = () => `
           sosa:observes m3lite:Humidity .
     }
 `
-const TurnOnOffQuery = ({ location, type, status }) => `
+const TurnOnOffByLocationQuery = ({ location, status }) => `
   WITH <http://devidtest/graph>
   DELETE { 
     ?actuation sosa:hasSimpleResult ?state ;
@@ -334,10 +334,8 @@ const TurnOnOffQuery = ({ location, type, status }) => `
   WHERE {
     ?obs a sosa:Observation ;
       sosa:madeBySensor ?sensor ;
-      sosa:hasFeatureOfInterest <${location}> ;
-      rdf:label ?label .
+      sosa:hasFeatureOfInterest <${location}> .
     ?sensor a sosa:Sensor ;
-      sosa:observes <${type}> ;
       ssn:hasProperty ?sensorstate .
     ?actuation sosa:actsOnProperty ?sensorstate ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
@@ -347,12 +345,28 @@ const TurnOnOffQuery = ({ location, type, status }) => `
   }
 `
 
+const GetStateQuery = ({ location, type }) => `
+  SELECT DISTINCT ?label ?status
+  WHERE {
+    ?obs a sosa:Observation ;
+        sosa:madeBySensor ?sensor ;
+        sosa:hasFeatureOfInterest <${location}> ;
+        rdf:label ?label .
+    ?sensor a sosa:Sensor ;
+        ssn:hasProperty ?sensorstate ;
+        sosa:observes <${type}> .
+    ?actuation sosa:actsOnProperty ?sensorstate ;
+        sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+        sosa:hasSimpleResult ?status .
+  }
+`
+
 async function x () {
   let query
-  query = TurnOnOffQuery
+  query = TurnOnOffByLocationQuery
   const result = await SEPA.query(query, {
-    location: 'place://devid-temp-4',
-    type: 'http://purl.org/iot/vocab/m3-lite#BoardTemperature',
+    location: 'place://devid-temp-1',
+    type: 'http://purl.org/iot/vocab/m3-lite#Temperature',
     status: 'on'
   })
   console.log(result)

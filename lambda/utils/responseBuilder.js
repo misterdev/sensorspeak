@@ -39,5 +39,7 @@ module.exports = {
   GetState: ({ location, type, length, sensors }) =>
     `There are ${length} ${type} sensors in ${location}: ${sensors}`,
   TurnOnOff: ({ location, type, status }) =>
-    `The ${type} sensors in ${location} have been turned ${status}`
+    `Any ${type} sensor in ${location} has been turned ${status}`,
+  TurnOnOffByLocation: ({ location, status }) =>
+    `Any sensor in ${location} has been turned ${status}`
 }

@@ -1,3 +1,5 @@
+CLEAR GRAPH <http://devidtest/graph>
+
 INSERT {
   GRAPH <http://devidtest/graph> {
     m3lite:Temperature a sosa:ObservableProperty .
@@ -20,98 +22,100 @@ INSERT {
       sosa:madeActuation <actuation://devid-temp-8> ;
       sosa:madeActuation <actuation://devid-temp-9> .
 
-    arces-monitor:devid-temp-1bis a sosa:Observation ;
-      rdf:label "Devid Test 1bis(Temperature)" ;
-      sosa:madeBySensor <sensor://devid-temp-1bis> ;
-      sosa:hasResult <result://devid-temp-1bis> ;
+    arces-monitor:devid-temp-1-1 a sosa:Observation ;
+      rdf:label "Devid Test 1-1(Temperature)" ;
+      sosa:madeBySensor <sensor://devid-temp-1-1> ;
+      sosa:hasResult <result://devid-temp-1-1> ;
       sosa:hasFeatureOfInterest <place://devid-temp-1> ;
-      arces-monitor:hasUpdateInterval <interval://devid-temp-1bis> .
-    <interval://devid-temp-1bis> a qudt-1-1:QuantityValue ;
+      arces-monitor:hasUpdateInterval <interval://devid-temp-1-1> .
+    <interval://devid-temp-1-1> a qudt-1-1:QuantityValue ;
         qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
         qudt-1-1:numericValue 3600000 .
-    <result://devid-temp-1bis> a qudt-1-1:QuantityValue ;
-      qudt-1-1:numericValue 0.36 .
-    <sensor://devid-temp-1bis> a sosa:Sensor ;
-      sosa:observes m3lite:Temperature ;
-      ssn:hasProperty <sensor://devid-temp-1bis#state> .
-    <sensor://devid-temp-1bis#state> a sosa:ActuatableProperty ;
-      sosa:isActedOnBy <actuation://devid-temp-1bis> .
-    <actuation://devid-temp-1bis> a sosa:Actuation ;
-      sosa:actsOnProperty  <sensor://devid-temp-1bis#state> ;
-      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult true ;
-      sosa:resultTime "2017-04-17T17:24:00+02:00" .
-
-    arces-monitor:devid-temp-1 a sosa:Observation ;
-      rdf:label "Devid Test 1(Temperature)" ;
-      sosa:madeBySensor <sensor://devid-temp-1> ;
-      sosa:hasResult <result://devid-temp-1> ;
-      sosa:hasFeatureOfInterest <place://devid-temp-1> ;
-      arces-monitor:hasUpdateInterval <interval://devid-temp-1> .
-    <interval://devid-temp-1> a qudt-1-1:QuantityValue ;
-        qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
-        qudt-1-1:numericValue 3600000 .
-    <result://devid-temp-1> a qudt-1-1:QuantityValue ;
+    <result://devid-temp-1-1> a qudt-1-1:QuantityValue ;
       qudt-1-1:numericValue 0.36 .
     <place://devid-temp-1> a schema:Place ;
       schema:name "DEVID HOUSE 1" .
-    <sensor://devid-temp-1> a sosa:Sensor ;
+    <sensor://devid-temp-1-1> a sosa:Sensor ;
       sosa:observes m3lite:Temperature ;
-      ssn:hasProperty <sensor://devid-temp-1#state> .
-    <sensor://devid-temp-1#state> a sosa:ActuatableProperty ;
-      sosa:isActedOnBy <actuation://devid-temp-1> .
-    <actuation://devid-temp-1> a sosa:Actuation ;
-      sosa:actsOnProperty  <sensor://devid-temp-1#state> ;
+      ssn:hasProperty <sensor://devid-temp-1-1#state> .
+    <sensor://devid-temp-1-1#state> a sosa:ActuatableProperty ;
+      sosa:isActedOnBy <actuation://devid-temp-1-1> .
+    <actuation://devid-temp-1-1> a sosa:Actuation ;
+      sosa:actsOnProperty  <sensor://devid-temp-1-1#state> ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult true ;
+      sosa:hasSimpleResult false ;
       sosa:resultTime "2017-04-17T17:24:00+02:00" .
 
-    arces-monitor:devid-temp-2 a sosa:Observation ;
-      rdf:label "Devid Test 2(Temperature)" ;
-      sosa:madeBySensor <sensor://devid-temp-2> ;
-      sosa:hasResult <result://devid-temp-2> ;
-      sosa:hasFeatureOfInterest <place://devid-temp-2> ;
-      arces-monitor:hasUpdateInterval <interval://devid-temp-2> .
-    <interval://devid-temp-2> a qudt-1-1:QuantityValue ;
+    arces-monitor:devid-temp-1-2 a sosa:Observation ;
+      rdf:label "Devid Test 1-1(Temperature)" ;
+      sosa:madeBySensor <sensor://devid-temp-1-2> ;
+      sosa:hasResult <result://devid-temp-1-2> ;
+      sosa:hasFeatureOfInterest <place://devid-temp-1> ;
+      arces-monitor:hasUpdateInterval <interval://devid-temp-1-2> .
+    <interval://devid-temp-1-2> a qudt-1-1:QuantityValue ;
         qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
         qudt-1-1:numericValue 3600000 .
-    <result://devid-temp-2> a qudt-1-1:QuantityValue ;
+    <result://devid-temp-1-2> a qudt-1-1:QuantityValue ;
+      qudt-1-1:numericValue 0.36 .
+    <place://devid-temp-1> a schema:Place ;
+      schema:name "DEVID HOUSE 1" .
+    <sensor://devid-temp-1-2> a sosa:Sensor ;
+      sosa:observes m3lite:Temperature ;
+      ssn:hasProperty <sensor://devid-temp-1-2#state> .
+    <sensor://devid-temp-1-2#state> a sosa:ActuatableProperty ;
+      sosa:isActedOnBy <actuation://devid-temp-1-2> .
+    <actuation://devid-temp-1-2> a sosa:Actuation ;
+      sosa:actsOnProperty  <sensor://devid-temp-1-2#state> ;
+      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+      sosa:hasSimpleResult false ;
+      sosa:resultTime "2017-04-17T17:24:00+02:00" .
+
+    arces-monitor:devid-temp-2-1 a sosa:Observation ;
+      rdf:label "Devid Test 2(Temperature)" ;
+      sosa:madeBySensor <sensor://devid-temp-2-1> ;
+      sosa:hasResult <result://devid-temp-2-1> ;
+      sosa:hasFeatureOfInterest <place://devid-temp-2> ;
+      arces-monitor:hasUpdateInterval <interval://devid-temp-2-1> .
+    <interval://devid-temp-2-1> a qudt-1-1:QuantityValue ;
+        qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
+        qudt-1-1:numericValue 3600000 .
+    <result://devid-temp-2-1> a qudt-1-1:QuantityValue ;
       qudt-1-1:numericValue 0.36 .
     <place://devid-temp-2> a schema:Place ;
       schema:name "DEVID HOUSE 2" .
-    <sensor://devid-temp-2> a sosa:Sensor ;
+    <sensor://devid-temp-2-1> a sosa:Sensor ;
       sosa:observes m3lite:Temperature ;
-      ssn:hasProperty <sensor://devid-temp-2#state> .
-    <sensor://devid-temp-2#state> a sosa:ActuatableProperty ;
-      sosa:isActedOnBy <actuation://devid-temp-2> .
-    <actuation://devid-temp-2> a sosa:Actuation ;
-      sosa:actsOnProperty  <sensor://devid-temp-2#state> ;
+      ssn:hasProperty <sensor://devid-temp-2-1#state> .
+    <sensor://devid-temp-2-1#state> a sosa:ActuatableProperty ;
+      sosa:isActedOnBy <actuation://devid-temp-2-1> .
+    <actuation://devid-temp-2-1> a sosa:Actuation ;
+      sosa:actsOnProperty  <sensor://devid-temp-2-1#state> ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult true ;
+      sosa:hasSimpleResult false ;
       sosa:resultTime "2017-04-16T17:24:00+02:00" .
 
-    arces-monitor:devid-temp-3 a sosa:Observation ;
+    arces-monitor:devid-temp-3-1 a sosa:Observation ;
       rdf:label "Devid Test 3(Temperature)" ;
-      sosa:madeBySensor <sensor://devid-temp-3> ;
-      sosa:hasResult <result://devid-temp-3> ;
+      sosa:madeBySensor <sensor://devid-temp-3-1> ;
+      sosa:hasResult <result://devid-temp-3-1> ;
       sosa:hasFeatureOfInterest <place://devid-temp-3> ;
-      arces-monitor:hasUpdateInterval <interval://devid-temp-3> .
-    <interval://devid-temp-3> a qudt-1-1:QuantityValue ;
+      arces-monitor:hasUpdateInterval <interval://devid-temp-3-1> .
+    <interval://devid-temp-3-1> a qudt-1-1:QuantityValue ;
         qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
         qudt-1-1:numericValue 3600000 .
-    <result://devid-temp-3> a qudt-1-1:QuantityValue ;
+    <result://devid-temp-3-1> a qudt-1-1:QuantityValue ;
       qudt-1-1:numericValue 0.36 .
     <place://devid-temp-3> a schema:Place ;
       schema:name "DEVID HOUSE 3" .
-    <sensor://devid-temp-3> a sosa:Sensor ;
+    <sensor://devid-temp-3-1> a sosa:Sensor ;
       sosa:observes m3lite:Temperature ;
-      ssn:hasProperty <sensor://devid-temp-3#state> .
-    <sensor://devid-temp-3#state> a sosa:ActuatableProperty ;
-      sosa:isActedOnBy <actuation://devid-temp-3> .
-    <actuation://devid-temp-3> a sosa:Actuation ;
-      sosa:actsOnProperty  <sensor://devid-temp-3#state> ;
+      ssn:hasProperty <sensor://devid-temp-3-1#state> .
+    <sensor://devid-temp-3-1#state> a sosa:ActuatableProperty ;
+      sosa:isActedOnBy <actuation://devid-temp-3-1> .
+    <actuation://devid-temp-3-1> a sosa:Actuation ;
+      sosa:actsOnProperty  <sensor://devid-temp-3-1#state> ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult true ;
+      sosa:hasSimpleResult false ;
       sosa:resultTime "2017-04-15T17:24:00+02:00" .
 
     arces-monitor:devid-temp-4 a sosa:Observation ;
@@ -159,7 +163,7 @@ INSERT {
     <actuation://devid-temp-5> a sosa:Actuation ;
       sosa:actsOnProperty  <sensor://devid-temp-5#state> ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult true ;
+      sosa:hasSimpleResult false ;
       sosa:resultTime "2017-04-18T17:24:00+02:00" .
       
     arces-monitor:devid-temp-6 a sosa:Observation ;
@@ -231,7 +235,7 @@ INSERT {
     <actuation://devid-temp-8> a sosa:Actuation ;
       sosa:actsOnProperty  <sensor://devid-temp-8#state> ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult true ;
+      sosa:hasSimpleResult false ;
       sosa:resultTime "2017-04-11T17:24:00+02:00" .
 
     arces-monitor:devid-temp-9 a sosa:Observation ;

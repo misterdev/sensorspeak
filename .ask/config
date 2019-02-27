@@ -23,7 +23,7 @@
             "codeUri": "lambda",
             "functionName": "sensor-speak-handler",
             "handler": "index.handler",
-            "revisionId": "cb14d3b2-9c0b-40af-b6c9-137e0f2fbc1b",
+            "revisionId": "33e4ec68-4b3f-4fc2-b458-a14f3d54d956",
             "runtime": "nodejs8.10"
           }
         ]

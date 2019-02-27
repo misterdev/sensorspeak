@@ -552,7 +552,6 @@ const GetStateIntentHandler = {
         return `\u{2022} #${index + 1}, ${label} is ${on_off}.`
       })
       .join('\n')
-    console.log(sensors)
 
     const speechText = RESPONSE.GetState({
       location: locationLabel,
@@ -564,7 +563,6 @@ const GetStateIntentHandler = {
     return Alexa.continueDialog(handlerInput, speechText)
   }
 }
-// TurnOnOffByLocation,TurnOnOffByType
 
 const TurnOnOffIntentHandler = {
   canHandle (handlerInput) {
@@ -605,6 +603,47 @@ const TurnOnOffIntentHandler = {
     const speechText = RESPONSE.TurnOnOff({
       location: locationLabel,
       type: typeSlot,
+      status
+    })
+
+    return Alexa.continueDialog(handlerInput, speechText)
+  }
+}
+
+// TurnOnOffByType
+
+const TurnOnOffByLocationIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'TurnOnOffByLocationIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const status = Alexa.getSlot(handlerInput, 'status')
+    if (status !== 'on' && status !== 'off')
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_STATE)
+
+    const query = SEPA.TurnOnOffByLocationQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      status
+    })
+
+    const speechText = RESPONSE.TurnOnOffByLocation({
+      location: locationLabel,
       status
     })
 
@@ -687,7 +726,8 @@ exports.handler = skillBuilder
     GetLastUpdateTimeIntentHandler,
     ListByStateIntentHandler,
     GetStateIntentHandler,
-    TurnOnOffIntentHandler
+    TurnOnOffIntentHandler,
+    TurnOnOffByLocationIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()

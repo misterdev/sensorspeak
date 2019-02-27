@@ -188,8 +188,7 @@ const TurnOnOffQuery = ({ location, type, status }) => `
   WHERE {
     ?obs a sosa:Observation ;
       sosa:madeBySensor ?sensor ;
-      sosa:hasFeatureOfInterest <${location}> ;
-      rdf:label ?label .
+      sosa:hasFeatureOfInterest <${location}> .
     ?sensor a sosa:Sensor ;
       sosa:observes <${type}> ;
       ssn:hasProperty ?sensorstate .
@@ -200,6 +199,32 @@ const TurnOnOffQuery = ({ location, type, status }) => `
       BIND(now() AS ?timestamp)
   }
 `
+
+const TurnOnOffByLocationQuery = ({ location, status }) => `
+  WITH <http://devidtest/graph>
+  DELETE { 
+    ?actuation sosa:hasSimpleResult ?state ;
+        sosa:resultTime ?oldTimestamp .
+  }
+  INSERT {
+    ?actuation sosa:hasSimpleResult ${status === 'on'} ;
+      sosa:resultTime ?timestamp .
+  }
+  WHERE {
+    ?obs a sosa:Observation ;
+      sosa:madeBySensor ?sensor ;
+      sosa:hasFeatureOfInterest <${location}> .
+    ?sensor a sosa:Sensor ;
+      ssn:hasProperty ?sensorstate .
+    ?actuation sosa:actsOnProperty ?sensorstate ;
+      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+      sosa:hasSimpleResult ?state ;
+      sosa:resultTime ?oldTimestamp .
+      BIND(now() AS ?timestamp)
+  }
+`
+
+// kjgasdkjahsdkjhs
 
 // // TODO aggiungere type e time
 // const GetMaxOfLocationQuery = ({ location, type }) => `
@@ -245,5 +270,6 @@ module.exports = {
   GetLastUpdateTimeQuery,
   ListByStateQuery,
   GetStateQuery,
-  TurnOnOffQuery
+  TurnOnOffQuery,
+  TurnOnOffByLocationQuery
 }
