@@ -224,6 +224,30 @@ const TurnOnOffByLocationQuery = ({ location, status }) => `
   }
 `
 
+const TurnOnOffByTypeQuery = ({ type, status }) => `
+  WITH <http://devidtest/graph>
+  DELETE { 
+    ?actuation sosa:hasSimpleResult ?state ;
+        sosa:resultTime ?oldTimestamp .
+  }
+  INSERT {
+    ?actuation sosa:hasSimpleResult ${status === 'on'} ;
+      sosa:resultTime ?timestamp .
+  }
+  WHERE {
+    ?obs a sosa:Observation ;
+      sosa:madeBySensor ?sensor .
+    ?sensor a sosa:Sensor ;
+      sosa:observes <${type}> ;
+      ssn:hasProperty ?sensorstate .
+    ?actuation sosa:actsOnProperty ?sensorstate ;
+      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
+      sosa:hasSimpleResult ?state ;
+      sosa:resultTime ?oldTimestamp .
+      BIND(now() AS ?timestamp)
+  }
+`
+
 // kjgasdkjahsdkjhs
 
 // // TODO aggiungere type e time
@@ -271,5 +295,6 @@ module.exports = {
   ListByStateQuery,
   GetStateQuery,
   TurnOnOffQuery,
-  TurnOnOffByLocationQuery
+  TurnOnOffByLocationQuery,
+  TurnOnOffByTypeQuery
 }

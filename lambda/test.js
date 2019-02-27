@@ -321,7 +321,7 @@ const type = () => `
           sosa:observes m3lite:Humidity .
     }
 `
-const TurnOnOffByLocationQuery = ({ location, status }) => `
+const TurnOnOffByTypeQuery = ({ type, status }) => `
   WITH <http://devidtest/graph>
   DELETE { 
     ?actuation sosa:hasSimpleResult ?state ;
@@ -333,9 +333,9 @@ const TurnOnOffByLocationQuery = ({ location, status }) => `
   }
   WHERE {
     ?obs a sosa:Observation ;
-      sosa:madeBySensor ?sensor ;
-      sosa:hasFeatureOfInterest <${location}> .
+      sosa:madeBySensor ?sensor .
     ?sensor a sosa:Sensor ;
+      sosa:observes <${type}> ;
       ssn:hasProperty ?sensorstate .
     ?actuation sosa:actsOnProperty ?sensorstate ;
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
@@ -345,25 +345,9 @@ const TurnOnOffByLocationQuery = ({ location, status }) => `
   }
 `
 
-const GetStateQuery = ({ location, type }) => `
-  SELECT DISTINCT ?label ?status
-  WHERE {
-    ?obs a sosa:Observation ;
-        sosa:madeBySensor ?sensor ;
-        sosa:hasFeatureOfInterest <${location}> ;
-        rdf:label ?label .
-    ?sensor a sosa:Sensor ;
-        ssn:hasProperty ?sensorstate ;
-        sosa:observes <${type}> .
-    ?actuation sosa:actsOnProperty ?sensorstate ;
-        sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-        sosa:hasSimpleResult ?status .
-  }
-`
-
 async function x () {
   let query
-  query = TurnOnOffByLocationQuery
+  query = TurnOnOffByTypeQuery
   const result = await SEPA.query(query, {
     location: 'place://devid-temp-1',
     type: 'http://purl.org/iot/vocab/m3-lite#Temperature',

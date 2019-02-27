@@ -594,7 +594,8 @@ const TurnOnOffIntentHandler = {
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_STATE)
 
     const query = SEPA.TurnOnOffQuery
-    const results = await SEPA.query(query, {
+
+    await SEPA.query(query, {
       location: locationId,
       type,
       status
@@ -609,8 +610,6 @@ const TurnOnOffIntentHandler = {
     return Alexa.continueDialog(handlerInput, speechText)
   }
 }
-
-// TurnOnOffByType
 
 const TurnOnOffByLocationIntentHandler = {
   canHandle (handlerInput) {
@@ -637,13 +636,48 @@ const TurnOnOffByLocationIntentHandler = {
       return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_STATE)
 
     const query = SEPA.TurnOnOffByLocationQuery
-    const results = await SEPA.query(query, {
+    await SEPA.query(query, {
       location: locationId,
       status
     })
 
     const speechText = RESPONSE.TurnOnOffByLocation({
       location: locationLabel,
+      status
+    })
+
+    return Alexa.continueDialog(handlerInput, speechText)
+  }
+}
+
+const TurnOnOffByTypeIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'TurnOnOffByTypeIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeSlot]
+
+    const status = Alexa.getSlot(handlerInput, 'status')
+    if (status !== 'on' && status !== 'off')
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_STATE)
+
+    const query = SEPA.TurnOnOffByTypeQuery
+    await SEPA.query(query, {
+      type,
+      status
+    })
+
+    const speechText = RESPONSE.TurnOnOffByType({
+      type: typeSlot,
       status
     })
 
@@ -727,7 +761,8 @@ exports.handler = skillBuilder
     ListByStateIntentHandler,
     GetStateIntentHandler,
     TurnOnOffIntentHandler,
-    TurnOnOffByLocationIntentHandler
+    TurnOnOffByLocationIntentHandler,
+    TurnOnOffByTypeIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()

@@ -41,5 +41,7 @@ module.exports = {
   TurnOnOff: ({ location, type, status }) =>
     `Any ${type} sensor in ${location} has been turned ${status}`,
   TurnOnOffByLocation: ({ location, status }) =>
-    `Any sensor in ${location} has been turned ${status}`
+    `Any sensor in ${location} has been turned ${status}`,
+  TurnOnOffByType: ({ type, status }) =>
+    `Any ${type} sensor has been turned ${status}`
 }
