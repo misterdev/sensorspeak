@@ -47,7 +47,7 @@ INSERT {
       sosa:resultTime "2017-04-17T17:24:00+02:00" .
 
     arces-monitor:devid-temp-1-2 a sosa:Observation ;
-      rdf:label "Devid Test 1-1(Temperature)" ;
+      rdf:label "Devid Test 1-2(Temperature)" ;
       sosa:madeBySensor <sensor://devid-temp-1-2> ;
       sosa:hasResult <result://devid-temp-1-2> ;
       sosa:hasFeatureOfInterest <place://devid-temp-1> ;
