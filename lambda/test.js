@@ -321,37 +321,42 @@ const type = () => `
           sosa:observes m3lite:Humidity .
     }
 `
-const TurnOnOffByTypeQuery = ({ type, status }) => `
-  WITH <http://devidtest/graph>
-  DELETE { 
-    ?actuation sosa:hasSimpleResult ?state ;
-        sosa:resultTime ?oldTimestamp .
-  }
-  INSERT {
-    ?actuation sosa:hasSimpleResult ${status === 'on'} ;
-      sosa:resultTime ?timestamp .
-  }
-  WHERE {
-    ?obs a sosa:Observation ;
-      sosa:madeBySensor ?sensor .
-    ?sensor a sosa:Sensor ;
-      sosa:observes <${type}> ;
-      ssn:hasProperty ?sensorstate .
-    ?actuation sosa:actsOnProperty ?sensorstate ;
-      sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
-      sosa:hasSimpleResult ?state ;
-      sosa:resultTime ?oldTimestamp .
-      BIND(now() AS ?timestamp)
-  }
+const SetUpdateIntervalQuery = ({ type, location, interval }) => `
+WITH <http://devidtest/graph>
+DELETE { 
+  ?updateInterval qudt-1-1:numericValue ?oldInterval .
+}
+INSERT {
+  ?updateInterval qudt-1-1:numericValue ${interval} .
+}
+WHERE {
+  ?obs a sosa:Observation ;
+    rdf:label ?label ;
+    sosa:madeBySensor ?sensor ;
+    sosa:hasFeatureOfInterest <${location}> ;
+    arces-monitor:hasUpdateInterval ?updateInterval .
+  ?updateInterval a qudt-1-1:QuantityValue ;
+      qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
+      qudt-1-1:numericValue ?oldInterval .
+  ?sensor a sosa:Sensor ;
+    sosa:observes <${type}> .
+}
 `
+
+// const moment = require('moment')
+// const iso = 'PT2H10M'
+// const ms = 7200000
+
+// console.log(moment, moment.duration(parseInt('7200000')).humanize(), moment.duration(0 + '7200000').humanize())
 
 async function x () {
   let query
-  query = TurnOnOffByTypeQuery
+  query = SetUpdateIntervalQuery
   const result = await SEPA.query(query, {
     location: 'place://devid-temp-1',
     type: 'http://purl.org/iot/vocab/m3-lite#Temperature',
-    status: 'on'
+    status: 'on',
+    interval: 3600000
   })
   console.log(result)
 }

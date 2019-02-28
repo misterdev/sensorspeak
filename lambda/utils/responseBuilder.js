@@ -45,5 +45,7 @@ module.exports = {
   TurnOnOffByType: ({ type, status }) =>
     `Any ${type} sensor has been turned ${status}`,
   GetUpdateInterval: ({ type, location, length, sensors }) =>
-    `There are ${length} ${type} sensors in ${location}: ${sensors}`
+    `There are ${length} ${type} sensors in ${location}: ${sensors}`,
+  SetUpdateInterval: ({ type, location, interval, humanized }) =>
+    `Every ${type} sensor in ${location} now updates every ${humanized} (${interval} ms)`
 }

@@ -264,37 +264,27 @@ const GetUpdateIntervalQuery = ({ type, location }) => `
   }
 `
 
-// kjgasdkjahsdkjhs
-
-// // TODO aggiungere type e time
-// const GetMaxOfLocationQuery = ({ location, type }) => `
-//     SELECT DISTINCT ?label MAX(?val) as ?maxVal
-//     WHERE {
-//         ?obs sosa:hasFeatureOfInterest ${location} ;
-//             rdf:label ?label ;
-//             sosa:hasResult ?r .
-//         ?r a qudt-1-1:QuantityValue .
-//         ?node arces-monitor:refersTo ?r ;
-//             time:inXSDDateTimeStamp ?t ;
-//             qudt-1-1:numericValue ?val
-//     }
-//     GROUP BY ?label
-// `
-
-// // TODO aggiungere type e time
-// const GetMinOfLocationQuery = ({ location, type }) => `
-//     SELECT DISTINCT ?label MIN(?val) as ?minVal
-//     WHERE {
-//         ?obs sosa:hasFeatureOfInterest ${location} ;
-//             rdf:label ?label ;
-//             sosa:hasResult ?r .
-//         ?r a qudt-1-1:QuantityValue .
-//         ?node arces-monitor:refersTo ?r ;
-//             time:inXSDDateTimeStamp ?t ;
-//             qudt-1-1:numericValue ?val
-//     }
-//     GROUP BY ?label
-// `
+const SetUpdateIntervalQuery = ({ type, location, interval }) => `
+  WITH <http://devidtest/graph>
+  DELETE { 
+    ?updateInterval qudt-1-1:numericValue ?oldInterval .
+  }
+  INSERT {
+    ?updateInterval qudt-1-1:numericValue ${interval} .
+  }
+  WHERE {
+    ?obs a sosa:Observation ;
+      rdf:label ?label ;
+      sosa:madeBySensor ?sensor ;
+      sosa:hasFeatureOfInterest <${location}> ;
+      arces-monitor:hasUpdateInterval ?updateInterval .
+    ?updateInterval a qudt-1-1:QuantityValue ;
+        qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
+        qudt-1-1:numericValue ?oldInterval .
+    ?sensor a sosa:Sensor ;
+      sosa:observes <${type}> .
+  }
+`
 
 module.exports = {
   LaunchRequestQuery,
@@ -313,5 +303,6 @@ module.exports = {
   TurnOnOffQuery,
   TurnOnOffByLocationQuery,
   TurnOnOffByTypeQuery,
-  GetUpdateIntervalQuery
+  GetUpdateIntervalQuery,
+  SetUpdateIntervalQuery
 }

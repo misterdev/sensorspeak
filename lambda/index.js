@@ -1,7 +1,7 @@
 const _ = require('lodash/object')
 const Ask_SDK = require('ask-sdk-core')
 const Fuse = require('fuse.js')
-const dateFns = require('date-fns')
+const moment = require('moment')
 
 const SEPA = require('./sepa')
 const Alexa = require('./utils/alexa')
@@ -685,7 +685,7 @@ const TurnOnOffByTypeIntentHandler = {
     return Alexa.continueDialog(handlerInput, speechText)
   }
 }
-// GetUpdateInterval,SetUpdateInterval
+
 const GetUpdateIntervalIntentHandler = {
   canHandle (handlerInput) {
     return (
@@ -721,8 +721,9 @@ const GetUpdateIntervalIntentHandler = {
       .map((sensor, index) => {
         const label = _.get(sensor, 'label.value')
         const interval = _.get(sensor, 'interval.value')
-        console.log(interval)
-        return `\u{2022} #${index + 1}, ${label} updates every ${interval}.`
+        const humanized = moment.duration(parseInt(interval)).humanize()
+        return `\u{2022} #${index +
+          1}, ${label} updates every ${humanized} (${interval} ms).`
       })
       .join('\n')
 
@@ -731,6 +732,56 @@ const GetUpdateIntervalIntentHandler = {
       type: typeSlot,
       length: results.length,
       sensors
+    })
+
+    return Alexa.continueDialog(handlerInput, speechText)
+  }
+}
+
+const SetUpdateIntervalIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'SetUpdateIntervalIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeSlot]
+
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const intervalSlot = Alexa.getSlot(handlerInput, 'interval')
+    if (!intervalSlot)
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+    const duration = moment.duration(intervalSlot)
+    const interval = duration.asMilliseconds()
+    const humanized = duration.humanize()
+
+    const query = SEPA.SetUpdateIntervalQuery
+    await SEPA.query(query, {
+      location: locationId,
+      type,
+      interval
+    })
+
+    const speechText = RESPONSE.SetUpdateInterval({
+      location: locationLabel,
+      type: typeSlot,
+      interval,
+      humanized
     })
 
     return Alexa.continueDialog(handlerInput, speechText)
@@ -815,7 +866,8 @@ exports.handler = skillBuilder
     TurnOnOffIntentHandler,
     TurnOnOffByLocationIntentHandler,
     TurnOnOffByTypeIntentHandler,
-    GetUpdateIntervalIntentHandler
+    GetUpdateIntervalIntentHandler,
+    SetUpdateIntervalIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()

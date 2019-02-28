@@ -6,7 +6,8 @@
 2. [Intent List](#intent-list)
 3. [SEPA Structure](#sepa-structure)
 4. [User Manual](#user-manual)
-5. [Presentation](https://docs.google.com/presentation/d/1z1K3b1ayt4vse97CCCZw-YXvw6vxNNqit3ZHSa7MjD0/edit#slide=id.g4f1755e562_4_30)
+
+- [Presentation](https://docs.google.com/presentation/d/1z1K3b1ayt4vse97CCCZw-YXvw6vxNNqit3ZHSa7MjD0/edit#slide=id.g4f1755e562_4_30)
 
 ## Project Structure
 
@@ -58,7 +59,7 @@ See the [README](../README.md) for the setup/development instructions.
 |TurnOnOffIntent|"turn {status} {location} {type}"|type, location, state|
 |TurnOnOffByLocationIntent|"turn {status} all sensors in {location}"|location, state|
 |TurnOnOffByTypeIntent|"turn {status} all {type} "|type, state|
-|-SetUpdateIntervalIntent|"set update interval of {location} {type} to {interval}"|type, location|
+|SetUpdateIntervalIntent|"set update interval of {location} {type} to {interval}"|type, location|
 |GetUpdateIntervalIntent|"get update interval of {location} {type}"|type, location|
 
 ## SEPA Structure
