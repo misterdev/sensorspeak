@@ -55,11 +55,11 @@ See the [README](../README.md) for the setup/development instructions.
 |==GetMaxOfLocationIntent| "get maximum {type} of {location}"|type, location|
 |==GetMinOfLocationIntent| "get minimum {type} of {location}"|type, location|
 |GetStateIntent|"get state of {location} {type}"|type, location|
-|-TurnOnOffIntent|"turn {status} {location} {type}"|type, location, state|
-|-TurnOnOffByLocationIntent|"turn {status} all sensors in {location}"|location, state|
-|-TurnOnOffByTypeIntent|"turn {status} all {type} "|type, state|
+|TurnOnOffIntent|"turn {status} {location} {type}"|type, location, state|
+|TurnOnOffByLocationIntent|"turn {status} all sensors in {location}"|location, state|
+|TurnOnOffByTypeIntent|"turn {status} all {type} "|type, state|
 |-SetUpdateIntervalIntent|"set update interval of {location} {type} to {interval}"|type, location|
-|-GetUpdateIntervalIntent|"get update interval of {location} {type}"|type, location|
+|GetUpdateIntervalIntent|"get update interval of {location} {type}"|type, location|
 
 ## SEPA Structure
 ### Current Structure (as of Feb. 2019)

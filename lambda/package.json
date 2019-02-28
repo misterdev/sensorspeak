@@ -11,6 +11,7 @@
   "dependencies": {
     "ask-sdk-core": "^2.0.0",
     "ask-sdk-model": "^1.0.0",
+    "date-fns": "^1.30.1",
     "fuse.js": "^3.3.0",
     "lodash": "^4.17.11",
     "sparql-client-2": "^0.6.3"

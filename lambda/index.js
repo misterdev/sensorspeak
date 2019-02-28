@@ -1,6 +1,7 @@
 const _ = require('lodash/object')
 const Ask_SDK = require('ask-sdk-core')
 const Fuse = require('fuse.js')
+const dateFns = require('date-fns')
 
 const SEPA = require('./sepa')
 const Alexa = require('./utils/alexa')
@@ -684,6 +685,57 @@ const TurnOnOffByTypeIntentHandler = {
     return Alexa.continueDialog(handlerInput, speechText)
   }
 }
+// GetUpdateInterval,SetUpdateInterval
+const GetUpdateIntervalIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'GetUpdateIntervalIntent')
+    )
+  },
+  async handle (handlerInput) {
+    if (!Alexa.checkDialogState(handlerInput, 'COMPLETED'))
+      return Alexa.elicitSlots(handlerInput)
+
+    const typeSlot = Alexa.getSlot(handlerInput, 'type')
+    if (!typeSlot && !SEPA.types[typeSlot])
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_TYPE)
+    const type = SEPA.types[typeSlot]
+
+    const locationSlot = Alexa.getSlot(handlerInput, 'location')
+    if (!locationSlot)
+      return Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION)
+    const location = new Fuse(SEPA.locations, fuseOptions).search(locationSlot)
+    const locationId = _.get(location, '[0].id')
+    const locationLabel = _.get(location, '[0].label', 'this location')
+    if (!locationId)
+      resolve(Alexa.continueDialog(handlerInput, Alexa.ERROR.NO_LOCATION))
+
+    const query = SEPA.GetUpdateIntervalQuery
+    const results = await SEPA.query(query, {
+      location: locationId,
+      type
+    })
+
+    const sensors = results
+      .map((sensor, index) => {
+        const label = _.get(sensor, 'label.value')
+        const interval = _.get(sensor, 'interval.value')
+        console.log(interval)
+        return `\u{2022} #${index + 1}, ${label} updates every ${interval}.`
+      })
+      .join('\n')
+
+    const speechText = RESPONSE.GetUpdateInterval({
+      location: locationLabel,
+      type: typeSlot,
+      length: results.length,
+      sensors
+    })
+
+    return Alexa.continueDialog(handlerInput, speechText)
+  }
+}
 
 const ErrorHandler = {
   canHandle (handlerInput) {
@@ -762,7 +814,8 @@ exports.handler = skillBuilder
     GetStateIntentHandler,
     TurnOnOffIntentHandler,
     TurnOnOffByLocationIntentHandler,
-    TurnOnOffByTypeIntentHandler
+    TurnOnOffByTypeIntentHandler,
+    GetUpdateIntervalIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .lambda()

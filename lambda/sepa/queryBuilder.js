@@ -248,6 +248,22 @@ const TurnOnOffByTypeQuery = ({ type, status }) => `
   }
 `
 
+const GetUpdateIntervalQuery = ({ type, location }) => `
+  SELECT ?label ?interval
+  WHERE {
+    ?obs a sosa:Observation ;
+      rdf:label ?label ;
+      sosa:madeBySensor ?sensor ;
+      sosa:hasFeatureOfInterest <${location}> ;
+      arces-monitor:hasUpdateInterval ?updateInterval .
+    ?updateInterval a qudt-1-1:QuantityValue ;
+        qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
+        qudt-1-1:numericValue ?interval .
+    ?sensor a sosa:Sensor ;
+      sosa:observes <${type}> .
+  }
+`
+
 // kjgasdkjahsdkjhs
 
 // // TODO aggiungere type e time
@@ -296,5 +312,6 @@ module.exports = {
   GetStateQuery,
   TurnOnOffQuery,
   TurnOnOffByLocationQuery,
-  TurnOnOffByTypeQuery
+  TurnOnOffByTypeQuery,
+  GetUpdateIntervalQuery
 }

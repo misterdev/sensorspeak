@@ -138,31 +138,6 @@
           ]
         },
         {
-          "name": "GetUpdateIntervalIntent",
-          "slots": [
-            {
-              "name": "location",
-              "type": "AMAZON.SearchQuery"
-            },
-            {
-              "name": "type",
-              "type": "DeviceType"
-            }
-          ],
-          "samples": [
-            "get update interval",
-            "get the update interval",
-            "get update interval of {type} sensor",
-            "get update interval of the {type} sensor",
-            "get the update interval of {type} sensor",
-            "get the update interval of the {type} sensor",
-            "get update interval of {location}",
-            "get update interval of the {location}",
-            "get the update interval of {location}",
-            "get the update interval of the {location}"
-          ]
-        },
-        {
           "name": "GetValueIntent",
           "slots": [
             {
@@ -413,6 +388,75 @@
             {
               "name": "status",
               "type": "DeviceStatus",
+              "samples": []
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": []
+            },
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "GetUpdateIntervalIntent",
+          "samples": [
+            "get update interval",
+            "get update interval of {type} sensors",
+            "get update interval of the {type} sensors",
+            "get update interval of sensors in {location}",
+            "get update interval of sensors of {location}",
+            "get update interval of the sensors in {location}",
+            "get update interval of the sensors of {location}",
+            "get update interval of {type} devices",
+            "get update interval of the {type} devices",
+            "get update interval of devices in {location}",
+            "get update interval of devices of {location}",
+            "get update interval of the devices in {location}",
+            "get update interval of the devices of {location}"
+          ],
+          "slots": [
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "samples": []
+            },
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "SetUpdateIntervalIntent",
+          "samples": [
+            "set update interval",
+            "set update interval of {type} sensors",
+            "set update interval of the {type} sensors",
+            "set update interval of {type} sensors to {interval}",
+            "set update interval of the {type} sensors to {interval}",
+            "set update interval of sensors in {location}",
+            "set update interval of sensors of {location}",
+            "set update interval of the sensors in {location}",
+            "set update interval of the sensors of {location}",
+            "set update interval of {type} devices",
+            "set update interval of {type} devices to {interval}",
+            "set update interval of the {type} devices",
+            "set update interval of the {type} devices to {interval}",
+            "set update interval of devices in {location}",
+            "set update interval of devices of {location}",
+            "set update interval of the devices in {location}",
+            "set update interval of the devices of {location}"
+          ],
+          "slots": [
+            {
+              "name": "interval",
+              "type": "AMAZON.DURATION",
               "samples": []
             },
             {
@@ -746,6 +790,65 @@
               }
             }
           ]
+        },
+        {
+          "name": "GetUpdateIntervalIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "SetUpdateIntervalIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
+              }
+            },
+            {
+              "name": "location",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-location"
+              }
+            },
+            {
+              "name": "interval",
+              "type": "AMAZON.DURATION",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-duration"
+              }
+            }
+          ]
         }
       ]
     },
@@ -774,6 +877,15 @@
           {
             "type": "PlainText",
             "value": "in which status?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.IntentSlot-duration",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "how often?"
           }
         ]
       }
