@@ -52,9 +52,9 @@ See the [README](../README.md) for the setup/development instructions.
 |GetValueIntent|"get {type} of {location}"|type, location|
 |GetAverageOfTypeIntent|"get average {type}"|type|
 |GetAverageOfLocationIntent|"get average {type} of {location}"|type, location|
-|==GetLastUpdateTimeIntent|"get last update time of {location} {type} sensor"  (//TODO |type, location|
-|==GetMaxOfLocationIntent| "get maximum {type} of {location}"|type, location|
-|==GetMinOfLocationIntent| "get minimum {type} of {location}"|type, location|
+|GetLastUpdateTimeIntent|"get last update time of {location} {type} sensor"  (|type, location|
+|GetMaxOfLocationIntent| "get maximum {type} of {location}"|type, location|
+|GetMinOfLocationIntent| "get minimum {type} of {location}"|type, location|
 |GetStateIntent|"get state of {location} {type}"|type, location|
 |TurnOnOffIntent|"turn {status} {location} {type}"|type, location, state|
 |TurnOnOffByLocationIntent|"turn {status} all sensors in {location}"|location, state|
@@ -176,3 +176,13 @@ User> alexa tell sensor speak to get the value for mars garden ✔️
     User> Temperature
     Alexa> The temperature in mars garden is 20°
 ```
+
+
+### Further Work
+1. Skills Refactor
+2. Update SEPA
+3. Fix MAX and MIN for location 
+  const date = new Date(
+    new Date().setDate(new Date().getDate() - 7)
+  ).toISOString()
+4. Improve slots

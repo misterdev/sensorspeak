@@ -80,38 +80,35 @@ const GetAverageOfLocationQuery = ({ location, type }) => `
   }
 `
 
-// TODO mettere type
-const GetMaxOfLocationQuery = ({ location, type }) => {
-  const date = new Date(
-    new Date().setDate(new Date().getDate() - 7)
-  ).toISOString()
-  return `
-    SELECT MAX(?val) as ?x
-    WHERE {
-        ?obs sosa:hasFeatureOfInterest <${location}> ;
-            sosa:hasResult ?result .
-        ?node arces-monitor:refersTo ?result ;
-            time:inXSDDateTimeStamp ?date ;
-            qudt-1-1:numericValue ?val .
-        FILTER (?date > "${date}"^^xsd:dateTime)
-    }`
-}
-// TODO mettere type
-const GetMinOfLocationQuery = ({ location, type }) => {
-  const date = new Date(
-    new Date().setDate(new Date().getDate() - 7)
-  ).toISOString()
-  return `
-    SELECT MIN(?val) as ?x
-    WHERE {
-        ?obs sosa:hasFeatureOfInterest <${location}> ;
-            sosa:hasResult ?result .
-        ?node arces-monitor:refersTo ?result ;
-            time:inXSDDateTimeStamp ?date ;
-            qudt-1-1:numericValue ?val .
-        FILTER (?date > "${date}"^^xsd:dateTime)
-    }`
-}
+const GetMaxOfLocationQuery = ({ location, type }) => `
+  SELECT MAX(?val) as ?x
+  WHERE {
+    ?obs a sosa:Observation ;
+      rdf:label ?label ;
+      sosa:hasFeatureOfInterest <${location}> ;
+      sosa:madeBySensor ?sensor .
+    ?sensor a sosa:Sensor ;
+      sosa:observes <${type}> .
+    ?node arces-monitor:refersTo ?obs ;
+      time:inXSDDateTimeStamp ?date ;
+      qudt-1-1:numericValue ?val .
+  }
+`
+
+const GetMinOfLocationQuery = ({ location, type }) => `
+  SELECT MIN(?val) as ?x
+  WHERE {
+    ?obs a sosa:Observation ;
+      rdf:label ?label ;
+      sosa:hasFeatureOfInterest <${location}> ;
+      sosa:madeBySensor ?sensor .
+    ?sensor a sosa:Sensor ;
+      sosa:observes <${type}> .
+    ?node arces-monitor:refersTo ?obs ;
+      time:inXSDDateTimeStamp ?date ;
+      qudt-1-1:numericValue ?val .
+  }
+`
 
 const GetLastUpdateTimeQuery = ({ location, type }) => `
   SELECT ?label ?date
