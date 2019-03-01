@@ -454,13 +454,19 @@ const GetLastUpdateTimeIntentHandler = {
         })
       )
 
-    const sensor = _.get(results, '[0].label.value')
-    const date = _.get(results, '[0].date.value')
+    const sensors = results
+      .map((sensor, index) => {
+        const label = _.get(sensor, 'label.value')
+        const rawDate = _.get(sensor, 'date.value')
+        const date = new Date(rawDate).toString()
+        return `\u{2022} #${index + 1}, ${label} updated on ${date}.`
+      })
+      .join('\n')
+
     const speechText = RESPONSE.GetLastUpdateTime({
       location: locationLabel,
       type: typeSlot,
-      sensor,
-      date: new Date(date).toString()
+      sensors
     })
     return Alexa.continueDialog(handlerInput, speechText)
   }

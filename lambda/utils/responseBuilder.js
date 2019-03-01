@@ -34,8 +34,8 @@ module.exports = {
     `The maximum ${type} observed in ${location} is ${max}`,
   GetMinOfLocation: ({ location, type, min }) =>
     `The minimum ${type} observed in ${location} is ${min}`,
-  GetLastUpdateTime: ({ location, type, sensor, date }) =>
-    `The last update for the ${type} in ${location} has been made by sensor ${sensor} on ${date}`,
+  GetLastUpdateTime: ({ location, type, sensors }) =>
+    `The last update for the ${type} sensor in ${location} is: ${sensors}`,
   GetState: ({ location, type, length, sensors }) =>
     `There are ${length} ${type} sensors in ${location}: ${sensors}`,
   TurnOnOff: ({ location, type, status }) =>
