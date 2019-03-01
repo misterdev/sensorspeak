@@ -55,7 +55,7 @@ const ListByTypeQuery = ({ type }) => `
     }
 `
 
-const GetAverageQuery = ({ type }) => `
+const GetAverageOfTypeQuery = ({ type }) => `
     SELECT AVG(?val) as ?x
     WHERE {
         ?obs a sosa:Observation ;
@@ -67,26 +67,20 @@ const GetAverageQuery = ({ type }) => `
     }
 `
 
-// TODO mettere type
-// TODO in sepa i result non sono QUANTITY VALUE
-const GetAverageOfLocationQuery = ({ location, type }) => {
-  const date = new Date(
-    new Date().setDate(new Date().getDate() - 1)
-  ).toISOString()
-  return `
-    SELECT AVG(?val) as ?x
-    WHERE {
-        ?obs sosa:hasFeatureOfInterest <${location}> ;
-            sosa:hasResult ?result .
-        ?node arces-monitor:refersTo ?result ;
-            time:inXSDDateTimeStamp ?date ;
-            qudt-1-1:numericValue ?val .
-        FILTER (?date > "${date}"^^xsd:dateTime)
-    }`
-}
-// TODO mettere type
-// TODO in sepa i result non sono QUANTITY VALUE
+const GetAverageOfLocationQuery = ({ location, type }) => `
+  SELECT AVG(?val) as ?x
+  WHERE {
+      ?obs a sosa:Observation ;
+        sosa:hasFeatureOfInterest <${location}> ;
+        sosa:hasResult ?result ;
+        sosa:madeBySensor ?sensor .
+      ?sensor a sosa:Sensor ;
+        sosa:observes <${type}> .
+      ?result qudt-1-1:numericValue ?val .
+  }
+`
 
+// TODO mettere type
 const GetMaxOfLocationQuery = ({ location, type }) => {
   const date = new Date(
     new Date().setDate(new Date().getDate() - 7)
@@ -103,7 +97,6 @@ const GetMaxOfLocationQuery = ({ location, type }) => {
     }`
 }
 // TODO mettere type
-// TODO in sepa i result non sono QUANTITY VALUE
 const GetMinOfLocationQuery = ({ location, type }) => {
   const date = new Date(
     new Date().setDate(new Date().getDate() - 7)
@@ -121,7 +114,6 @@ const GetMinOfLocationQuery = ({ location, type }) => {
 }
 
 // TODO mettere type
-// TODO in sepa i result non sono QUANTITY VALUE
 const GetLastUpdateTimeQuery = ({ location, type }) => {
   // Filtriamo solo le observation relative all'ultimo anno
   // altrimenti il tempo necessario alla query e' ~10s e la
@@ -293,7 +285,7 @@ module.exports = {
   ListByTypeQuery,
   ListLocationsQuery,
   GetValueQuery,
-  GetAverageQuery,
+  GetAverageOfTypeQuery,
   GetAverageOfLocationQuery,
   GetMaxOfLocationQuery,
   GetMinOfLocationQuery,

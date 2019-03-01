@@ -215,11 +215,11 @@ const ListByTypeIntentHandler = {
   }
 }
 
-const GetAverageIntentHandler = {
+const GetAverageOfTypeIntentHandler = {
   canHandle (handlerInput) {
     return (
       Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
-      Alexa.checkIntentName(handlerInput, 'GetAverageIntent')
+      Alexa.checkIntentName(handlerInput, 'GetAverageOfTypeIntent')
     )
   },
   async handle (handlerInput) {
@@ -232,7 +232,7 @@ const GetAverageIntentHandler = {
 
     const type = SEPA.types[typeSlot]
 
-    const query = SEPA.GetAverageQuery
+    const query = SEPA.GetAverageOfTypeQuery
     const results = await SEPA.query(query, { type })
     if (!results)
       return Alexa.continueDialog(handlerInput, RESPONSE.NoResults())
@@ -245,7 +245,7 @@ const GetAverageIntentHandler = {
       )
 
     const average = _.get(results, '[0].x.value')
-    const speechText = RESPONSE.GetAverage({
+    const speechText = RESPONSE.GetAverageOfType({
       type: typeSlot,
       average
     })
@@ -856,7 +856,7 @@ exports.handler = skillBuilder
     ListByLocationIntentHandler,
     ListByTypeIntentHandler,
     GetValueIntentHandler,
-    GetAverageIntentHandler,
+    GetAverageOfTypeIntentHandler,
     GetAverageOfLocationIntentHandler,
     GetMaxOfLocationIntentHandler,
     GetMinOfLocationIntentHandler,

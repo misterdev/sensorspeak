@@ -20,7 +20,7 @@
           "samples": ["list all locations", "list locations"]
         },
         {
-          "name": "GetAverageIntent",
+          "name": "GetAverageOfTypeIntent",
           "slots": [
             {
               "name": "type",
@@ -637,6 +637,22 @@
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.IntentSlot-location"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetAverageOfTypeIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "type",
+              "type": "DeviceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.IntentSlot-type"
               }
             }
           ]
