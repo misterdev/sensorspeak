@@ -50,7 +50,7 @@ See the [README](../README.md) for the setup/development instructions.
 |ListByTypeIntent|"list {type} sensors"|type|
 |ListByStateIntent|"list all sensor in {status} mode"|state|
 |GetValueIntent|"get {type} of {location}"|type, location|
-|GetAverageIntent|"get average {type}"|type|
+|GetAverageOfTypeIntent|"get average {type}"|type|
 |GetAverageOfLocationIntent|"get average {type} of {location}"|type, location|
 |==GetLastUpdateTimeIntent|"get last update time of {location} {type} sensor"  (//TODO |type, location|
 |==GetMaxOfLocationIntent| "get maximum {type} of {location}"|type, location|
@@ -63,13 +63,14 @@ See the [README](../README.md) for the setup/development instructions.
 |GetUpdateIntervalIntent|"get update interval of {location} {type}"|type, location|
 
 ## SEPA Structure
-### Current Structure (as of Feb. 2019)
+### Current Structure (as of March 1st 2019)
 ```sparql
 ?obs a sosa:Observation ;
     sosa:hasResult ?result ;
-    sosa:hasFeatureOfInterest ;
-    rdf:label (XMLSchema#string) "MML Core 3 (Mars)" ;
-    rdf:comment (XMLSchema#string) 'Temperatura Server MML Core 3' ;
+    sosa:resultTime "2019-03-01T16:19:12.411296"
+    sosa:hasFeatureOfInterest ?place ;
+    rdf:label "MML Core 3 (Mars)" ;
+    rdf:comment 'Temperatura Server MML Core 3' ;
     arces-monitor:hasMqttTopic 'arces/servers/mars/mml/cpu/core-3/temperature' .
 
 ?place a schema:Place ;
@@ -78,13 +79,12 @@ See the [README](../README.md) for the setup/development instructions.
     schema:GeoCoordinates <nodeID://XXXX> .
 
 ?result a qudt-1-1:QuantityValue ;
-    qudt-1-1:unit qudt-unit-1-1:Millibar ;
-    qudt-1-1:numericValue (XMLSchema#decimal) 0.36 .
+    qudt-1-1:unit qudt-unit-1-1:DegreeCelsius ;
+    qudt-1-1:numericValue 25.9 .
 
-// value = nodeID://YYYY
-?value arces-monitor:refersTo ?result ;
-    time:inXSDDateTimeStamp (XMLSchema#dateTime) 2018-11-11T04:01:39.544057 ;
-    qudt-1-1:numericValue (XMLSchema#decimal) 27.35 .
+?value arces-monitor:refersTo ?obs ;
+    time:inXSDDateTimeStamp	"2019-02-07T14:53:15.274146" ;
+    qudt-1-1:numericValue 23.93 .
 ```
 
 ### Additions

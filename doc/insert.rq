@@ -32,7 +32,7 @@ INSERT {
         qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
         qudt-1-1:numericValue 3600000 .
     <result://devid-temp-1-1> a qudt-1-1:QuantityValue ;
-      qudt-1-1:numericValue 0.36 .
+      qudt-1-1:numericValue 0 .
     <place://devid-temp-1> a schema:Place ;
       schema:name "DEVID HOUSE 1" .
     <sensor://devid-temp-1-1> a sosa:Sensor ;
@@ -45,6 +45,12 @@ INSERT {
       sosa:actuationMadeBy arces-monitor:alexa-actuator ; 
       sosa:hasSimpleResult false ;
       sosa:resultTime "2017-04-17T17:24:00+02:00" .
+    <value://devid-temp-1-1--1> arces-monitor:refersTo arces-monitor:devid-temp-1-1 ;
+        time:inXSDDateTimeStamp	"2019-02-07T14:53:15.274146" ;
+        qudt-1-1:numericValue 100 .
+    <value://devid-temp-1-1--2> arces-monitor:refersTo arces-monitor:devid-temp-1-1 ;
+        time:inXSDDateTimeStamp	"2019-02-07T14:53:15.274146" ;
+        qudt-1-1:numericValue 0 .
 
     arces-monitor:devid-temp-1-2 a sosa:Observation ;
       rdf:label "Devid Test 1-2(Temperature)" ;
@@ -56,7 +62,7 @@ INSERT {
         qudt-1-1:unit qudt-unit-1-1:MilliSecond ;
         qudt-1-1:numericValue 3600000 .
     <result://devid-temp-1-2> a qudt-1-1:QuantityValue ;
-      qudt-1-1:numericValue 0.36 .
+      qudt-1-1:numericValue 100 .
     <place://devid-temp-1> a schema:Place ;
       schema:name "DEVID HOUSE 1" .
     <sensor://devid-temp-1-2> a sosa:Sensor ;
