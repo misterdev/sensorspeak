@@ -1,13 +1,8 @@
 module.exports = {
-  NoValue: ({ location, type }) =>
-    `There aren't data about the ${type} sensor in ${location}. I'm sorry 🤷‍`,
-  NoValueType: ({ type }) =>
-    `There aren't data about the ${type} sensors. I'm sorry 🤷‍`,
-  NoValueStatus: ({ status }) => `There are no sensor with status: ${status}`,
-  NoResults: () =>
-    `Something went wrong 🙀, I can't communicate with the SEPA. Try again later.`,
   LaunchRequest: ({ sensor, label }) =>
     `Hi, I'm Alexa and I am able to talk with the SEPA. For example, I know that the label of the sensor \"${sensor}\" is: ${label}`,
+  Help: () =>
+    `I'm Sensor Speak, you can ask me to read data from the SEPA, ask me something like: "list all sensors", "turn on sensors" or "get value"`,
   ListLocations: ({ locations, length }) =>
     `There are ${length} locations: ${locations}`,
   ListLocationsError: () =>
@@ -47,5 +42,12 @@ module.exports = {
   GetUpdateInterval: ({ type, location, length, sensors }) =>
     `There are ${length} ${type} sensors in ${location}: ${sensors}`,
   SetUpdateInterval: ({ type, location, interval, humanized }) =>
-    `Every ${type} sensor in ${location} now updates every ${humanized} (${interval} ms)`
+    `Every ${type} sensor in ${location} now updates every ${humanized} (${interval} ms)`,
+  NoValue: ({ location, type }) =>
+    `There aren't data about the ${type} sensor in ${location}. I'm sorry 🤷‍`,
+  NoValueType: ({ type }) =>
+    `There aren't data about the ${type} sensors. I'm sorry 🤷‍`,
+  NoValueStatus: ({ status }) => `There are no sensor with status: ${status}`,
+  NoResults: () =>
+    `Something went wrong 🙀, I can't communicate with the SEPA. Try again later.`
 }

@@ -56,6 +56,42 @@ const LaunchRequestHandler = {
   }
 }
 
+const HelpIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      Alexa.checkIntentName(handlerInput, 'AMAZON.HelpIntent')
+    )
+  },
+  handle (handlerInput) {
+    const speechText = RESPONSE.Help()
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .withSimpleCard('Sensor Speak', speechText)
+      .getResponse()
+  }
+}
+
+const CancelAndStopIntentHandler = {
+  canHandle (handlerInput) {
+    return (
+      Alexa.checkRequestType(handlerInput, 'IntentRequest') &&
+      (Alexa.checkIntentName(handlerInput, 'AMAZON.StopIntent') ||
+        Alexa.checkIntentName(handlerInput, 'AMAZON.CancelIntent'))
+    )
+  },
+  handle (handlerInput) {
+    const speechText = 'Goodbye! 👋'
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .withSimpleCard('Sensor Speak', speechText)
+      .getResponse()
+  }
+}
+
 const ListLocationsIntentHandler = {
   canHandle (handlerInput) {
     return Alexa.checkIntentName(handlerInput, 'ListLocationsIntent')
@@ -809,54 +845,13 @@ const ErrorHandler = {
   }
 }
 
-// const HelpIntentHandler = {
-//     canHandle(handlerInput) {
-//         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-//             handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent'
-//     },
-//     handle(handlerInput) {
-//         const speechText = 'You can say hello to me!'
-
-//         return handlerInput.responseBuilder
-//             .speak(speechText)
-//             .reprompt(speechText)
-//             .withSimpleCard('Sensor Speak', speechText)
-//             .getResponse()
-//     },
-// }
-
-// const CancelAndStopIntentHandler = {
-//     canHandle(handlerInput) {
-//         return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-//             (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent' ||
-//                 handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent')
-//     },
-//     handle(handlerInput) {
-//         const speechText = 'Goodbye!'
-
-//         return handlerInput.responseBuilder
-//             .speak(speechText)
-//             .withSimpleCard('Sensor Speak', speechText)
-//             .getResponse()
-//     },
-// }
-
-// const SessionEndedRequestHandler = {
-//     canHandle(handlerInput) {
-//         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest'
-//     },
-//     handle(handlerInput) {
-//         console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`)
-
-//         return handlerInput.responseBuilder.getResponse()
-//     },
-// }
-
 const skillBuilder = Ask_SDK.SkillBuilders.custom()
 
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
+    HelpIntentHandler,
+    CancelAndStopIntentHandler,
     ListDevicesIntentHandler,
     ListLocationsIntentHandler,
     ListByLocationIntentHandler,
