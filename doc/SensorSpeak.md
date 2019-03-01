@@ -176,13 +176,3 @@ User> alexa tell sensor speak to get the value for mars garden ✔️
     User> Temperature
     Alexa> The temperature in mars garden is 20°
 ```
-
-
-### Further Work
-1. Skills Refactor
-2. Update SEPA
-3. Fix MAX and MIN for location 
-  const date = new Date(
-    new Date().setDate(new Date().getDate() - 7)
-  ).toISOString()
-4. Improve slots
