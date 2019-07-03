@@ -12,7 +12,9 @@
     "deploy:model": "ask deploy --target model --force",
     "mock": "node lambda/test.js",
     "format": "prettier-standard '**/*.js' '**/*.json'",
-    "test": "bst test"
+    "test": "bst test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -32,7 +34,8 @@
   },
   "homepage": "https://github.com/misterdev/sensorspeak#readme",
   "dependencies": {
-    "sparql-client-2": "^0.6.3"
+    "sparql-client-2": "^0.6.3",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "bespoken-tools": "^2.1.17",
@@ -62,5 +65,6 @@
         "git add"
       ]
     }
-  }
+  },
+  "snyk": true
 }
